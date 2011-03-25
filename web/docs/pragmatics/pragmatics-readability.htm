@@ -1,0 +1,90 @@
+<html><!-- #BeginTemplate "/Templates/pragmatics.dwt" -->
+<head>
+<!-- #BeginEditable "doctitle" --> 
+<title>Obix</title>
+<!-- #EndEditable -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../styles.css" type="text/css">
+</head>
+
+<body>
+<table border="0" width="100%"><tr>
+    <td> <!-- #BeginEditable "previous_page" --><a href="pragmatics-real_world.htm">Previous 
+      page</a><!-- #EndEditable --> 
+      | <!-- #BeginEditable "next_page" --><a href="pragmatics-performance.htm">Next 
+      page</a><!-- #EndEditable --> 
+      | <a href="contents.htm">Contents</a> | <a href="../../index.htm">Home</a> 
+    </td>
+    <td align=right>Obix pragmatics</td>
+</tr></table>
+<hr>
+<!-- #BeginEditable "text" --> 
+<p class="pragmatic">Readability is more important than number of keystrokes!</p>
+<p>Consider the following statement written in a programming language like Java 
+  or C:</p>
+<table width="100%" border="1" bgcolor="#EAEAEA">
+  <tr> 
+    <td> 
+      <pre>
+
+<code>Utilities.message ( &quot;Information&quot;, &quot;Readability is important!&quot;, RED, true, false ) ;<br></code></pre>
+    </td>
+  </tr>
+</table>
+<p>Visibly, this statement is used to display a message to the user. We suppose 
+  that <code>Utilities</code> is a class, because it is a convention that class 
+  names start with an uppercase letter, and we believe that the programmer knows 
+  and applies this convention. We suppose that the message displayed is &quot;<code>Readability 
+  is important!</code>&quot;. Parameter <code>RED</code> must be<code></code>, 
+  also by convention, a constant, and we guess that it is used to define some 
+  color, but we don't know if it is the color of the text, or the text's background, 
+  or whatever. And we have no idea about what the last two parameters are used 
+  for. There is a lot of uncertainty when reading the above statement. If we want 
+  to know more we have to look at the definition of the function (if we know where 
+  to find it and have access to it) or we must read the technical documentation 
+  (if it exists and is up to date).<br>
+</p>
+<p>Obix uses a different syntax to avoid such error-prone uncertainties. The above 
+  statement would be written like this:</p>
+<table width="100%" border="1" bgcolor="#EAEAEA">
+  <tr> 
+    <td> 
+      <pre>
+
+<code>se_utilities.co_message ( &amp;
+   window_title  = &quot;Information&quot; &amp;
+   message       = &quot;Readability is important!&quot; &amp;
+   text_color    = en_red &amp;
+   cancel_button = yes &amp;
+   log_message   = no )<br></code></pre>
+    </td>
+  </tr>
+</table>
+<p>Sure, the programmer has to type a little bit more (if he doesn't have a smart 
+  ide). But, the source code is more readable and understandable. There are no, 
+  or at least much less doubts about what the programmer really wants to do. In 
+  Obix, every input argument assignment must be written as:</p>
+<p><code>input_argument_id = expression</code></p>
+<p>Besides the better understandability, this syntax eliminates the risk of erroneously 
+  permuting two arguments of the same type and adds compile-time error detection 
+  when a command's input argument list is changed.</p>
+<p>By the way, this syntax for a command's execution would be very appropriate 
+  for a speech recognition system. Imagine how ordering a cup of coffee to a coffee 
+  machine would be easy, by saying:</p>
+<p><code>'service' 'coffee machine' 'command' 'make coffee' 'with milk' 'yes' 
+  'with sugar' 'no'</code></p>
+<p>The above code is just one example of the 'readability is more important than 
+  writability' principle. Other examples can be found in the <a href="../manuals/tutorial.html">tutorial</a>.</p>
+<!-- #EndEditable --> 
+<hr>
+<table border="0" width="100%"><tr>
+    <td> <!-- #BeginEditable "previous_page-bottom" --><a href="pragmatics-real_world.htm">Previous 
+      page</a><!-- #EndEditable --> 
+      | <!-- #BeginEditable "next_page-bottom" --><a href="pragmatics-performance.htm">Next 
+      page</a><!-- #EndEditable --> 
+      | <a href="contents.htm">Contents</a> | <a href="../../index.htm">Home</a> 
+    </td>
+    <td align=right>October 2004</td>
+</tr></table>
+</body>
+<!-- #EndTemplate --></html>

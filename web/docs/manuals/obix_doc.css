@@ -1,0 +1,74 @@
+
+
+/* this file must be copied into the directory of the HTML files */
+
+
+body, p, th, td, li, dt, dd, h1, h2, h3, h4, h5 {
+  font-family: verdana,arial,sans-serif;
+}
+
+body, p, th, td, li, dt, dd {
+  font-size: 11px;
+}
+
+h1, h2, h3, h4, h5 {
+  color: #009; /* dark blue */
+  padding-top: 9px;
+  padding-bottom: 3px;
+  margin-bottom: 30px;
+}
+
+h1 {
+  font-size: 200%;
+}
+
+h2 {
+  font-size: 150%;
+}
+
+h3 {
+  font-size: 125%;
+}
+
+h4 {
+  font-size: 112%;
+}
+
+h5 {
+  font-size: 100%;
+}
+
+div.chapter h2 {
+  background-color: #eee; /* gray */
+}
+
+div.section h2 {
+  background-color: #eee; /* gray */
+}
+
+div.section h3, div.section h4, div.section h5 {
+  background-color: white;
+  border-bottom: 1px dotted;
+}
+
+div.simplesect h2, div.simplesect h3, div.simplesect h4, div.simplesect h5 {
+  background-color: white;
+  border-bottom: 1px dotted;
+}
+
+dt {
+  margin-bottom: 5px; /* TOC */
+}
+
+pre.programlisting, pre.screen {
+  border: 1px dotted;
+  padding: 3px;
+}
+
+pre.programlisting {
+  background-color: #eee; /* gray */
+}
+
+.firstterm {
+  font-weight: 600;
+}

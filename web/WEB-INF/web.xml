@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- The template for this file is defined in file L:\obix\working\project_templates\work\web\WEB-INF\web_xml.txt and can be modified if needed. -->
+
+<web-app 
+	version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.htm</welcome-file>
+        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- test servlet -->
+    <servlet>
+        <servlet-name>Test</servlet-name>
+        <servlet-class>li_obix_web_site.li_tests.fa_obix_web_site_test_servlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Test</servlet-name>
+        <url-pattern>/test_servlet</url-pattern>
+    </servlet-mapping>
+    
+    <!-- add your servlets here (see example above) -->
+
+</web-app>

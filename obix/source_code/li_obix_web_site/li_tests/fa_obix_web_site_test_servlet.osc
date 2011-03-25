@@ -1,0 +1,25 @@
+factory obix_web_site_test_servlet type:HTTP_servlet java: "extends javax.servlet.http.HttpServlet"
+
+	// The template for this file is defined in file L:\obix\working\project_templates\work\obix\source_code\li_project\li_tests\fa_test_servlet_osc.txt and can be modified if needed.
+
+	%java_servlet_extension_code
+
+	command start
+		script
+			// nothing to do
+		end
+	end
+
+	command end
+		script
+			// nothing to do
+		end
+	end
+	
+	command handle_request
+		script
+			i_response.string_response_writer.write ( string = "<h3>Hello from project 'obix_web_site' test servlet at " & se_time_of_day.co_current_time.to_string & "</h3>")
+		end
+	end
+
+end

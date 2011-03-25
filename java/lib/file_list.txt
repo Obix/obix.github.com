@@ -1,0 +1,3 @@
+rel file ..\..\..\..\..\lib\obix.jar
+rel file ..\..\..\..\..\lib\obix_ext.jar
+rel file ..\..\..\..\..\obix_dev.jar

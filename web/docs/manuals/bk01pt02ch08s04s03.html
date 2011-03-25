@@ -1,0 +1,51 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>repeat from to instruction</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="bk01pt02ch08s04.html" title="Loops"><link rel="prev" href="bk01pt02ch08s04s02.html" title="repeat for each instruction"><link rel="next" href="bk01pt02ch08s04s04.html" title="repeat times instruction"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center"><code class="code">repeat from to</code> instruction</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="bk01pt02ch08s04s02.html">Prev</a> </td><th width="60%" align="center">Loops</th><td width="20%" align="right"> <a accesskey="n" href="bk01pt02ch08s04s04.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="repeat_from_to_instruction"></a><code class="code">repeat from to</code> instruction</h3></div></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repeat_from_to_description"></a>Description</h4></div></div></div><p>The <code class="code">repeat from to</code> instruction is used to execute a set of instructions over a range of integer values stored in a loop variable. The loop variable starts and ends with specified values. At each pass, it is incremented or decremented by one, or any other specified step value. The loop variable can be accessed by instructions within the loop.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">The <code class="code">repeat from to</code> instruction is similar to the frequently used <code class="code">for (int i=0; i&lt;max; i++)</code> statement in Java and C#.</td></tr></table></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repeat_from_to_syntax"></a>Syntax</h4></div></div></div><div class="table"><a name="repeat_from_to_syntax_table"></a><p class="title"><b>Table 8.14. <code class="code">repeat from to</code> syntax</b></p><div class="table-contents"><table summary="repeat from to syntax" cellspacing="0" cellpadding="5" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Production</th><th>Syntax</th><th>Links</th></tr></thead><tbody><tr><td><code class="code">repeat_from_to_instruction</code></td><td>
+                <div class="literallayout"><p><code class="code">"repeat" "from" <a href="bk02ch03.html#EBNF_object_type_selector">object_type_selector</a> ? <a href="bk02ch03.html#EBNF_variable_id">variable_id</a> "=" <a href="bk02ch03.html#EBNF_expression">expression</a> "down" ? "to" <a href="bk02ch03.html#EBNF_expression">expression</a> ( "step" <a href="bk02ch03.html#EBNF_expression">step_expression</a> ) ? <a href="bk02ch03.html#EBNF_repeat_tail">repeat_tail</a> ?<br>
+   <a href="bk02ch03.html#EBNF_script_instruction">script_instruction</a> *<br>
+"end" "repeat" ?</code></p></div>
+                <p>remarks:
+                  </p><div class="itemizedlist"><ul type="disc"><li><code class="code">expression</code> must be of type <code class="code">signed_integer32</code> (or any sub-type)</li><li>the default value for <code class="code">object_type_selector</code> is <code class="code">ty_positive32</code></li><li><code class="code">step_expression</code> must be of type <code class="code">positive32</code> (or any sub-type)</li><li>the default value for <code class="code">step</code> is 1</li></ul></div><p>
+                </p>
+              </td><td><a href="bk01pt02ch08s04s03.html" title="repeat from to instruction">the section called &#8220;<code class="code">repeat from to</code> instruction&#8221;</a></td></tr><tr><td><code class="code">repeat_tail</code></td><td><code class="code">( "counter" ":" <a href="bk02ch03.html#EBNF_variable_id">variable_id</a> ) ? ( "id" ":" <a href="bk02ch03.html#EBNF_identifier">identifier</a> ) ?</code></td><td><a href="bk01pt02ch08s04s06.html" title="repeat tail">the section called &#8220;repeat tail&#8221;</a></td></tr></tbody></table></div></div><br class="table-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repeat_from_to_example_section"></a>Examples</h4></div></div></div><div class="example"><a name="repeat_from_to_example_1"></a><p class="title"><b>Example 8.14. <code class="code">repeat from to</code> example 1</b></p><div class="example-contents"><pre class="programlisting">// display numbers from 1 to 10
+
+repeat from i = 1 to 10
+   system.console.write_line ( i.to_string )
+end</pre></div></div><br class="example-break"><div class="example"><a name="repeat_from_to_example_1a"></a><p class="title"><b>Example 8.15. <code class="code">repeat from to</code> example 2</b></p><div class="example-contents"><pre class="programlisting">// display even numbers between 10 and 4
+
+repeat from i = 10 down to 4 step 2
+   system.console.write_line ( i.to_string )
+end</pre><p>The result on screen is:</p><pre class="screen">10
+8
+6
+4</pre></div></div><br class="example-break"><div class="example"><a name="repeat_from_to_example_2"></a><p class="title"><b>Example 8.16. <code class="code">repeat from to</code> example 3</b></p><div class="example-contents"><pre class="programlisting">service instruction_examples
+
+   command repeat_from_to_example_2
+      script
+      
+         // create table data provider with 2 rows and 4 columns, and containing some simple test data
+         const positive32 row_count = 2
+         const positive32 column_count = 4
+         const table_data_provider table_data_provider = fa_table_data_provider_for_tests.co_create ( &amp;
+         	i_row_count = c_row_count &amp;
+         	i_column_count = c_column_count )
+         	
+         // loop through all rows
+         repeat from row_index = 1 to c_row_count
+
+            // loop through all even columns
+            repeat from column_index = 2 to c_column_count step 2
+
+               // display cell value
+               se_system.console.write_line ( c_table_data_provider.co_cell_value ( &amp;
+                  i_row_index = v_row_index &amp;
+                  i_column_index = v_column_index ).to_string )
+
+            end repeat
+         end repeat
+
+      end script
+   end command
+   
+end service</pre><p>The result on screen is:</p><pre class="screen">r1 c2
+r1 c4
+r2 c2
+r2 c4</pre></div></div><br class="example-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repeat_from_to_see_also"></a>See also</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><a href="bk01pt02ch08s04s06.html" title="repeat tail">the section called &#8220;repeat tail&#8221;</a></li><li><a href="bk01pt02ch09.html" title="Chapter 9. Expressions and operators">Chapter 9, <i>Expressions and operators</i></a></li></ul></div><div class="itemizedlist"><ul type="disc"><li><a href="bk01pt02ch08s04s07.html" title="exit repeat instruction">the section called &#8220;<code class="code">exit repeat</code> instruction&#8221;</a></li><li><a href="bk01pt02ch08s04s08.html" title="next repeat instruction">the section called &#8220;<code class="code">next repeat</code> instruction&#8221;</a></li></ul></div><div class="itemizedlist"><ul type="disc"><li><a href="bk01pt02ch08s04.html#repeat_while_instruction" title="repeat while instruction">the section called &#8220;<code class="code">repeat while</code> instruction&#8221;</a></li><li><a href="bk01pt02ch08s04s02.html" title="repeat for each instruction">the section called &#8220;<code class="code">repeat for each</code> instruction&#8221;</a></li><li><a href="bk01pt02ch08s04s04.html" title="repeat times instruction">the section called &#8220;<code class="code">repeat times</code> instruction&#8221;</a></li><li><a href="bk01pt02ch08s04s05.html" title="repeat forever instruction">the section called &#8220;<code class="code">repeat forever</code> instruction&#8221;</a></li></ul></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="bk01pt02ch08s04s02.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="bk01pt02ch08s04.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="bk01pt02ch08s04s04.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"><code class="code">repeat for each</code> instruction </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> <code class="code">repeat times</code> instruction</td></tr></table></div></body></html>

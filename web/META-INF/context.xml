@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- The template for this file is defined in file L:\obix\working\project_templates\work\web\META-INF\context_xml.txt and can be modified if needed. -->
+
+<Context reloadable="true" antiJARLocking="true" path="/obix_web_site"/>

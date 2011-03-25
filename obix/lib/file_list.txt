@@ -1,0 +1,3 @@
+rel file ..\..\..\..\..\obix_lib\obix.oar
+rel file ..\..\..\..\..\obix_lib\obix_ext.oar
+rel file ..\..\..\..\..\obix_lib\obix_dev.oar
