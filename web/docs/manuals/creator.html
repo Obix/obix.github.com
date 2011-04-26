@@ -1,0 +1,59 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Creator</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="RSE_features.html" title="Chapter 6. RSE features"><link rel="prev" href="command.html" title="Command"><link rel="next" href="event.html" title="Event"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Creator</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="command.html">Prev</a> </td><th width="60%" align="center">Chapter 6. RSE features</th><td width="20%" align="right"> <a accesskey="n" href="event.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="creator"></a>Creator</h2></div></div></div><h3><a name="id554720"></a>Description</h3><p>A <em class="firstterm">creator</em> is a command belonging to a factory and is used to create objects of the type implemented by the factory.</p><p>Each factory contains one or more creators.</p><p>Each creator is accessed through its identifier which must be unique within the factory.</p><p>A creator can have any number of input arguments, but it must always have at least one output argument whose type is the type implemented by the factory.</p><h3><a name="id642599"></a>Syntax</h3><div class="table"><a name="creator_syntax"></a><p class="title"><b>Table 6.11. Creator</b></p><div class="table-contents"><table summary="Creator" cellspacing="0" cellpadding="5" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Production</th><th>Syntax</th><th>Links</th></tr></thead><tbody><tr><td><code class="code">creator</code></td><td><div class="literallayout"><p><code class="code">"creator" ( "id" ":" ) ? <a href="Obix_EBNF.html#EBNF_command_id">command_id</a> <a href="Obix_EBNF.html#EBNF_command_properties">command_properties</a><br>
+   <a href="Obix_EBNF.html#EBNF_input_argument">input_argument</a> *<br>
+   <a href="Obix_EBNF.html#EBNF_in_check">in_check</a> ?<br>
+   <a href="Obix_EBNF.html#EBNF_output_argument">output_argument</a> *<br>
+   <a href="Obix_EBNF.html#EBNF_out_check">out_check</a> ?<br>
+   <a href="Obix_EBNF.html#EBNF_script">script</a><br>
+"end" "creator" ?</code></p></div></td><td><a href="creator.html" title="Creator">the section called &#8220;Creator&#8221;</a></td></tr></tbody></table></div></div><br class="table-break"><p>All properties defined for commands and their arguments also apply to creators. For more information please refer to <a href="command.html#command_properties_table" title="Table 6.8. Command properties">Table 6.8, &#8220;Command properties&#8221;</a></p><p><a name="creator_kind_property"></a>In addition to the properties existing for commands, a creator has the following property:</p><div class="table"><a name="creator_properties_table"></a><p class="title"><b>Table 6.12. Additional creator property</b></p><div class="table-contents"><table summary="Additional creator property" cellspacing="0" cellpadding="5" border="1"><colgroup><col><col><col><col></colgroup><thead><tr><th>Property</th><th>Value</th><th>Required</th><th>Default value</th></tr></thead><tbody><tr><td><code class="code">kind</code></td><td>one of the following:<pre class="literallayout">standard
+in_all</pre></td><td>no</td><td><code class="code">standard</code></td></tr></tbody></table></div></div><br class="table-break"><p>Property <code class="code">kind</code> defines the kind of creator.</p><p><code class="code">standard</code> is the default value and denotes a creator for which all arguments and the script have to be defined explicitly.</p><p><code class="code">in_all</code> tells the compiler to automatically create the list of arguments and, optionally, the script. This eliminates the need for manually writing similar code again and again. If <code class="code">kind</code> is <code class="code">in_all</code> then:</p><div class="itemizedlist"><ul type="disc"><li><p>no arguments can be explicitly defined in the source code. The compiler automatically creates:</p><div class="itemizedlist"><ul type="circle"><li><p>one input argument for each attribute of kind <code class="code">constant</code> or <code class="code">variable</code> that is defined in the type which is implemented by the factory. The following properties of each input argument are the same as those defined for its corresponding attribute: <code class="code">id suffix</code>, <code class="code">type</code>, <code class="code">voidable</code>, <code class="code">check</code> and <code class="code">default</code>.</p></li><li><p>one output argument whose id is <code class="code">result</code>, whose type is the type implemented by the factory, and whose <code class="code">voidable</code> property is set to <code class="code">no</code></p></li></ul></div></li><li><p>a script can optionally be defined. If no script is defined then the compiler automatically creates a script that assigns each input argument to its corresponding attribute</p></li></ul></div><h3><a name="id598355"></a>Examples</h3><div class="example"><a name="creator_examples"></a><p class="title"><b>Example 6.9. Creators</b></p><div class="example-contents"><p>Suppose the following type exists:</p><pre class="programlisting">type customer_7
+   attribute identifier type:positive32 end
+   attribute name type:string default: "unknown" kind:variable end
+   attribute city type:string voidable:yes kind:variable end
+   attribute last_order_date type:date_time voidable:yes kind:readonly_variable end
+end type</pre><p>Then all 3 creators in the following factory do exactly the same:</p><pre class="programlisting">factory customer_7 type:customer_7
+
+   attribute last_order_date
+      get
+         script
+            // o_last_order_date = ...
+         end
+      end
+   end
+
+   creator create kind:in_all end
+
+   creator create_2 kind:in_all
+      script
+         o_result.a_identifier = i_identifier
+         o_result.a_name = i_name
+         o_result.a_city = i_city
+      end script
+   end creator
+
+   creator create_3
+      in identifier type:positive32 end
+      in name type:string default: "unknown" end
+      in city type:string voidable:yes end
+      
+      out result type:customer_7 end
+      
+      script
+         o_result.a_identifier = i_identifier
+         o_result.a_name = i_name
+         o_result.a_city = i_city
+      end script
+   end creator
+
+end factory</pre></div></div><br class="example-break"><p>For more examples, see:</p><div class="itemizedlist"><ul type="disc"><li><a href="factory.html#factory_two_creators_example" title="Example 5.6. Two creators and a private attribute in a factory">Example 5.6, &#8220;Two creators and a private attribute in a factory&#8221;</a></li><li><a href="factory.html#creator_with_more_input_example" title="Example 5.7. Creator with additional input argument">Example 5.7, &#8220;Creator with additional input argument&#8221;</a></li></ul></div><h3><a name="creator_see_also"></a>See also</h3><div class="itemizedlist"><ul type="disc"><li><a href="command.html" title="Command">the section called &#8220;Command&#8221;</a></li><li><a href="factory.html" title="Factory">the section called &#8220;Factory&#8221;</a></li></ul></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="command.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="RSE_features.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="event.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Command </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Event</td></tr></table></div></body></html>

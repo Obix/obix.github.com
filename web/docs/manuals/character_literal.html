@@ -1,0 +1,31 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Character literal</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="literals.html" title="Literals"><link rel="prev" href="yes_no_literal.html" title="Yes_no literal"><link rel="next" href="void_literal.html" title="Void literal"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Character literal</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="yes_no_literal.html">Prev</a> </td><th width="60%" align="center">Literals</th><td width="20%" align="right"> <a accesskey="n" href="void_literal.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="character_literal"></a>Character literal</h3></div></div></div><h4><a name="id584888"></a>Description</h4><p>A <em class="firstterm">character literal</em> consists of one Unicode character or one escape character within single quotes (apostrophes).</p><h4><a name="id546402"></a>Syntax</h4><div class="table"><a name="character_literal_syntax"></a><p class="title"><b>Table 4.8. Character literal</b></p><div class="table-contents"><table summary="Character literal" cellspacing="0" cellpadding="5" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Production</th><th>Syntax</th><th>Links</th></tr></thead><tbody><tr><td><code class="code">character_literal</code></td><td>
+                <code class="code">"'" ( <a href="Obix_EBNF.html#EBNF_Unicode_character">Unicode_character</a> | <a href="Obix_EBNF.html#EBNF_escape_character">escape_character</a> ) "'"</code>
+                <p>remark: Unicode_character cannot be <code class="code">"'"</code> or <code class="code">"\"</code> or <code class="code">&lt;carriage_return&gt;</code> or <code class="code">&lt;line_feed&gt;</code></p>
+              </td><td><a href="character_literal.html" title="Character literal">the section called &#8220;Character literal&#8221;</a></td></tr><tr><td><code class="code">Unicode_character</code></td><td>any Unicode_character, like <code class="code">A, B, C, 1, 2, 3, +, -, %, </code>and so on</td><td> </td></tr><tr><td><code class="code">escape_character</code></td><td><div class="literallayout"><p><code class="code">-&gt; "\b"   /* backspace */<br>
+-&gt; "\f"   /* form feed */<br>
+-&gt; "\n"   /* line feed */<br>
+-&gt; "\r"   /* carriage return */<br>
+-&gt; "\t"   /* horizontal tab */<br>
+-&gt; '\"'   /* quote (double quote) */<br>
+-&gt; "\'"   /* apostrophe (single quote) */<br>
+-&gt; "\\"   /* backslash */<br>
+-&gt; "\u" <a href="Obix_EBNF.html#EBNF_hex_digit">hex_digit</a> <a href="Obix_EBNF.html#EBNF_hex_digit">hex_digit</a> <a href="Obix_EBNF.html#EBNF_hex_digit">hex_digit</a> <a href="Obix_EBNF.html#EBNF_hex_digit">hex_digit</a>   /* hexadecimal Unicode character definition */</code></p></div></td><td> </td></tr></tbody></table></div></div><br class="table-break"><div class="example"><a name="character_literals_example"></a><p class="title"><b>Example 4.13. Character literals</b></p><div class="example-contents"><pre class="programlisting">'a'       // a
+'7'       // 7
+' '       // space
+'"'       // double quote
+'\''      // single quote
+'\t'      // horizontal tab
+'\u002f'  // ?
+</pre></div></div><br class="example-break"></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="yes_no_literal.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="literals.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="void_literal.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Yes_no literal </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Void literal</td></tr></table></div></body></html>

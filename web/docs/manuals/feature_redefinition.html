@@ -1,0 +1,246 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Chapter 18. Feature redefinition</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="advanced_concepts.html" title="Part III. Advanced concepts"><link rel="prev" href="contract_programming.html" title="Chapter 17. Contract programming"><link rel="next" href="generic_types.html" title="Chapter 19. Generic types"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 18. Feature redefinition</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="contract_programming.html">Prev</a> </td><th width="60%" align="center">Part III. Advanced concepts</th><td width="20%" align="right"> <a accesskey="n" href="generic_types.html">Next</a></td></tr></table><hr></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="feature_redefinition"></a>Chapter 18. Feature redefinition</h2></div></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="feature_redefinition_description"></a>Description</h2></div></div></div><p><em class="firstterm">Feature redefinition</em> is used in child types to change features (attributes, commands and events) inherited from parent types.</p><p>For example, suppose that type <code class="code">product</code> has attribute <code class="code">identifier</code> of type <code class="code">string</code>, and that type <code class="code">book</code> is a child type of <code class="code">product</code>. If the specification requires that each book is identified by its ISBN number, then feature redefinition can be used to modify (i.e. to redefine) the type of attribute <code class="code">identifier</code> in type <code class="code">book</code>. Instead of being a simple <code class="code">string</code>, attribute <code class="code">identifier</code> now becomes a value of type <code class="code">ISBN_number</code>, which is a <code class="code">string</code> restricted to be a valid ISBN number.</p><p>Feature redefinition contributes to a better typing system, because it allows for more control and flexibility about what is allowed and banned in parent and child types, as shown by the rules explained in the following section.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="feature_redefinition_rules"></a>Rules</h2></div></div></div><div class="orderedlist"><ol type="1"><li><p><span class="emphasis"><em>The general syntax to redefine inherited features in a child type is to embed feature redefinition instructions within the <code class="code">inherit</code> instruction</em></span>.</p><p>Example: If type <code class="code">bar</code> inherits from type <code class="code">foo</code> and redefines inherited features then the syntax is as follows:</p><pre class="programlisting">type foo
+
+   // attributes
+   // commands
+   // events
+
+end</pre><pre class="programlisting">type bar
+
+   inherit foo
+      // feature redefinition instructions
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>Feature redefinition is done in a child type by changing one or more properties of inherited attributes, input arguments, output arguments and events.</em></span></p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">Only properties that change have to be explicitly specified in the child type's source code. All other properties are implicitly inherited.</td></tr></table></div><p></p></li><li><p><span class="emphasis"><em>Whenever feature redefinition is used, then type compatibility must be preserved.</em></span></p><p>This rule results from the <a href="type_inheritance.html#type_compatibility_rule">type compatibility rule</a> which requires that a child type is always compatible to all its parent types.</p><p>The consequence is that features in child types cannot be redefined arbitrarily, because otherwise type compatibility could be broken. The compiler takes care of that by applying the rules explained below. Some of these rules might appear a bit confusing at first, but in practice they just make sense and contribute to well designed types.</p><p>The following rules apply to attributes:</p><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>In a child type, the type <code class="code">T</code> of an immutable attribute can be changed to any compatible type (i.e. any child type) of type <code class="code">T</code>.</em></span></p><p>In the following example, an attribute of type <code class="code">product</code> in a parent type is redefined to be of type <code class="code">book</code> in a child type (we suppose that <code class="code">book</code> is compatible to <code class="code">product</code>):</p><pre class="programlisting">type parent1
+
+   attribute item type:product end
+
+end</pre><pre class="programlisting">type child1
+
+   inherit parent1
+      attribute item type:book end
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>If property <code class="code">voidable</code> of an immutable attribute is set to <code class="code">yes</code> in the parent type then it can be changed to <code class="code">no</code> in a child type.</em></span></p><p>Example:</p><pre class="programlisting">type parent2
+
+   attribute security_level type:positive32 voidable:yes end
+
+end</pre><pre class="programlisting">type child2
+
+   inherit parent2
+      attribute security_level voidable:no end
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>If property <code class="code">kind</code> of an attribute is set to <code class="code">readonly_variable</code> in the parent type then it can be changed to <code class="code">readonly_constant</code> in a child type.</em></span></p><p>Example:</p><pre class="programlisting">type parent3
+
+   attribute item_count type:zero_positive32 kind:readonly_variable end
+
+end</pre><pre class="programlisting">type child3
+
+   inherit parent3
+      attribute item_count kind:readonly_constant end
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>In a child type, property <code class="code">setable</code> of an attribute can be set to a less restrictive value than the value defined in the parent type.</em></span></p><p>Example:</p><pre class="programlisting">type parent4
+
+   attribute foo type:string kind:variable setable:factory end
+
+end</pre><pre class="programlisting">type child4
+
+   inherit parent4
+      attribute foo setable:all end
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>The <code class="code">check</code> of an immutable attribute can be made stronger in the child type, so that the set of allowed values in the child type is a subset of those allowed in the parent type.</em></span></p><p>Practically this is realized with a boolean <code class="code">and</code> applied to the checks defined in the parent and child types.</p><p>If a check exists in the parent type, and another one is specified in the child type, then the resulting check in the child type is the result of a boolean <code class="code">and</code> of both checks. This means that an object of the parent type must only fulfill the condition specified through the check defined in the parent type, but an object of the child type must fulfill the condition specified through the parent type's check, as well as the condition specified through the child type's check.</p><p>If no check exists in the parent type, then the check defined in the child type simply is the check applied to any object of the child type.</p><p>In the example below, the parent type requires that an attribute is a string containing 2 to 7 characters, and the child type  furthermore requires the string to start with "A":</p><pre class="programlisting">type parent5
+
+   attribute acronym type:string check: i_acronym.item_count &gt;= 2 and i_acronym.item_count &lt;= 7 end
+
+end</pre><pre class="programlisting">type child5
+
+   inherit parent5
+      attribute acronym and_check: i_acronym.is_start ( "A" ) end
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>If an attribute's type <span class="emphasis"><em>remains unchanged</em></span> in a child type, then the attribute's <code class="code">default</code> value <span class="emphasis"><em>can</em></span> be redefined in the child type. However, if an attribute's type <span class="emphasis"><em>changes</em></span> in a child type, then the attribute's <code class="code">default</code> value <span class="emphasis"><em>must</em></span> be redefined in the child type if a default value exists in the parent type, and the attribute's <code class="code">default</code> value <span class="emphasis"><em>can</em></span> be defined in the child type if a default value doesn't exists in the parent type.</em></span></p><p>Example:</p><pre class="programlisting">type parent6
+
+   attribute index type:zero_positive32 default: 0 end
+   
+end</pre><pre class="programlisting">type child6
+
+   inherit parent6
+      attribute index type:positive32 default: 1 end
+   end
+
+end</pre></li></ul></div><p>The following rules for command output arguments are similar to those of immutable attributes:</p><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>In a child type, the type <code class="code">T</code> of a command output argument can be changed to any compatible type (i.e. any child type) of type <code class="code">T</code>.</em></span></p><p>In the following example we again suppose that <code class="code">book</code> is compatible to <code class="code">product</code>:</p><pre class="programlisting">type parent8
+
+   command foo
+      out result type:product end
+   end
+
+end</pre><pre class="programlisting">type child8
+
+   inherit parent8
+      command foo
+         out result type:book end
+      end
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>If property <code class="code">voidable</code> of a command output argument is set to <code class="code">yes</code> in the parent type then it can be changed to <code class="code">no</code> in a child type.</em></span></p><p>Example:</p><pre class="programlisting">type parent9
+
+   command foo
+      out result type:product voidable:yes end
+   end
+
+end</pre><pre class="programlisting">type child9
+
+   inherit parent9
+      command foo
+         out result voidable:no end
+      end
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>The <code class="code">check</code> of a command output argument can be made stronger in the child type, so that the set of allowed values in the child type is a subset of those allowed in the parent type.</em></span></p><p>As for attributes, this is realized with a boolean <code class="code">and</code> applied to the checks defined in the parent and child types.</p><p>In the following example the parent type guarantees that the result of a command is a string starting with "a" and that the first file passed as input argument will exist after execution of the command:</p><pre class="programlisting">type parent10
+
+   command foo
+      in file1 type: file end
+      in file2 type: file end
+
+      out result type:string check: i_result.is_start ( "a" ) end
+      out_check check: i_file1.exists end
+   end
+
+end</pre><p>The child type below goes a step further by guaranteeing that the result will start with "ab", and that both files, file1 and file2, will exists after execution:</p><pre class="programlisting">type child10
+
+   inherit parent10
+      command foo
+         out result and_check: i_result.is_start ( "ab" ) end
+         and_out_check check: i_file2.exists end
+      end
+   end
+
+end</pre></li></ul></div><p>The following rules for command input arguments are the counterpart of those for output arguments:</p><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>In a child type, the inherited type <code class="code">T</code> of a command input argument can be changed to any parent type of type <code class="code">T</code>.</em></span></p><p>In the following example we suppose that type <code class="code">book</code> is a child of <code class="code">product</code>:</p><pre class="programlisting">type parent11
+
+   command foo
+      in item type:book end
+   end
+
+end</pre><pre class="programlisting">type child11
+
+   inherit parent11
+      command foo
+         in item type:product end
+      end
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>If property <code class="code">voidable</code> of a command input argument is set to <code class="code">no</code> in the parent type then it can be changed to <code class="code">yes</code> in a child type.</em></span></p><p>Example:</p><pre class="programlisting">type parent12
+
+   command foo
+      in item type:product voidable:no end
+   end
+
+end</pre><pre class="programlisting">type child12
+
+   inherit parent12
+      command foo
+         in item voidable:yes end
+      end
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>The <code class="code">check</code> of a command input argument can be weakened in the child type, so that the set of allowed values in the child type is a superset of those allowed in the parent type.</em></span></p><p>Practically, this is realized with a boolean <code class="code">or</code> applied to the checks defined in the parent and child types.</p><p>In the following example the parent type requires an input string to start with "a":</p><pre class="programlisting">type parent13
+
+   command foo
+      in string type:string check: i_string.is_start ( "a" ) end
+   end
+
+end</pre><p>The child type weakens the condition by specifying that the input string can start with "a" or "b":</p><pre class="programlisting">type child13
+
+   inherit parent13
+      command foo
+         in string or_check: i_string.is_start ( "b" ) end
+      end
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>A command input argument's <code class="code">default</code> value <span class="emphasis"><em>can</em></span> be redefined in the child type.</em></span></p><p>Example:</p><pre class="programlisting">type parent14
+
+   command foo
+      in string type:string end
+   end
+
+end</pre><pre class="programlisting">type child14
+
+   inherit parent14
+      command foo
+         in string default: "bar" end
+      end
+   end
+
+end</pre></li></ul></div><p>The following rule applies to events:</p><div class="itemizedlist"><ul type="disc"><li><p><span class="emphasis"><em>In a child type, the inherited type <code class="code">T</code> of an event can be changed to any compatible type (i.e. any child type) of type <code class="code">T</code>.</em></span></p><p>Example (we suppose that <code class="code">object_state_changed_event</code> is a child type of <code class="code">object_event</code>:</p><pre class="programlisting">type parent7
+
+   event foo type:object_event end
+
+end</pre><pre class="programlisting">type child7
+
+   inherit parent7
+      event foo type:object_state_changed_event end
+   end
+
+end</pre></li></ul></div></li><li><p><span class="emphasis"><em>Multiple redefinitions can appear in one type, and each child type of a child type can add its own redefinitions.</em></span>.</p><p>For example, a child type <code class="code">CT</code> can redefine two properties of attribute <code class="code">A1</code>, and one property of attribute <code class="code">A2</code>. Furthermore, a child type of <code class="code">CT</code> (i.e. a child of a child) can add its own redefinitions for one or both attributes, as long as type compatibility is preserved.</p></li></ol></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="feature_redefinition_rationale"></a>Rationale</h2></div></div></div><p>Although feature redefinition might be new and unusual for some programmers, it quickly becomes used again and again, once its possibilities and advantages are understood.</p><p><span class="emphasis"><em>Feature redefinition</em></span> is a useful extensions of <span class="emphasis"><em>type inheritance</em></span>, and both are based on the well known principle [<span class="citation">Whoever can do more can do less</span>].</p><p>In the real world, we are all used to the idea of feature redefinition. Consider, for example, a journeyman-carpenter who is able to construct a simple cupboard (command <code class="code">construct_cupboard</code> of type <code class="code">journeyman_carpenter</code> returns a <code class="code">simple_cupboard</code> object). A master-carpenter can obviously create anything a journeyman can create, but he can also create more sophisticated things (whoever can do more can do less). In our example, a master can construct a more sophisticated cupboard with more features. <span class="emphasis"><em>Type inheritance</em></span> and <span class="emphasis"><em>feature redefinition</em></span> allow us to express such relations: <code class="code">sophisticated_cupboard</code> is a child type of type <code class="code">simple_cupboard</code> (type inheritance), <code class="code">master_carpenter</code> is a child type of type <code class="code">journeyman_carpenter</code> (type inheritance again), and, while command <code class="code">construct_cupboard</code> returns a <code class="code">simple_cupboard</code> object in type <code class="code">journeyman_carpenter</code>, it returns a <code class="code">sophisticated_cupboard</code> object in type <code class="code">master_carpenter</code> (feature redefinition).</p><p>Hence, <span class="emphasis"><em>feature redefinition</em></span> opens the door for a more expressive typing system that results in a better design and more reliability, because more errors can be detected at compile-time, and maintenance is eased.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="feature_redefinition_examples"></a>Examples</h2></div></div></div><p>Feature redefinition is often used with scalar types (i.e. a type that represents a single value), because it allows to create child types that can hold only a subset of the values allowed in the parent type.</p><p>Consider, for example, 32 bits integer numbers. The parent type for these numbers in the Obix standard library is <code class="code">signed_integer32</code>. This type has attribute <code class="code">value</code> of type <code class="code">integer32_value</code> that allows to store any signed integer value in the range -214748648 to 2147483647.</p><p>Type <code class="code">zero_positive32</code> is a child type of <code class="code">signed_integer32</code> and allows to store only positive integers in the range 0 to 2147483647. Furthermore, <code class="code">positive32</code> is a child type of <code class="code">zero_positive32</code> which doesn't allow the value zero. Similar types exist for negative numbers: <code class="code">zero_negative32</code> (-214748648 to 0) and <code class="code">negative32</code> (-214748648 to -1). The following figure shows the type inheritance tree:</p><div class="figure"><a name="integer_types"></a><p class="title"><b>Figure 18.1. Integer types</b></p><div class="figure-contents"><div class="mediaobject"><img src="integer_types.gif" alt="Integer types"></div></div></div><br class="figure-break"><p>Now suppose we need a type to store the day of a month, which is an integer ranging from 1 to 31. The idea is of course to inherit from type <code class="code">positive32</code>, but restrict the set of allowed values to the range 1 to 31. Feature redefinition enables us to do this as follows:</p><pre class="programlisting">type day_in_month
+
+   inherit positive32
+      attribute value and_check: i_value &lt;= 31.a_value end
+   end
+
+end</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">The above type inherits all features of type <code class="code">positive32</code>, including arithmetic calculations and other features not needed in type <code class="code">day_in_month</code>. To avoid this, we could inherit from type <code class="code">simple_positive32</code>, which has fewer features and simplifies the implementation of <code class="code">day_in_month</code>.</td></tr></table></div><p>Another very typical example of feature redefinition can be found in types <code class="code">type</code>, <code class="code">factory</code> and <code class="code">service</code> of Obix's standard library. The common parent for these types is type <code class="code">RSE</code> (Root Software Element). Each <code class="code">RSE</code> is identified by a prefixed identifier (see <a href="prefixed_identifier.html" title="Prefixed identifier">the section called &#8220;Prefixed identifier&#8221;</a> for more information about prefixed identifiers). Therefore, type <code class="code">RSE</code> is defined as follows:</p><pre class="programlisting">type RSE_
+
+   attribute id:id type: prefixed_id end
+   
+   // other features not shown here
+
+end</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">The underscore after the type's identifier is just used here to make a difference between this example code and the real code of type <code class="code">RSE</code> in the Obix library.</td></tr></table></div><p>However, as explained in previous chapters, a type is identified by a <code class="code">type_identifier</code>, which is a <code class="code">prefixed_identifier</code> starting with <code class="code">"ty_"</code>, a factory is identified by a <code class="code">factory_identifier</code> that starts with <code class="code">"fa_"</code>, and a service is identified by a <code class="code">service_identifier</code> that starts with <code class="code">"se_"</code></p><p>Therefore, feature redefinition is used to specify the more specialized identifiers. In type <code class="code">type</code>, for example, attribute <code class="code">id</code> is redefined to be of type <code class="code">type_id</code>:</p><pre class="programlisting">type type_
+
+   inherit RSE_
+      attribute id:id type: type_id end
+   end
+
+end</pre><p>Types <code class="code">factory</code> and <code class="code">service</code> are redefined in a similar way:</p><pre class="programlisting">type factory_
+
+   inherit RSE_
+      attribute id:id type: factory_id end
+   end
+
+end</pre><pre class="programlisting">type service_
+
+   inherit RSE_
+      attribute id:id type: service_id end
+   end
+
+end</pre><p>Feature redefinition is also used for types <code class="code">type_id</code>, <code class="code">factory_id</code> and <code class="code">service_id</code>. These types are all children of type <code class="code">prefixed_id</code>, and their code looks like this:</p><pre class="programlisting">type type_id_
+
+   inherit prefixed_id
+      attribute value and_check: i_value.co_is_start ( "ty_".a_value ) end
+   end
+
+end</pre><pre class="programlisting">type factory_id_
+
+   inherit prefixed_id
+      attribute value and_check: i_value.co_is_start ( "fa_".a_value ) end
+   end
+
+end</pre><pre class="programlisting">type service_id_
+
+   inherit prefixed_id
+      attribute value and_check: i_value.co_is_start ( "se_".a_value ) end
+   end
+
+end</pre><p>Furthermore, type <code class="code">prefixed_id</code> is a child of type <code class="code">id</code>. And type <code class="code">id</code> is a child of type <code class="code">non_empty_string</code>, which is a child of type <code class="code">string</code>. Again, all these types (except <code class="code">string</code>) use feature redefinition, because each child type is a string with a more restricted set (i.e. a subset) of allowed values.</p><p>The following figure shows the type inheritances and examples of valid values.</p><div class="figure"><a name="string_to_type_id"></a><p class="title"><b>Figure 18.2. Inheritance path of <code class="code">type_id</code></b></p><div class="figure-contents"><div class="mediaobject"><img src="string_to_type_id.gif" alt="Inheritance path of type_id"></div></div></div><br class="figure-break"><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">Please refer to Obix' standard library API documentation to see the actual source code of the above types.</td></tr></table></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="feature_redefinition_see_also"></a>See also</h2></div></div></div><div class="itemizedlist"><ul type="disc"><li><a href="type_inheritance.html" title="Chapter 15. Type inheritance">Chapter 15, <i>Type inheritance</i></a></li><li><a href="contract_programming.html" title="Chapter 17. Contract programming">Chapter 17, <i>Contract programming</i></a></li><li><a href="generic_types.html" title="Chapter 19. Generic types">Chapter 19, <i>Generic types</i></a></li></ul></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="contract_programming.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="advanced_concepts.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="generic_types.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 17. Contract programming </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 19. Generic types</td></tr></table></div></body></html>

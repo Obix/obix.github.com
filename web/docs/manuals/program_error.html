@@ -1,0 +1,198 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Program error</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="error_handling.html" title="Chapter 13. Runtime error handling"><link rel="prev" href="error_handling.html" title="Chapter 13. Runtime error handling"><link rel="next" href="resource_error.html" title="Resource error"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Program error</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="error_handling.html">Prev</a> </td><th width="60%" align="center">Chapter 13. Runtime error handling</th><td width="20%" align="right"> <a accesskey="n" href="resource_error.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="program_error"></a>Program error</h2></div></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="program_error_description"></a>Description</h3></div></div></div><p>A <em class="firstterm">program error</em> is an error that appears at runtime and which is due to an error in the source code.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>The reason for program errors is human imperfection and compiler imperfection.</p><p>If a programmer was perfect, he or she would write error-free programs.</p><p>If the compiler was perfect it would detect all errors done by the programmers, so that an error-free application can be delivered to users. This, however, is technically unfeasible. The Obix compiler has been designed to detect a maximum of errors at compile-time. Errors detected at compile-time are called <em class="firstterm">coding errors</em>. All remaining errors, not detected by the compiler, potentially result in errors at runtime, and are called program errors in this context. A coding error or program errors is also frequently called a <em class="firstterm">bug</em></p><p>An interesting fact about the number of program errors in applications can be found in the book <em class="citetitle">Code complete, second edition</em> (ISBN 0-7356-1967-0), written by Steve McConnell, at page 521:</p><div class="itemizedlist"><ul type="disc"><li><p>Industry average experience is about 1 - 25 errors per 1000 lines of code for delivered software</p></li></ul></div><p>This means that a mid-size application consisting of 50000 instructions typically contains not less than 50 to 1250 program errors when delivered to the customer(s)!</p></td></tr></table></div><p>Program errors always appear unintentionally, because a programmer strives to write error-free programs. Therefore, program errors can appear randomly at any time and in any location of the source code.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="program_error_kinds"></a>Kinds of program errors</h3></div></div></div><p>Although the number of program errors in an application is always unknown, there is always a fixed set of <span class="emphasis"><em>types</em></span> of program errors that <span class="emphasis"><em>can</em></span> occur in a programming language. The following table gives an overview of the most frequent program error types in Obix:</p><div class="table"><a name="program_errors_table"></a><p class="title"><b>Table 13.1. Types of program errors</b></p><div class="table-contents"><table summary="Types of program errors" cellspacing="0" cellpadding="5" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Group</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td rowspan="5" valign="middle">standard</td><td>void_object_error</td><td>
+                  <p>An attempt is made to use a feature (e.g. execute a command) on a <code class="code">void</code> object reference. This error is similar to the <code class="code">NullPointerException</code> in Java.</p> <p>Example:</p>
+                  <pre class="programlisting">brain = void
+brain.think</pre>
+                </td></tr><tr><td>arithmetic_overflow_error</td><td>
+                  <p>The result of an arithmetic operation exceeds the highest value that is representable with the given number of bits.</p>
+                  <p>Example:</p>
+                  <pre class="programlisting">const positive32 four_billion = 2000000000 + 2000000000</pre>
+                </td></tr><tr><td>system_error</td><td>
+                  <p>A operating system error occurred.</p>
+                  <p>Examples:</p>
+                  <pre class="programlisting">stack overflow, low memory, etc.</pre>
+                </td></tr><tr><td>supplier_error</td><td>
+                  <p>A script calls another script, and then an error occurs in the called script.</p>
+                </td></tr><tr><td>error_instruction_error</td><td>
+                  <p>A program error is intentionally raised with the <code class="code">error</code> instruction. see <a href="error_instruction.html" title="error instruction">the section called &#8220;<code class="code">error</code> instruction&#8221;</a>.</p>
+                  <p>Example:</p>
+                  <pre class="programlisting">error "Huston, we have a problem!"</pre>
+                </td></tr><tr><td rowspan="4" valign="middle">contract programming</td><td>attribute_check_error</td><td>
+                  <p>An attempt is made to set an attribute to an invalid value</p>
+                </td></tr><tr><td>input_argument_check_error</td><td>
+                  <p>An attempt is made to call a command with an invalid input argument value</p>
+                </td></tr><tr><td>output_argument_check_error</td><td>
+                  <p>A command returns with an invalid output argument value</p>
+                </td></tr><tr><td>check_script_error</td><td>
+                  <p>The condition checked with a <code class="code">check script</code> instruction is not fulfilled. see <a href="check_script_instruction.html" title="check script instruction">the section called &#8220;<code class="code">check script</code> instruction&#8221;</a>.</p>
+                </td></tr></tbody></table></div></div><br class="table-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="default_error_handling"></a>Default behavior</h3></div></div></div><p>An important question is: What happens in case of a program error at runtime?</p><p>Because program errors appear randomly (i.e. the programmer doesn't know in advance when they appear and what causes them to appear), Obix provides a default behavior for all program errors at runtime.</p><p>The default behavior is to simply write an error message to the system's <code class="code">error</code> device which, by default, is the system console. Then the execution of the thread in which the error occurred, is stopped. The error message contains an explanation of the error, the location in the source code that caused the error, as well as the trace of all called scripts, up to the root script.</p><p>Here is an example of such an error message, caused through a division by 0:</p><pre class="screen">OBIX PROGRAM EXECUTION ERROR
+----------------------------
+        feature: ty_integer32_value.co_divide
+        library: li_obix.li_basics.li_scalars.li_number.li_integer.li_integer32
+           line: 46
+           time: Jan 11, 2011 11:10:27 AM
+    description: Division by zero. [division_by_zero_error]
+input argument : i_operand
+
+&gt;
+        feature: fa_positive32.co_divide
+        library: li_obix.li_basics.li_scalars.li_number.li_integer.li_integer32
+           line: 79
+           time: Jan 11, 2011 11:10:27 AM
+    description: An error occurred in a supplier. [supplier_error]
+
+&gt;
+        feature: se_tests.co_run
+        library: li_tests
+           line: 9
+           time: Jan 11, 2011 11:10:27 AM
+    description: An error occurred in a supplier. [supplier_error]</pre></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="customized_error_handling"></a>Customized program error handling</h3></div></div></div><p>While Obix's default behavior might be suitable during development, it is generally inappropriate for applications running under production mode, for the following reasons:</p><div class="itemizedlist"><ul type="disc"><li><p>The default behaviour of stopping the application is often inappropriate, or even dangerous, depending on the part of the application that was executed (e.g. in medical applications: imagine a surgeon's robot halting during surgery). Specific behaviors might be necessary depending on the context, and sometimes it is better to simply ignore the error instead of stopping the whole application.</p></li><li><p>Program errors should be logged (for example in a file or database) to help debugging, and the creator and/or maintainer of the software should possibly be informed quickly and automatically (e.g. via email notification).</p></li><li><p>The end-user should get a more user-friendly error message, possibly displayed in a graphical user interface (GUI) that provides a comprehensible message and suggests different options to escape.</p></li></ul></div><p>Therefore, the application's behavior in case of a program error can be programmatically customized at different levels.</p><p>At the highest level, we can change Obix's global default program error handling that applies to all errors for which no specific handling is defined. At the lowest level, we can change the error handling for a single instruction. We can also define error handling at any intermediate levels in order to customize error handling for specific parts of an application. The details are explained in the following sections.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="global_program_error_handling"></a>Changing the default global program error handling</h3></div></div></div><p>As said already, Obix's default handling of program errors at runtime is to write error information (i.e. error message, date and time of occurence, location in source code and stack trace) to the system's <code class="code">error</code> device, which, by default, is the system console.</p><p>Hence, instead of dispaying error information on the system console, the information can be redirected to any other system device by using the operating system's <code class="code">error</code> redirection mechanism which is available on Unix-like systems, and on Windows.</p><p>For example, to log all program errors in a file named <code class="code">errors.txt</code>, we can append <code class="code">2&gt;&gt; errors.txt</code> to the system command that starts the application. Suppose the application's name is <code class="code">cybernetics</code>. Then the system command would be:</p><pre class="programlisting">cybernetics 2&gt;&gt; errors.txt</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">Please refer to your operating system's documentation for more information about redirecting the <code class="code">error</code> device or visit <a href="http://en.wikipedia.org/wiki/Redirection_(computing)" target="_top">http://en.wikipedia.org/wiki/Redirection_(computing)</a>.</td></tr></table></div><p>There is, however, a more powerful way for customization.</p><p>Obix's default error handling for program errors is defined by attribute <code class="code">a_program_error_handler</code> in service <code class="code">li_obix.li_system.se_system_utilities</code>, which is defined as follows:</p><pre class="programlisting">attribute program_error_handler type:program_error_handler default: fa_system_err_program_error_handler.create kind:variable setable:all end</pre><p>Whenever a program error appears at runtime, Obix calls the error handler assigned to <code class="code">se_system_utilities.a_program_error_handler</code>. Because <code class="code">a_program_error_handler</code> is a variable attribute (<code class="code">kind:variable setable:all</code>), we can assign any appropriate program error handler at runtime. Typically, this is done once when the application starts, but we can, if needed, change the error handler at any time during execution of the application. For example, the error handler could be specifed through a configuration file, or a user with the right privileges could choose the error handler in a menu of the application.</p><p>There are two steps involved in providing your own customized error handler:</p><div class="itemizedlist"><ul type="disc"><li><p>create a factory that implements type <code class="code">ty_program_error_handler</code>.</p></li><li><p>assign an instance of that factory to <code class="code">se_system_utilities.a_program_error_handler</code>.</p></li></ul></div><p>Type <code class="code">ty_program_error_handler</code> is defined as follws:</p><pre class="programlisting">///
+   Copyright (C) 2011 Christian Neumanns (www.obix.lu)
+   This code can be used under the terms of the 'GNU Afero General Public License version 3'
+   The full text of this license can be found at http://www.gnu.org/licenses/agpl.html
+   THIS CODE IS DISTRIBUTED WITHOUT ANY WARRANTY. See the license for details.
+end ///
+
+type program_error_handler
+
+   inherit runtime_error_handler end
+
+   command handle_program_error
+      in error type:program_error end
+   end
+
+end</pre><p><code class="code">ty_runtime_error_handler</code> is just a type with no features, used as the parent type of all error handlers:</p><pre class="programlisting">///
+   Copyright (C) 2011 Christian Neumanns (www.obix.lu)
+   This code can be used under the terms of the 'GNU Afero General Public License version 3'
+   The full text of this license can be found at http://www.gnu.org/licenses/agpl.html
+   THIS CODE IS DISTRIBUTED WITHOUT ANY WARRANTY. See the license for details.
+end ///
+
+type runtime_error_handler
+
+end
+</pre><p>Hence, in the simplest case, the only thing to do in a customized error handler factory is to implement command <code class="code">handle_program_error</code>. All information about the error is available in input argument <code class="code">error</code>. The actual type of object in this input argument is a child-type of type <code class="code">program_error</code> and corresponds to one of the error types listed in <a href="program_error.html#program_errors_table" title="Table 13.1. Types of program errors">Table 13.1, &#8220;Types of program errors&#8221;</a>.</p><p>Let's have a look at an example of a customized program error handler. Suppose that:</p><div class="itemizedlist"><ul type="disc"><li><p>in case of a system error, an email is sent to an administrator.</p></li><li><p>in case of any other error, an email is sent to a developer service center.</p></li><li><p>in any case the date, time and identification of the error is logged to file <code class="code">errors.txt</code></p></li></ul></div><p>The code of the factory could be as follows:</p><pre class="programlisting">factory my_program_error_handler type:program_error_handler
+
+   // this private attribute holds a reference to the file used to log program errors
+   attribute log_file type:file private:yes end
+
+   // any time a program error occurs, the following command is called
+   // the error is supplied in input argument i_error
+   command handle_program_error
+      script
+
+         // depending on the case of error, send an email to the administrator
+         // or to the developer service center
+         case type of i_error
+            when system_error then
+               // send mail to administrator
+               // (code not shown for brevety)
+            otherwise
+               // send mail to developer service center
+               // (code not shown for brevety)
+         end case
+       
+         // display short message on the system's err device
+         system.err.write_line ( string = "A program error occured!" )
+       
+         // log error in log file
+         const file_error log_file_error = se_file.append_string_to_file ( &amp;
+            string = i_error.to_string &amp;
+            file = a_log_file )
+         if log_file_error #r void then
+            // send mail to administrator, because error could not be written to log file
+            // (code not shown for brevety)
+         end if
+     end
+   end
+   
+   // The creator requires one input argument: the file used to log program errors
+   creator create
+      in log_file type:file check:i_log_file.exists end
+      
+      out result type:program_error_handler end
+      
+      script
+         o_result.a_log_file = i_log_file
+      end
+   end
+
+end factory</pre><p>To activate this customized program error handler (and replace Obix's default error handler), the following code has to be added to the application's initialisation code:</p><pre class="programlisting">const file my_log_file = fa_file.create_from_string.result ( path = "/var/log/my_application/errors.txt" )
+if not my_log_file.exists then
+	my_log_file.create_physically
+end if
+se_system_utilities.program_error_handler = fa_my_program_error_handler.create ( my_log_file )</pre></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="error_handling_rules"></a>Changing local program error handling</h3></div></div></div><p>As said already, the global default program error handling can be overwritten for specific parts of the application. This can be done by applying the following rules:</p><div class="itemizedlist"><ul type="disc"><li><p>Whenever the <code class="code">on_error:continue</code> clause is appended to an instruction and a runtime error occurs during the execution of that instruction, then the execution of that instruction is stopped immediately, but the application itself is not stopped. The application continues execution with the next instruction in the source code.</p><p>The <code class="code">on_error:continue</code> clause can be used with the following instructions:
+          </p><div class="itemizedlist"><ul type="circle"><li>variable declaration instruction (see <a href="script_instructions.html#variable_declaration_instruction" title="Variable declaration instruction">the section called &#8220;Variable declaration instruction&#8221;</a>)</li><li>constant declaration instruction (see <a href="script_instructions.html#constant_declaration_instruction" title="Constant declaration instruction">the section called &#8220;Constant declaration instruction&#8221;</a>)</li><li>assignment instruction (see <a href="script_instructions.html#assignment_instruction" title="Assignment instruction">the section called &#8220;Assignment instruction&#8221;</a>)</li><li>object command execution instruction (see <a href="script_execution_instructions.html#object_command_execution_instruction" title="Object command execution instruction">the section called &#8220;Object command execution instruction&#8221;</a>)</li><li>script execution instruction (see <a href="script_execution_instruction.html" title="Script execution instruction">the section called &#8220;Script execution instruction&#8221;</a>)</li></ul></div><p>
+          </p></li><li><p>Variable <code class="code">v_program_error_</code> is implicitly declared in every script. It is of type <code class="code">ty_program_error</code> and can be <code class="code">void</code> at runtime or contain any object that is a child type of <code class="code">ty_program_error</code>. It is implicitly set to <code class="code">void</code> before executing an instruction with the <code class="code">on_error:continue</code> clause. After executing that instruction, it is still <code class="code">void</code> if no runtime error occurred, or else it contains an object describing the runtime error.</p></li></ul></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="program_error_handling_example_section"></a>Examples</h3></div></div></div><p>The basic steps for local customized error handling are:</p><div class="itemizedlist"><ul type="disc"><li><p>use the <code class="code">on_error:continue</code> clause to avoid invoking the global error handler and stopping the application</p></li><li><p>use the implicitly defined script variable <code class="code">v_program_error_</code> to check if a run-time error occurred and to (optionally) analyze the error</p></li><li><p>provide appropriate instructions in case of a runtime error</p></li></ul></div><p>The general skeleton for source code that provides customized program error handling is shown below:</p><pre class="programlisting">result = do_something on_error:continue // continue execution if an error occurs in 'do_something'
+if v_program_error_ =r void then        // check if an error occured
+   // :-) everything is ok
+else
+   // :-( we have a problem! analyse data in v_program_error_ and do whatever is appropriate
+end if
+// in any case, continue with following instructions</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>The above code is similar to the following Java code that uses the <code class="code">try-catch-finally</code> statement, which is also used in other programming languages:</p><pre class="programlisting">try {
+   result = do_something();
+   // :-) everything is ok
+}
+catch (Exception e) {
+   // :-( we have a problem! analyse data in e and do whatever is appropriate
+}
+finally {
+   // in any case, continue with following statements
+}</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>There is no <code class="code">try-catch-finally</code> instruction in Obix. At first this might appear as a surprise, because the <code class="code">try-catch-finally</code> instruction, first introduced in Java, was especially invented to handle exceptional situations at runtime. Moreover, it has been added in a number of other popular languages, because of its general acceptance.</p><p>Although the <code class="code">try-catch-finally</code> instruction is certainly a very useful and powerful instruction if used properly, it is also one of the most debated and misused one, because it requires a thorough understanding and discipline from the part of the programmer, as explained in some good articles on the internet, and demonstrated by a number of bad uses in real code (sometimes even encouraged in magazines and books). Ironically, while the <code class="code">try-catch-finally</code> instruction has been specifically invented for error handling, there are a number of cases where new errors have been introduced because of not properly using the <code class="code">try-catch-finally</code> instruction. Therefore, runtime errors in Obix are handled in a simpler and less error-prone, but not less powerful way, without the need for a <code class="code">try-catch-finally</code> instruction.</p></td></tr></table></div></td></tr></table></div><p>The following code illustrates different ways to handle program errors.</p><div class="example"><a name="program_error_handling_example"></a><p class="title"><b>Example 13.1. Customized program error handling examples</b></p><div class="example-contents"><pre class="programlisting">service error_handling_examples
+
+     command example_2
+      script
+         // declare a void constant and a variable
+         const string void_string = void
+         var character first_char
+
+         // case 1:
+         // ignore the error
+         first_char = void_string.first_item on_error:continue // 'void object' runtime error will occur!
+                                                               // but program execution continues
+         system.console.write_line ( "1: error ignored" )
+         
+         // case 2:
+         // do something in case of an error
+         first_char = void_string.first_item on_error:continue
+         if v_program_error_ #r void then
+            system.console.write_line ( "2: the following error occured:" )
+            system.console.write_line ( v_program_error_.to_string )
+         end if
+         
+         // case 3:
+         // do something in case of an error
+         // do something else in case of no error
+         first_char = void_string.first_item on_error:continue
+         if v_program_error_ =r void then
+            system.console.write_line ( "3: no error occured" )
+         else
+            system.console.write_line ( "3: an error occured" )
+         end if
+         
+         // case 4:
+         // default behaviour (the application is stopped)
+         first_char = void_string.first_item
+         system.console.write_line ( "this message will never be displayed" )
+      end
+   end
+
+end service</pre><p>The above code will display the following on the system console, then stop the application and display a default runtime error message.</p><pre class="screen">1: error ignored
+2: the following error occurred:
+        feature: se_error_handling_examples.co_example_2
+        library: li_explore.li_doc_examples.li_advanced
+           line: 14
+    instruction: first_char = void_string.first_item on_error:continue
+        message: Feature execution on void object. [void_object]
+3: an error occurred</pre></div></div><br class="example-break"></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="error_handling.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="error_handling.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="resource_error.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 13. Runtime error handling </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Resource error</td></tr></table></div></body></html>

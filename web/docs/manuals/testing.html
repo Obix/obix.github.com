@@ -1,0 +1,201 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Chapter 21. Testing</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="advanced_concepts.html" title="Part III. Advanced concepts"><link rel="prev" href="source_code_templates.html" title="Chapter 20. Source code templates"><link rel="next" href="ebnf.html" title="Obix's Extended Backus-Naur Form (EBNF)"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 21. Testing</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="source_code_templates.html">Prev</a> </td><th width="60%" align="center">Part III. Advanced concepts</th><td width="20%" align="right"> <a accesskey="n" href="ebnf.html">Next</a></td></tr></table><hr></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="testing"></a>Chapter 21. Testing</h2></div></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="testing_description"></a>Description</h2></div></div></div><p>Obix has an integrated framework for testing software components. The basic idea is to embed test scripts everywhere in the source code, so that source code can repeatedly be tested in an easy way. The goal of these tests is to quickly find a maximum number of coding errors (bugs) in an early stage of the project.</p><p>Obix supports the bottom-up approach for testing software. Small software units are first created and then tested immediately. After checking these lowest level units, higher level units that use lower level units (and/or units at the same level) are created and again tested immediately. This cycle continues until the highest level of abstraction is reached, which is typically the application object.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">Testing in Obix has a number of commonalities with <span class="emphasis"><em>unit testing</em></span> which exists as optional third-party additions in other languages (e.g. JUnit for Java).</td></tr></table></div><p>The rules for writing tests in Obix are explained in the next section.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="testing_rules"></a>Rules</h2></div></div></div><div class="orderedlist"><ol type="1"><li><p><span class="emphasis"><em>The smallest unit that can be tested in Obix is a script. Each script can optionally have an associated test script used to test the functionality of the script.</em></span></p><p>The test script is appended to the script to be tested between a <code class="code">test</code> and <code class="code">end test</code> instruction.</p><p>A script with no test script has the following syntax:</p><pre class="programlisting">script
+   // script instructions
+end script</pre><p>And the syntax for a script with an associated test script is:</p><pre class="programlisting">script
+   // script instructions
+end script
+test
+   script
+      // test script instructions
+   end script
+end test</pre><p>Each kind of script, except test script themselves, can have an associated test script. See <a href="scripts.html#script_kinds" title="Kinds of scripts">the section called &#8220;Kinds of scripts&#8221;</a> for a complete list of kinds of scripts.</p><p>The following terminology is used:</p><p>The script to be tested is called the <span class="emphasis"><em>tested script</em></span>.</p><p>The test script is called the <span class="emphasis"><em>script test script</em></span>.</p><p>A script test script is used to test the correctness of the tested script it belongs to. It does this by calling the tested script with different input conditions and checking the results for each call. If a result is different from the expected result, a test fail error is created and appended to a list of all encountered test fails.</p><p>For more information on script test scripts see <a href="test_script.html" title="test script">the section called &#8220;<code class="code">test</code> script&#8221;</a>.</p></li><li><p><span class="emphasis"><em>A test script can also be associated with a Root Software Element (RSE) (i.e. a type, factory or service).</em></span></p><p>A test script that tests a RSE is called a <span class="emphasis"><em>RSE test script</em></span>.</p><p>A RSE test script always appears at the end of a RSE's source code, after the definition of the RSE's features (e.g. attributes, commands and events).</p><p>For example, a factory with no RSE test script has the following syntax:</p><pre class="programlisting">factory foo type:foo
+
+   // attributes
+   // commands
+   // creators
+
+end factory</pre><p>And the syntax for the same factory with an associated RSE test script is:</p><pre class="programlisting">factory foo type:foo
+
+   // attributes
+   // commands
+   // creators
+
+   test
+      script
+         // RSE test script instructions
+      end script
+   end test
+
+end factory</pre><p>A RSE test script tests a RSE by using the RSE's features (attributes, commands and events) and comparing the real results with expected results. If a result doesn't match the expected result, a test fail error is created and appended to a list of all encountered test fails.</p><p>For more information on RSE test scripts see <a href="test_script.html" title="test script">the section called &#8220;<code class="code">test</code> script&#8221;</a>.</p></li><li><p><span class="emphasis"><em>Test scripts can contain all script instructions explained in <a href="script_instructions.html" title="Chapter 8. Script instructions">Chapter 8, <i>Script instructions</i></a>.</em></span></p><p>As test scripts can contain all kinds of instructions, the full power of the language can be used to create and manage test cases. For example, instead of hard-coding input values and their corresponding expected results in the source code, they could be read from an external source, such as an XML or Excel file fed by people who are not necessarily programmers (e.g. the users of the software).</p></li><li><p><span class="emphasis"><em>The <code class="code">verify</code> instruction is used to detect test fails by comparing real results to expected results.</em></span></p><p>For more information on the <code class="code">verify</code> instruction see <a href="verify_instruction.html" title="verify instruction">the section called &#8220;<code class="code">verify</code> instruction&#8221;</a>.</p></li><li><p><span class="emphasis"><em>The <code class="code">verify error</code> instruction is used to ensure that a runtime error is generated in a given situation.</em></span></p><p>For more information on the <code class="code">verify error</code> instruction see <a href="verify_error_instruction.html" title="verify error instruction">the section called &#8220;<code class="code">verify error</code> instruction&#8221;</a>.</p></li><li><p><span class="emphasis"><em>The <code class="code">test</code> instruction is used to launch a test case in a script test script.</em></span></p><p>For more information on the <code class="code">test</code> instruction see <a href="testing_instructions.html#test_instruction" title="test instruction">the section called &#8220;<code class="code">test</code> instruction&#8221;</a>.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">The <code class="code">test</code> instruction cannot be used in <span class="emphasis"><em>RSE</em></span> test scripts, it can only be used in <span class="emphasis"><em>script</em></span> test scripts.</td></tr></table></div><p></p></li><li><p><span class="emphasis"><em>All test scripts in a RSE are executed by calling the RSE's <code class="code">test_</code> command, which is implicitly defined whenever at least one test script is defined in the RSE.</em></span></p><p>The <code class="code">test_</code> command executes the RSE test script as well as all script test scripts defined in the RSE.</p><p>Command <code class="code">test_</code> has one input argument that holds the list of all test fails encountered. This input argument's id is <code class="code">i_test_fail_list_</code> and its type is <code class="code">ty_test_fail_list</code>. Each time a test fail is detected through a <code class="code">verify</code> or a <code class="code">verify error</code> instruction in anyone of the test scripts, an object describing the test fail is automatically appended to <code class="code">i_test_fail_list_</code>.</p><p>At the time of writing type <code class="code">test_fail_list</code> is defined as follows:</p><pre class="programlisting">///
+   Copyright (C) 2011 Christian Neumanns (www.obix.lu)
+   This code can be used under the terms of the 'GNU Afero General Public License version 3'
+   The full text of this license can be found at http://www.gnu.org/licenses/agpl.html
+   THIS CODE IS DISTRIBUTED WITHOUT ANY WARRANTY. See the license for details.
+end ///
+
+type test_fail_list
+
+   command is_empty
+      out result type:yes_no end
+   end command
+
+   command item_count
+      out result type:zero_positive32 end
+   end command
+
+   command item_iterator
+      out result type:iterator end
+   end command
+
+   command append
+      in test_fail type:test_fail end
+   end command
+
+   command display_result
+   end
+
+end type
+</pre><p>The following code shows how to execute all test scripts of an RSE (<code class="code">fa_bank_account</code> in this example):</p><pre class="programlisting">         // create list to hold all test fails encountered during testing
+         var ty_test_fail_list v_test_fail_list = fa_test_fail_list.co_create
+
+         // execute all test scripts in fa_bank_account
+         fa_bank_account.co_test_ ( v_test_fail_list )
+
+         // display the result of testing
+         v_test_fail_list.co_display_result</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">A future version of Obix will provide an easier way to execute test scripts and display their results.</td></tr></table></div></li></ol></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="testing_rationale"></a>Rationale</h2></div></div></div><p>It is a proven fact that one of the most important and efficient methods for finding coding errors is testing the code by running it under a representative number of normal and exceptional conditions. The better the tests, the more likely are the chances to find remaining errors.</p><p>Smart compilers and intelligent code analyzing tools are able to detect <span class="emphasis"><em>some</em></span> errors, but they can't eliminate the need for testing software before delivery. Hence, testing and debugging software is undoubtedly one of the most important tasks during software development.</p><p>However, if testing is not supported by the programming language itself, then testing can be cumbersome and risks resulting in just a few and sometimes sloppy executed manual tests. Most importantly, because of the lack for easily saving and automatically re-executing test cases, there is a high risk of not detecting new errors introduced after changing or extending existing code.</p><p>Therefore, support for testing has been integrated in the core of the Obix programming language. It should always be easy for the programmer to write tests, preferably without the need for choosing and installing an optional third-party testing framework.</p><p>Moreover, test scripts obviously have a very pleasant side effect. They provide technical documentation about software components in a precise, up-to-date and reliable manner. This reduces (or even eliminates) time spent with the boring task of writing technical documentation as well as the much more boring and error-prone task of updating and maintaining that documentation. Test scripts help to quickly understand the exact behavior of software components. Moreover, because boundary conditions and error generating situations are included in well written test cases, every programmer is well informed about exceptional situations to consider.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="testing_examples"></a>Testing examples</h2></div></div></div><p>For a first simple example of testing a service command, see <a href="test_script.html#simple_test_script_example" title="Example 7.3. A simple test script example">Example 7.3, &#8220;A simple test script example&#8221;</a></p><p>To see how a factory can be tested, suppose a tiny application that manages bank accounts.</p><p>A bank customer is defined as follows:</p><pre class="programlisting">type bank_customer default_factory:yes
+  
+   attribute identifier type:positive32 end
+   attribute name type:string end
+   attribute city type:string end
+  
+end type</pre><p>A bank account is associated with one bank customer. There are two operations: <code class="code">pay_in</code> and <code class="code">withdraw</code>. The source code for type <code class="code">bank_account</code> looks like this:</p><pre class="programlisting">type bank_account
+
+   attribute customer type:bank_customer end 
+
+   attribute balance type:zero_positive32 default:0 kind:variable setable:factory end 
+
+   command pay_in
+      in amount type:positive32 end
+   end command 
+
+   command withdraw
+      in amount type:positive32 end
+   end command 
+
+end type</pre><p>Suppose the factory to be tested is the following one:</p><pre class="programlisting">factory bank_account type:bank_account
+
+   command pay_in
+      script
+         a_balance = a_balance + i_amount
+      end script
+   end command 
+
+   command withdraw
+      script
+         a_balance = a_balance - i_amount
+      end script
+   end command 
+
+   creator create
+      in customer type:bank_customer end
+
+      out result type:bank_account end
+
+      script
+         o_result.a_customer = i_customer
+         o_result.a_balance = 0
+      end script
+   end creator 
+
+end factory</pre><p>There are 4 different test scripts that can be written for this factory:</p><div class="itemizedlist"><ul type="disc"><li>2 script test scripts for testing the scripts of commands <code class="code">pay_in</code> and <code class="code">withdraw</code></li><li>one script test script for testing the creator</li><li>one RSE test script to test the whole factory</li></ul></div><p>Tests for command <code class="code">pay_in</code> can be written like this:</p><pre class="programlisting">...
+
+   command pay_in
+
+      script
+         a_balance = a_balance + i_amount
+      end script
+
+      test
+         script
+            // create an object for testing purposes
+            v_test_object_ = create ( fa_bank_customer.create ( &amp;
+               identifier = 10 &amp;
+               name = "Foo" &amp;
+               city = "Bar" ) )
+
+            // first test case. pay in 100 and verify new balance is 100
+            test 100
+            verify v_test_object_.balance =v 100
+
+            // second test case. pay in 200 and verify new balance is now 300
+            test 200
+            verify v_test_object_.balance =v 300
+
+            // fourth test case. pay in too much and produce an arithmetic overflow error
+            test se_positive32.max_value
+            verify error
+         end script
+      end test
+
+   end command 
+
+...</pre><p>A we can see:</p><div class="itemizedlist"><ul type="disc"><li><p>The script to be tested is immediately followed by a test script.</p></li><li><p>Variable <code class="code">v_test_object_</code> (which the compiler implicitly declares in a test script) holds the <code class="code">bank_account</code> object that will be used by subsequent <code class="code">test</code> instructions.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">Implicitly defined variables are, by convention, always followed by an underscore (_) in order to distinguish them from variables that are explicitly declared in the source code.</td></tr></table></div><p></p></li><li><p>A first test is launched by instruction <code class="code">test 100</code>. This instruction is similar to writing <code class="code">v_test_object_.co_pay_in ( 100 )</code>, but it is shorter to write and the behavior at runtime is adapted to testing purposes. <code class="code">test 100</code> executes the tested script and provides values for input arguments (<code class="code">i_amount = 100</code> in our case).</p></li><li><p>The <code class="code">verify</code> instruction is used to check the result of a test case. <code class="code">verify</code> is always followed by a <code class="code">yes_no</code> expression which has to evaluate to <code class="code">yes</code> if the test passes validation. If the expression evaluates to <code class="code">no</code>, or if a program error occurs then a test fail object is automatically created and appended to the list containing all test fails encountered. In any case program execution continues.</p></li><li><p>Besides testing for correct results, the <code class="code">verify error</code> instruction is used to ensure that a program error actually occurs in a given situation. In our case, a runtime error must occur in case of an amount paid in that is too big and produces an arithmetic overflow error.</p></li></ul></div><p>Tests for command <code class="code">withdraw</code> can be written in a similar manner.</p><p>To test the features of factory <code class="code">bank_account</code> altogether, the following RSE test script can be inserted at the end of the factory's source code, just before the <code class="code">end factory</code> instruction:</p><pre class="programlisting">factory bank_account type:bank_account
+
+...
+
+   test
+      script
+         // create a customer
+         var bank_customer bc = fa_bank_customer.create ( &amp;
+            identifier = 10 &amp;
+            name = "Foo" &amp;
+            city = "Bar" )
+
+         // create an account
+         var bank_account account = create ( bc )
+
+         // check customer attribute of account
+         verify account.customer =r bc
+         verify account.customer.name =v "Foo"
+
+         // balance must be 0 after creation
+         verify account.balance =v 0
+
+         // add 100 to the account
+         account.pay_in ( 100 )
+         // verify balance
+         verify account.balance =v 100
+   
+         // withdraw 70
+         account.withdraw ( 70 )
+         // verify balance
+         verify account.balance =v 30
+
+         // withdraw 10
+         account.withdraw ( 10 )
+         // verify balance
+         verify account.balance =v 20
+
+         // ...
+      end script
+   end test
+
+end factory</pre><p>To execute all test scripts in <code class="code">fa_bank_account</code>, the following code can now be executed. Any test fails will be displayed on the system console.</p><pre class="programlisting">         // create list to hold all test fails encountered during testing
+         var ty_test_fail_list v_test_fail_list = fa_test_fail_list.co_create
+
+         // execute all test scripts in fa_bank_account
+         fa_bank_account.co_test_ ( v_test_fail_list )
+
+         // display the result of testing
+         v_test_fail_list.co_display_result</pre><p>For other examples, see also:</p><div class="itemizedlist"><ul type="disc"><li><a href="literals.html#triple_apostrophed_string_literals_example" title="Example 4.8. Triple apostrophed string literals">Example 4.8, &#8220;Triple apostrophed string literals&#8221;</a></li><li><a href="literals.html#triple_quoted_string_literals_example" title="Example 4.9. Triple quoted string literals">Example 4.9, &#8220;Triple quoted string literals&#8221;</a></li></ul></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="testing_see_also"></a>See also</h2></div></div></div><div class="itemizedlist"><ul type="disc"><li><a href="test_script.html" title="test script">the section called &#8220;<code class="code">test</code> script&#8221;</a></li><li><a href="testing_instructions.html#test_instruction" title="test instruction">the section called &#8220;<code class="code">test</code> instruction&#8221;</a></li><li><a href="verify_instruction.html" title="verify instruction">the section called &#8220;<code class="code">verify</code> instruction&#8221;</a></li><li><a href="verify_error_instruction.html" title="verify error instruction">the section called &#8220;<code class="code">verify error</code> instruction&#8221;</a></li></ul></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="source_code_templates.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="advanced_concepts.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="ebnf.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 20. Source code templates </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Obix's Extended Backus-Naur Form (EBNF)</td></tr></table></div></body></html>

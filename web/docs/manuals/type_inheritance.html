@@ -1,0 +1,166 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Chapter 15. Type inheritance</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="advanced_concepts.html" title="Part III. Advanced concepts"><link rel="prev" href="object_immutability.html" title="Chapter 14. Object immutability"><link rel="next" href="static_typing.html" title="Chapter 16. Static typing"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 15. Type inheritance</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="object_immutability.html">Prev</a> </td><th width="60%" align="center">Part III. Advanced concepts</th><td width="20%" align="right"> <a accesskey="n" href="static_typing.html">Next</a></td></tr></table><hr></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="type_inheritance"></a>Chapter 15. Type inheritance</h2></div></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="type_inheritance_description"></a>Description</h2></div></div></div><p><em class="firstterm">Type inheritance</em> is the ability of one type to have (or to inherit) all the features (i.e. attributes, commands and events) of one or more other types.</p><p>If type T2 has all the features of type T1 then:</p><div class="itemizedlist"><ul type="disc"><li><p>the inheritance can be graphically represented as follows:</p><div class="figure"><a name="T2_inherits_T1"></a><p class="title"><b>Figure 15.1. T2 inherits from T1</b></p><div class="figure-contents"><div class="mediaobject"><img src="T2_inherits_T1.gif" alt="T2 inherits from T1"></div></div></div><br class="figure-break"></li><li><p>the terminology we use is:</p><div class="itemizedlist"><ul type="circle"><li>T2 inherits from T1</li><li>T2 is a child type of T1</li><li>T1 is a parent type of T2<p></p></li></ul></div></li><li><p>the syntax for T1 and T2 in Obix source code is:</p><pre class="programlisting">type T1
+
+   // definition of attributes, commands and events
+
+end</pre><pre class="programlisting">type T2
+
+   inherit T1 end
+
+end</pre></li></ul></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="type_inheritance_rules"></a>Rules</h2></div></div></div><p>Type inheritance is governed by the following rules:</p><div class="orderedlist"><ol type="1"><li><p><span class="emphasis"><em>A child type can optionally define its own additional features which are not defined in its parent type(s).</em></span></p><div class="figure"><a name="child_type_features"></a><p class="title"><b>Figure 15.2. Additional features in a child type</b></p><div class="figure-contents"><div class="mediaobject"><img src="T2_inherits_T1_f.gif" alt="Additional features in a child type"></div></div></div><br class="figure-break"><p>Terminology:</p><p>- in type T2, f1 and f2 are features inherited from type T1. f1 and f2 both exist in T2 and in T1.</p><p>- f3 is an own feature of type T2, also called an uninherited feature of type T2. f3 exists in T2, but not in T1.</p><p>Example:</p><p>In the following source code example, type <code class="code">book</code> inherits 3 attributes and 1 command from type <code class="code">product</code> and adds one more uninherited feature, namely attribute <code class="code">author</code>.</p><pre class="programlisting">type product
+
+   attribute identifier type:positive32 end
+   attribute name type:string end
+   attribute price_in_cents type:positive32 end
+   
+   command convert_to_XML
+      out result type:string end
+   end
+
+end</pre><pre class="programlisting">type book 
+
+   inherit product end
+
+   attribute author type:string end
+
+end</pre></li><li><p><span class="emphasis"><em>A type can inherit from several other types.</em></span></p><div class="figure"><a name="multiple_type_inheritance"></a><p class="title"><b>Figure 15.3. Multiple type inheritance</b></p><div class="figure-contents"><div class="mediaobject"><img src="multiple_inheritance.gif" alt="Multiple type inheritance"></div></div></div><br class="figure-break"><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">There is no limit as to the number of types a given type can inherit from. However, directly inheriting from more than about 7 types appears very rarely in practice and might be a sign of design that needs to be improved.</td></tr></table></div><p>Terminology:</p><p>- When a type inherits from just one other type we speak about <em class="firstterm">single type inheritance</em>.</p><p>- When a type inherits from more than one other type we speak about <em class="firstterm">multiple type inheritance</em>.</p><p>Example:</p><p>In the following code type <code class="code">fruit</code> is an example of multiple type inheritance, because <code class="code">fruit</code> inherits from <code class="code">product</code> and <code class="code">expirable</code>.</p><pre class="programlisting">type product
+
+   attribute identifier type:positive32 end
+   attribute name type:string end
+   attribute price_in_cents type:positive32 end
+   
+   command convert_to_XML
+      out result type:string end
+   end
+
+end</pre><pre class="programlisting">type expirable 
+
+   attribute expires type:simple_date end
+
+end</pre><pre class="programlisting">type fruit 
+
+   inherit product; expirable end
+
+   attribute country_of_origin type:string end
+
+end</pre></li><li><p><span class="emphasis"><em>Type inheritance can be nested to any desired level.</em></span></p><p>A type T4 can inherit from type T3 which inherits from T2 which inherits from T1, and so on.</p><div class="figure"><a name="nested_type_inheritance"></a><p class="title"><b>Figure 15.4. Nested type inheritance</b></p><div class="figure-contents"><div class="mediaobject"><img src="nested_inheritance.gif" alt="Nested type inheritance"></div></div></div><br class="figure-break"><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">There is no limit as to the number of nesting levels allowed. However, levels above 7 appear rarely in practice and might be a sign of design that needs to be improved.</td></tr></table></div><p>Terminology:</p><p>- T3 is a <em class="firstterm">direct parent type</em> of T4</p><p>- T1 and T2 are <em class="firstterm">indirect parent type</em>s of T4</p><p>- T1, T2 and T3 are <em class="firstterm">ancestor type</em>s of T4</p><p>- T4 is a <em class="firstterm">direct child type</em> of T3</p><p>- T4 is an <em class="firstterm">indirect child type</em> of T1 and T2</p><p>- T4 is a <em class="firstterm">descendant type </em>of T1, T2 and T3</p><p>- T1 is the <em class="firstterm">root type</em> of T2, T3 and T4</p><p>Example:</p><p>In the following example, type <code class="code">ebook</code> directly inherits from <code class="code">book</code>, and indirectly inherits from <code class="code">product</code>:</p><pre class="programlisting">type product
+
+   attribute identifier type:positive32 end
+   attribute name type:string end
+   attribute price_in_cents type:positive32 end
+   
+   command convert_to_XML
+      out result type:string end
+   end
+
+end</pre><pre class="programlisting">type book 
+
+   inherit product end
+
+   attribute author type:string end
+
+end</pre><pre class="programlisting">type ebook
+
+   inherit book end
+
+   attribute URL type:string end
+
+end</pre></li><li><p><span class="emphasis"><em>All types implicitly inherit from type <code class="code">any_type</code>.</em></span></p><p>Type <code class="code">any_type</code> is a parent type of all other types, and all types are therefore child types of type <code class="code">any_type</code>.</p><p>Type <code class="code">any_type</code> is defined as follows:</p><pre class="programlisting">///
+   Copyright (C) 2011 Christian Neumanns (www.obix.lu)
+   This code can be used under the terms of the 'GNU Afero General Public License version 3'
+   The full text of this license can be found at http://www.gnu.org/licenses/agpl.html
+   THIS CODE IS DISTRIBUTED WITHOUT ANY WARRANTY. See the license for details.
+end ///
+
+type any_type
+
+   command to_string
+      out result type:string end
+   end
+
+end type
+</pre></li><li><a name="type_compatibility_rule"></a><p><span class="emphasis"><em>A type is always compatible to all its parent types.</em></span></p><p>Whenever an object of type <code class="code">T</code> is required, then any object of a type which is a child type of type <code class="code">T</code> is also accepted. This makes sense, because any child type has all the features of its parent types. Therefore, a child type is always compatible to a parent type.</p><p>Example:</p><p>Suppose type <code class="code">book</code> is a child type of type <code class="code">product</code>, as follows:</p><pre class="programlisting">type product
+
+   attribute identifier type:positive32 end
+   attribute name type:string end
+   attribute price_in_cents type:positive32 end
+   
+   command convert_to_XML
+      out result type:string end
+   end
+
+end</pre><pre class="programlisting">type book 
+
+   inherit product end
+
+   attribute author type:string end
+
+end</pre><p>Suppose also the following service command exists to simply display a product at the system console::</p><pre class="programlisting">service product_service
+
+   command display_product
+      in product type:product end
+      script
+         se_system.console.write_line ( "product " &amp; i_product.a_identifier.to_string &amp; ", " &amp; i_product.a_name )
+      end
+   end
+
+end</pre><p>Because <code class="code">book</code> is a child type of <code class="code">product</code>, <code class="code">book</code> is compatible to <code class="code">product</code>, which means that command <code class="code">display_product</code> not only accepts objects of type <code class="code">product</code>, but also objects of type <code class="code">book</code>, as shown in the following code:</p><pre class="programlisting">var product glass = fa_product.co_create ( &amp;
+   identifier = 123 &amp;
+   name = "glass" &amp;
+   price_in_cents = 500 )
+var book book = fa_book.co_create ( &amp;
+   identifier = 124 &amp;
+   name = "Effective Java" &amp;
+   price_in_cents = 3499 &amp;
+   author = "Joshua Bloch" )
+   
+product_service.display_product ( v_glass ) // allowed because glass is of type product
+product_service.display_product ( v_book )  // allowed because book is a child type of type product</pre><p>On the other hand, if type <code class="code">dog</code> is defined as follows:</p><pre class="programlisting">type dog
+   attribute name type:string end
+   command bark end
+end type
+</pre><p>then an object of type <code class="code">dog</code> cannot be accepted as an input for command <code class="code">display_product</code>, because <code class="code">dog</code> is not a child type of <code class="code">product</code> (i.e. <code class="code">dog</code> is not compatible to <code class="code">product</code>), as shown below:</p><pre class="programlisting">var dog taya = fa_dog.co_create ( "Taya" )
+// product_service.display_product ( taya ) // not allowed because dog is not a child type of type product
+                                            // (i.e. dog is not compatible to product)</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Because every object implicitly inherits from type <code class="code">any_type</code>, the type compatibility rule implies that any object of any type can always be assigned to an object reference of type <code class="code">any_type</code> (see examples below).</p></td></tr></table></div><p>Here are some more examples of valid and invalid assignments:</p><pre class="programlisting">var product product
+v_product = v_glass    // valid because the types are equal
+v_product = v_book     // valid because book is a child type of product
+// v_product = v_taya     // not valid because dog is not a child type of product
+
+var any_type object
+// all following assignments are valid because each type on the right side of the assignments
+// is a child type of type any_type
+v_object = v_glass
+v_object = v_book
+v_object = v_taya
+
+// all following assignments are not valid, bacause any_type is not a child type of product, book or dog
+// v_glass = v_object
+// v_book = v_object
+// v_taya = v_object
+
+// remark: ty_positive32 is a child of ty_zero_positive32, which is a child of ty_signed_integer32
+
+var signed_integer32 i32 = -10
+var zero_positive32 zp32 = 0
+var positive32 p32       = 10
+
+// valid assignments
+i32 = zp32
+i32 = p32
+zp32 = p32
+
+// invalid assignments
+// zp32 = i32
+// p32 = i32
+// p32 = zp32</pre><p>See also: <a href="case_type_of_instruction.html" title="case type of instruction">the section called &#8220;<code class="code">case type of</code> instruction&#8221;</a></p></li><li><p><span class="emphasis"><em>All identifiers of all features in all parent and child types must be unique.</em></span></p><p>Example:</p><p>If type <code class="code">T1</code> has attribute <code class="code">name</code>, and type <code class="code">T2</code> inherits from <code class="code">T1</code>, then <code class="code">T2</code> cannot have its own attribute <code class="code">name</code>.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>However, <code class="code">T2</code> can redefine some properties of attribute <code class="code">name</code>, as long as the type compatibility is guaranteed. See <a href="feature_redefinition.html" title="Chapter 18. Feature redefinition">Chapter 18, <i>Feature redefinition</i></a> for more information about feature redefinition in child types.</p></td></tr></table></div></li><li><p><span class="emphasis"><em>Repeated inheritance is allowed.</em></span></p><p>Repeated inheritance occurs whenever a child type <code class="code">T4</code> inherits the same feature, <code class="code">f1</code>, from two parent types <code class="code">T2</code> and <code class="code">T3</code>, and <code class="code">f1</code> is defined in type <code class="code">T1</code> which is a parent of types <code class="code">T2</code> and <code class="code">T3</code>.</p><div class="figure"><a name="repeated_inheritance"></a><p class="title"><b>Figure 15.5. Repeated type inheritance</b></p><div class="figure-contents"><div class="mediaobject"><img src="repeated_inheritance.gif" alt="Repeated type inheritance"></div></div></div><br class="figure-break"><p>Example:</p><p>Repeated inheritance always occurs whenever a type explicitly inherits from at least one other type, because all types inherit from type <code class="code">any_type</code>.</p></li><li><p><span class="emphasis"><em>Cyclic inheritance is not allowed.</em></span></p><p>Cyclic inheritance would occur whenever a type <code class="code">T2</code> directly or indirectly inherits from type <code class="code">T1</code>, and <code class="code">T1</code> directly or indirectly inherits from <code class="code">T2</code>.</p><div class="figure"><a name="cyclic_inheritance"></a><p class="title"><b>Figure 15.6. Cyclic type inheritance</b></p><div class="figure-contents"><div class="mediaobject"><img src="cyclic_inheritance.gif" alt="Cyclic type inheritance"></div></div></div><br class="figure-break"><p>Cyclic inheritance would lead to endless recursion. If it appears in a type system it is always a sign of a design error.</p></li></ol></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="object_immutability.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="advanced_concepts.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="static_typing.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 14. Object immutability </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 16. Static typing</td></tr></table></div></body></html>

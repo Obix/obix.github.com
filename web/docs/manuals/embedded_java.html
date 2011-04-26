@@ -1,0 +1,277 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Chapter 10. Embedded Java source code</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="advanced_concepts.html" title="Part III. Advanced concepts"><link rel="prev" href="advanced_concepts.html" title="Part III. Advanced concepts"><link rel="next" href="enumerated_type.html" title="Chapter 11. Enumerated type"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 10. Embedded Java source code</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="advanced_concepts.html">Prev</a> </td><th width="60%" align="center">Part III. Advanced concepts</th><td width="20%" align="right"> <a accesskey="n" href="enumerated_type.html">Next</a></td></tr></table><hr></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="embedded_java"></a>Chapter 10. Embedded Java source code</h2></div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">Please note that this chapter is incomplete. An update will be published in the future.</td></tr></table></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="embedded_java_description"></a>Description</h2></div></div></div><p>Java source code can directly be inserted into Obix source code. Moreover, Java code can also call Obix code, and data between Obix and Java can easily be exchanged.</p><p>The possibility to embed Java source code into Obix source code is certainly one of the most valuable features of Obix, because it enables Obix programmers to use and take advantage of the huge amount of existing and proven Java software.</p><p>Embedding Java into Obix is easy. We just have to observe the following simple rules.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="embedded_java_rules"></a>Rules</h2></div></div></div><div class="orderedlist"><ol type="1"><li><p><span class="emphasis"><em>Java source code must be embedded between a <code class="code">java</code> and <code class="code">end java</code> instruction.</em></span></p><p>Example:</p><pre class="programlisting">java
+   System.out.println("Hello from Java");
+end java</pre></li><li><p><span class="emphasis"><em>Java source code can appear at different locations in Obix source:</em></span></p><div class="itemizedlist"><ul type="disc"><li><p>Java source code can appear any number of times in any location of any script</p><p>In the following example, a message to the system console is first written with an Obix instruction, and then with a Java statement. (Remark: the word 'statement' is used in the world of Java, rather than the word 'instruction' which is used in Obix).</p><pre class="programlisting">service java_examples
+
+   command example_2
+      script
+         system.console.write_line ( "Hello from Obix " )
+         java
+            System.out.println ( "Hello from Java" );
+         end java
+      end
+   end
+
+end</pre><p>Running the above code will output the following on the system console:</p><pre class="screen">Hello from Obix
+Hello from Java</pre></li><li><p>A <code class="code">java_header</code> element can appear at the beginning of a type, factory or service, just after the first instruction that declares the RSE.</p><p><code class="code">java_header</code> elements are inserted before the class declaration in the Java code. They are typically used to add <code class="code">import</code> statements, and to add annotations to the Java class or interface.</p><p>Example:</p><pre class="programlisting">service java_examples
+
+   java_header
+      import javax.jws.*;
+      import javax.crypto.*;
+      
+      @WebService
+   end java_header
+
+   ...</pre></li><li><p>Java source code can appear at the beginning of a type, factory or service, just after the first instruction that declares the RSE.</p><p>Example:</p><pre class="programlisting">service java_examples
+
+   java
+      private static String java_string = "nice";
+
+      private static void shared_method ( String s ) {
+         int i = 3;
+         int j = i + 10;
+         // more Java statements
+      }
+   end java
+
+   // Obix code
+
+end</pre><p>Java source code at the beginning of an RSE is typically used to store local data in Java fields, and to provide shared methods used from Java source code embedded in the RSE's scripts.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><code class="code">java_header</code> must precede <code class="code">java</code> if both are used at the beginning of an RSE.</td></tr></table></div></li><li><p>Java source code can be embedded just after the first instruction that declares an attribute or command.</p><p>This kind of Java code is always inserted before the declaration of the attribute or command in the Java code. It can thus be used to add annotations.</p><p>Example:</p><pre class="programlisting">service java_examples
+
+   attribute name type:string default:"Unknown"
+      java
+         @javax.xml.bind.annotation.XmlValue
+      end java
+   end attribute
+
+end</pre></li></ul></div></li><li><p><span class="emphasis"><em>Variables, constants, input arguments and output arguments declared in Obix can be accessed in embedded Java by simply specifying the prefixed identifier of the variable, constant, input argument or output argument.</em></span></p><p>See following rule for an example.</p></li><li><p><span class="emphasis"><em>Scalar values in Obix can be converted to their corresponding primitive Java values by applying the <code class="code">getValue().java_value()</code> methods to the object.</em></span></p><p>The following example demonstrates how to access primitive Java values stored in Obix variables, constants, input arguments and output arguments:</p><pre class="programlisting">service java_examples
+
+   command example_4
+      in i1 type:string end
+      in i2 type:positive32 end
+
+      out result type:string end
+
+      script
+         var string name = "Albert"
+         const string friday = "Friday"
+
+         // at this point we have 2 input arguments, one output argument, a variable, and a constant declared in Obix
+         // we will now access them in embedded Java code:
+         java
+            System.out.println ( "values in Java:" );
+            
+            // access Obix input argument
+            System.out.println ( "i1: " + i_i1.getValue().java_value() );
+
+            // store Obix scalar value into Java primitive value
+            int i2 = i_i2.getValue().java_value();
+            System.out.println ( "i2: " + i2 );
+
+            // access Obix variable
+            System.out.println ( "name: " + v_name.getValue().java_value() );
+
+            // access Obix constant
+            System.out.println ( "friday: " + c_friday.getValue().java_value() );
+            
+            // assign Obix variable to Obix output argument
+            o_result = v_name;
+            System.out.println ( "result: " + o_result.getValue().java_value());
+
+            System.out.println();
+         end java
+
+         // o_result has been set in Java code; now display it with Obix
+         system.console.write_line ( "result in Obix: " &amp; result )
+      end
+   end
+
+
+end</pre><p>Executing</p><pre class="programlisting">se_java_examples.co_example_4 ( i1 = "foo"; i2 = 17 )</pre><p>will produce the following output on the system console:</p><pre class="screen">values in Java:
+i1: foo
+i2: 17
+name: Albert
+friday: Friday
+result: Albert
+
+result in Obix: Albert</pre></li><li><p><span class="emphasis"><em>Scalar values in Obix can be created from primitive Java values by using specific Java constructors.</em></span></p><p>The following example shows the different Java constructors that can be used to create scalar values:</p><pre class="programlisting">service java_examples
+
+   command example_5
+      script
+         // declare some scalars in Obix
+         var string first_name
+         var positive32 i
+         var character char
+         var yes_no flag
+
+         // now create Obix objects in Java and assign them to the above variables
+         java
+            v_first_name = new fa_string ( "Albert" );
+            v_i = new fa_positive32 ( 17 );
+            v_char = new fa_character ( 'A' );
+            v_flag = new fa_yes_no ( true );
+         end java
+
+         // check values in Obix:
+         check script first_name =v "Albert"
+         check script i =v 17
+         check script char =v 'A'
+         check script flag =v yes
+      end
+   end
+
+end</pre><p>Other scalar values (<code class="code">zero_positive32</code>, <code class="code">non_empty_string</code>, etc.) are created analogously to the examples above.</p></li><li><p><span class="emphasis"><em>The value of an attribute can be accessed in Java by using the Java Beans syntax for accessing properties, i.e. <code class="code">get{unprefixed_and_capitalized_attribute_identifier}()</code>.</em></span></p><p>Suppose the following type exists in Obix, and a factory has also been defined to create dogs:</p><pre class="programlisting">type dog
+   attribute name type:string end
+   command bark end
+end type
+</pre><p>We can then create a dog and access its name in Java as shown below:</p><pre class="programlisting">service java_examples
+
+   command example_6
+      script
+         // create dog in Obix
+         var dog lassie = fa_dog.co_create ( "Lassie" )
+
+         // now access the dog's name in Java
+         java
+            System.out.println ( "dog's name: " + v_lassie.getName().getValue().java_value() );
+         end java
+      end
+   end
+
+end</pre><p>Here is the result displayed:</p><pre class="screen">dog's name: Lassie
+dog's name: Lassie</pre></li><li><p><span class="emphasis"><em>The value of an attribute can be set in Java by using the Java Beans syntax for setting properties, i.e. <code class="code">set{unprefixed_and_capitalized_attribute_identifier}({value})</code>.</em></span></p><p>Let's reuse the following type defined in <a href="RSE_features.html#attribute_setable_property" title="Attribute property setable">the section called &#8220;Attribute property <code class="code">setable</code>&#8221;</a>:</p><pre class="programlisting">type person_2 default_factory:yes
+
+   attribute_list type:string
+
+      attribute first_name end             // attribute is immutable. it can only be set in the creator.
+                                           // (property 'kind' defaults to 'constant', in which case
+                                           // property 'setable' defaults to 'creator')
+      attribute last_name &amp;
+         kind:variable setable:factory end // only scripts in the factory that creates the object can change 'last_name'
+
+      attribute city &amp;
+         kind:variable setable:all end     // any script can change the value
+
+   end attribute_list
+
+end type</pre><p>We can now create a person and change the city through embedded Java as follows:</p><pre class="programlisting">service java_examples
+
+   command example_7
+      script
+         // create person in Obix
+         var person_2 paganini = fa_person_2.co_create ( &amp;
+            first_name = "Nicolas" &amp;
+            last_name = "Paganini" &amp;
+            city = "unknown" )
+
+         // now set attribute 'city' in Java
+         java
+            v_paganini.setCity ( new fa_string("Genoa, Italy") );
+         end java
+
+         // check in Obix
+         check script paganini.city =v "Genoa, Italy"
+      end
+   end
+
+end</pre></li><li><p><span class="emphasis"><em>Whenever a method of a type, factory or service is called in Java, the package path must be specified if no import statements are defined between <code class="code">java_header</code> and <code class="code">end java_header</code>. The package path consists of the library path defined in Obix. For each library, the prefixed library identifier must be used (i.e. <code class="code">li_bar</code> for library <code class="code">bar</code>)</em></span></p><p>Example:</p><p>If a service <code class="code">foo</code> exists in library <code class="code">bar.zar</code>, then the service is accessed in Java with <code class="code">li_bar.li_zar.se_foo</code>.</p><p>See also the following rule for an additional example.</p></li><li><p><span class="emphasis"><em>An object or service command (including object creators) can be executed in Java by calling the method <code class="code">{prefixed_command_identifier}_command({input_values})</code>, where <code class="code">{prefixed_command_identifier}</code> denotes the actual prefixed identifier of the command, and <code class="code">{input_values}</code> denotes the list of actual input arguments passed to the command.</em></span></p><p>Example:</p><pre class="programlisting">service java_examples
+
+   command example_8
+      script
+         // use Obix service command to display "Hello" on system console
+         system.console.write_line ( "Hello from Obix" )
+
+         java
+            // now use same command in Java
+            li_obix.li_system.se_system.getConsole().co_write_line_command ( new fa_string("Hello from Java") );
+            // the same result can of course also be achieved with the following statement:
+            System.out.println ("Hello from Java");
+         end java
+
+         // create dog in Obix
+         var dog bello = fa_dog.co_create ( "Bello" )
+         // use Java to make him bark
+         java
+            v_bello.co_bark_command();
+         end java
+
+         // we can also make the inverse: create the dog in Java and make him bark in Obix:
+         java
+            v_bello = li_doc_manual.li_basics.li_RSE.fa_dog.co_create_command(new fa_string("Bello"));
+         end java
+         system.console.write_line ( "Hello from Obix again" )
+         bello.bark
+      end
+   end
+
+
+end</pre><p>The result on the system console will be:</p><pre class="screen">Hello from Obix
+Hello from Java
+Hello from Java
+bark bark
+Hello from Obix again
+bark bark</pre></li></ol></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Whenever in doubt about the correct syntax to use in embedded Java code, it can be useful to first write the instruction(s) in Obix and then look at the Java statements produced by the Obix compiler. Java source code produced by the Obix compiler is created in the application's <code class="code">java\src\java\</code> sub-directory.</p><p>For example, the following code:</p><pre class="programlisting">service java_examples
+
+   command example_9
+      script
+         var string capital = "New York"
+         capital = capital.to_upper_case
+         var zero_positive32 count = capital.item_count
+      end
+   end
+
+end</pre><p>results in the following Java code produced by the Obix compiler:</p><pre class="programlisting">li_obix.li_basics.li_scalars.li_string.in_string v_capital = new fa_non_empty_string ("New York");
+v_capital = v_capital.co_to_upper_case_command ();
+li_obix.li_basics.li_scalars.li_number.li_integer.li_integer32.in_zero_positive32 v_count = v_capital.getItem_count();</pre></td></tr></table></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="embedded_java_wrapper"></a>Writing a Java wrapper</h2></div></div></div><p>Suppose that a certain software component developed in Java is used again and again in an Obix application.</p><p>A first approach for using this component from within Obix would be to embed Java source code each time we need the component, by applying the rules explained above.</p><p>However, this would result in two serious inconveniences:</p><div class="itemizedlist"><ul type="disc"><li><p>First, the Obix source code would be cluttered with lots of embedded Java source code which makes the application more difficult to write and maintain, because programmers working on the project have to cope with two languages.</p></li><li><p>Secondly, some features existing in Obix, such as contract programming, are unavailable in embedded Java code, which increases the risk for less reliable code.</p></li></ul></div><p>A much better approach is to write an Obix wrapper for the existing Java component. An Obix wrapper is simply an Obix software component that internally uses the Java component to implement the functionality.</p><p>The advantages are important:</p><div class="itemizedlist"><ul type="disc"><li><p>Embedded Java code now only exists in the Obix software component that implements the functionality. All other code using the component is written in Obix.</p></li><li><p>The interface to the component can be adapted and enhanced. For example, contract programming can be used to make the component more robust. Features can be renamed. Features not existing in the Java component can be added in the Obix wrapper. And obsolete or unused features in the Java component can be made inaccessible.</p></li></ul></div><p>Here is an example of a wrapper around java.net.InetSocketAddress:</p><pre class="programlisting">///
+   Copyright (C) 2011 Christian Neumanns (www.obix.lu)
+   This code can be used under the terms of the 'GNU Afero General Public License version 3'
+   The full text of this license can be found at http://www.gnu.org/licenses/agpl.html
+   THIS CODE IS DISTRIBUTED WITHOUT ANY WARRANTY. See the license for details.
+end ///
+
+type network_address
+
+    java
+        java.net.InetSocketAddress java_value();
+    end java
+
+    attribute IP_address type:string default: se_net.a_localhost_IP_address end
+    attribute port type:zero_positive32 check: i_port &lt;= 65535 end
+	
+end type</pre><pre class="programlisting">///
+   Copyright (C) 2011 Christian Neumanns (www.obix.lu)
+   This code can be used under the terms of the 'GNU Afero General Public License version 3'
+   The full text of this license can be found at http://www.gnu.org/licenses/agpl.html
+   THIS CODE IS DISTRIBUTED WITHOUT ANY WARRANTY. See the license for details.
+end ///
+
+factory network_address type:network_address
+
+    java
+        java.net.InetSocketAddress a_java_value;
+        public java.net.InetSocketAddress java_value() { return a_java_value; };
+    end java
+
+    creator create kind:in_all
+        script
+            java
+                o_result.a_java_value = new java.net.InetSocketAddress(i_IP_address.getValue().java_value(), i_port.getValue().java_value());
+            end java
+
+            o_result.a_IP_address = i_IP_address
+            o_result.a_port = i_port
+        end script
+    end creator
+	
+end factory</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="advanced_concepts.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="advanced_concepts.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="enumerated_type.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Part III. Advanced concepts </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Chapter 11. Enumerated type</td></tr></table></div></body></html>

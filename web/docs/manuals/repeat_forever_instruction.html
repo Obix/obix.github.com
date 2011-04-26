@@ -1,0 +1,45 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>repeat forever instruction</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="loop_instructions.html" title="Loops"><link rel="prev" href="repeat_times_instruction.html" title="repeat times instruction"><link rel="next" href="repeat_tail.html" title="repeat tail"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center"><code class="code">repeat forever</code> instruction</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="repeat_times_instruction.html">Prev</a> </td><th width="60%" align="center">Loops</th><td width="20%" align="right"> <a accesskey="n" href="repeat_tail.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="repeat_forever_instruction"></a><code class="code">repeat forever</code> instruction</h3></div></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repeat_forever_description"></a>Description</h4></div></div></div><p>The <code class="code">repeat forever</code> instruction is used to reexecute a set of instructions infinitely. The only programmatic way to terminate the loop is by exiting it with the <code class="code">exit repeat</code> instruction.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repeat_forever_syntax"></a>Syntax</h4></div></div></div><div class="table"><a name="repeat_forever_syntax_table"></a><p class="title"><b>Table 8.16. <code class="code">repeat forever</code> syntax</b></p><div class="table-contents"><table summary="repeat forever syntax" cellspacing="0" cellpadding="5" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Production</th><th>Syntax</th><th>Links</th></tr></thead><tbody><tr><td><code class="code">repeat_forever_instruction</code></td><td><div class="literallayout"><p><code class="code">"repeat" "forever" <a href="Obix_EBNF.html#EBNF_repeat_tail">repeat_tail</a> ?<br>
+   <a href="Obix_EBNF.html#EBNF_script_instruction">script_instruction</a> *<br>
+"end" "repeat" ?</code></p></div></td><td><a href="repeat_forever_instruction.html" title="repeat forever instruction">the section called &#8220;<code class="code">repeat forever</code> instruction&#8221;</a></td></tr><tr><td><code class="code">repeat_tail</code></td><td><code class="code">( "counter" ":" <a href="Obix_EBNF.html#EBNF_variable_id">variable_id</a> ) ? ( "id" ":" <a href="Obix_EBNF.html#EBNF_identifier">identifier</a> ) ?</code></td><td><a href="repeat_tail.html" title="repeat tail">the section called &#8220;repeat tail&#8221;</a></td></tr></tbody></table></div></div><br class="table-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repeat_forever_example_section"></a>Example</h4></div></div></div><div class="example"><a name="repeat_forever_example_1"></a><p class="title"><b>Example 8.19. <code class="code">repeat forever</code> example 1</b></p><div class="example-contents"><pre class="programlisting">// display numbers from 1 to 10
+
+repeat forever counter: i
+   system.console.write_line (i.to_string )
+   if i =v 10 then
+      exit repeat
+   end if
+end</pre></div></div><br class="example-break"><div class="example"><a name="repeat_forever_example_2"></a><p class="title"><b>Example 8.20. <code class="code">repeat forever</code> example 2</b></p><div class="example-contents"><pre class="programlisting">service instruction_examples
+
+   command repeat_forever_example_2
+      script
+      
+         // ask user to type a string composed of 3 characters
+
+         var string user_input                                                           // declare variable to hold result
+
+         repeat forever
+            v_user_input = se_system.console.ask_string ( "Please enter 3 characters:" ) // ask user to enter a string on the system console
+            if v_user_input.a_item_count =v 3 then                                       // check if exactly 3 characters have been entered
+               exit repeat                                                               // if ok: exit the loop
+            else
+               se_system.console.write_line ( "Input error! Please try again!" )         // if not ok: display error message and restart again
+            end if
+         end repeat
+
+         se_system.console.write_line ( "You typed: " &amp; user_input )                     // display result
+
+      end script
+   end command
+   
+end service</pre></div></div><br class="example-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repeat_forever_see_also"></a>See also</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><a href="repeat_tail.html" title="repeat tail">the section called &#8220;repeat tail&#8221;</a></li></ul></div><div class="itemizedlist"><ul type="disc"><li><a href="exit_repeat_instruction.html" title="exit repeat instruction">the section called &#8220;<code class="code">exit repeat</code> instruction&#8221;</a></li><li><a href="next_repeat_instruction.html" title="next repeat instruction">the section called &#8220;<code class="code">next repeat</code> instruction&#8221;</a></li></ul></div><div class="itemizedlist"><ul type="disc"><li><a href="loop_instructions.html#repeat_while_instruction" title="repeat while instruction">the section called &#8220;<code class="code">repeat while</code> instruction&#8221;</a></li><li><a href="repeat_for_each_instruction.html" title="repeat for each instruction">the section called &#8220;<code class="code">repeat for each</code> instruction&#8221;</a></li><li><a href="repeat_from_to_instruction.html" title="repeat from to instruction">the section called &#8220;<code class="code">repeat from to</code> instruction&#8221;</a></li><li><a href="repeat_times_instruction.html" title="repeat times instruction">the section called &#8220;<code class="code">repeat times</code> instruction&#8221;</a></li></ul></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="repeat_times_instruction.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="loop_instructions.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="repeat_tail.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"><code class="code">repeat times</code> instruction </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> repeat tail</td></tr></table></div></body></html>

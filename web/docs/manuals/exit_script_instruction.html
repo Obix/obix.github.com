@@ -1,0 +1,35 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>exit script instruction</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="flow_control_instructions.html" title="Flow control"><link rel="prev" href="case_type_of_instruction.html" title="case type of instruction"><link rel="next" href="loop_instructions.html" title="Loops"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center"><code class="code">exit script</code> instruction</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="case_type_of_instruction.html">Prev</a> </td><th width="60%" align="center">Flow control</th><td width="20%" align="right"> <a accesskey="n" href="loop_instructions.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="exit_script_instruction"></a><code class="code">exit script</code> instruction</h3></div></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="exit_script_description"></a>Description</h4></div></div></div><p>The <em class="firstterm">exit script instruction</em> is used to immediately exit the current script and return to the calling script.</p><p>All output argument values returned to the calling script are those assigned at the moment of exiting the script.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="exit_script_syntax"></a>Syntax</h4></div></div></div><div class="table"><a name="exit_script_syntax_table"></a><p class="title"><b>Table 8.11. <code class="code">exit script</code> syntax</b></p><div class="table-contents"><table summary="exit script syntax" cellspacing="0" cellpadding="5" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Production</th><th>Syntax</th><th>Links</th></tr></thead><tbody><tr><td><code class="code">exit_script_instruction</code></td><td>
+                <code class="code">"exit" "script"</code>
+              </td><td><a href="exit_script_instruction.html" title="exit script instruction">the section called &#8220;<code class="code">exit script</code> instruction&#8221;</a></td></tr></tbody></table></div></div><br class="table-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="exit_script_example_section"></a>Example</h4></div></div></div><div class="example"><a name="exit_script_example"></a><p class="title"><b>Example 8.8. <code class="code">exit script</code> example</b></p><div class="example-contents"><p>The following command simply appends a <code class="code">suffix</code> to a <code class="code">name</code>. If the <code class="code">suffix</code> is <code class="code">void</code> then the command just returns the <code class="code">name</code>.</p><pre class="programlisting">service instruction_examples
+
+   command append_voidable_suffix
+      in name type:string end
+      in suffix type:string voidable:yes end
+      
+      out result type:string end
+
+      script
+      
+         if suffix =r void then
+            result = name
+            exit script // if suffix is void then exit now
+         end if
+         
+         result = name &amp; suffix
+         
+      end script
+   end command
+   
+end service</pre></div></div><br class="example-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="exit_script_see_also"></a>See also</h4></div></div></div><div class="itemizedlist"><ul type="disc"><li><a href="exit_repeat_instruction.html" title="exit repeat instruction">the section called &#8220;<code class="code">exit repeat</code> instruction&#8221;</a></li><li><a href="next_repeat_instruction.html" title="next repeat instruction">the section called &#8220;<code class="code">next repeat</code> instruction&#8221;</a></li></ul></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="case_type_of_instruction.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="flow_control_instructions.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="loop_instructions.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top"><code class="code">case type of</code> instruction </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Loops</td></tr></table></div></body></html>
