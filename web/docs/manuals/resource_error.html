@@ -19,7 +19,7 @@
       out error type:file_error voidable:yes end   // returns any file problems encountered
       
       script
-         o_error = se_file.store_string_to_new_or_existing_file ( &amp;
+         o_error = se_text_file_IO.store_string_to_new_or_existing_file ( &amp;
             string = i_date.to_string &amp;
             file = i_new_or_existing_file )
       end
@@ -29,7 +29,7 @@ end service</pre><p>The script converts the <code class="code">date</code> to a 
 
    // this attribute defines the file used to store the date of the last backup
    attribute last_backup_date_file type: file &amp;
-      default: fa_file.create ( fa_file_path.create ( '''c:\temp\last_backup_date.txt'''.value ) ) end
+      default: fa_file.create ( '''c:\temp\last_backup_date.txt'''~ ) end
 
    command do_backup
       script
@@ -39,7 +39,7 @@ end service</pre><p>The script converts the <code class="code">date</code> to a 
          // now store date of this backup in text file
 
          // get today's date
-         const simple_date last_backup_date = se_simple_date.current_date
+         const date last_backup_date = se_date.current_date
          
          // use 'co_store_date_to_file' to store the date
          // in case of a failure, 'error' holds the error returned by 'co_store_date_to_file'
@@ -49,9 +49,9 @@ end service</pre><p>The script converts the <code class="code">date</code> to a 
 
          // display a message in case of an error
          if c_error #r void then
-            system.console.write_line ( """Last backup date ({{c_last_backup_date.to_string}})
+            system.console.write_line ( """Last backup date ({{c_last_backup_date}})
 could not be stored to file 
-"{{a_last_backup_date_file.to_string}}"""" )
+"{{a_last_backup_date_file}}"""" )
          end if
       end
    end
@@ -64,14 +64,14 @@ could not be stored to file
       in existing_file type:file check: i_existing_file.exists end // the file in which the date is stored
       
       out result type:simple_date voidable:yes end                 // the date read from the file
-      out error type:resource_error voidable:yes end               // any problem encountered with file reading
+      out error type:system_error voidable:yes end                 // any problem encountered with file reading
       out_check check: i_result #r void xor i_error #r void end    // exactly one output argument must be void
       
       script
 
          // read the content of the text file into a 'string' object
          var string date_in_file // holds the string read from file
-         se_file.restore_string_from_file ( &amp;
+         se_text_file_IO.restore_string_from_file ( &amp;
             file = i_existing_file ) &amp;
             ( v_date_in_file = o_result &amp;
             o_error = o_error )
@@ -104,7 +104,7 @@ end service</pre><p>To use the above command we will now create another command 
          
          // use 'co_restore_date_from_file' to read date from file
          var simple_date last_backup_date
-         var resource_error error
+         var system_error error
          co_restore_date_from_file ( a_last_backup_date_file ) &amp;
             ( v_last_backup_date = o_result &amp;
             v_error = o_error )

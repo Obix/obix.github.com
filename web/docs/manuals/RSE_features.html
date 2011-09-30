@@ -68,8 +68,9 @@ end type</pre></div></li></ol></div><p>In both cases it is also possible to opti
             check i_identifier &gt;= min and i_identifier &lt;= max &amp;
                error_message: "Identifier must contain a value between " &amp; v_min.to_string &amp; " and " &amp; v_max.to_string &amp; "!" &amp;
                error_id: invalid_identifier &amp;
-               error_data: fa_positive32_min_max_error.co_create ( &amp;
-                  object = i_identifier &amp;
+               error_data: fa_resource_positive32_min_max_error.co_create ( &amp;
+				  resource = void &amp;
+                  data = i_identifier &amp;
                   min = v_min &amp;
                   max = v_max )
          end script

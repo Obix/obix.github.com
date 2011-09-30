@@ -52,8 +52,8 @@
       
          // execute object command with 2 input arguments and 2 output arguments
          var file temporary_file
-         var file_system_error error
-         se_file.create_temporary_text_file ( &amp;
+         var resource_error error
+         se_text_file_IO.create_temporary_text_file ( &amp;
             delete_file_on_exit = yes &amp;
             text = supplier_XML ) &amp;
             ( v_temporary_file = o_result &amp;
@@ -66,7 +66,7 @@
 
          // if we are just interested in 1 of the 2 output arguments we can also write as follows:
          // (Remark: It is NOT a good idea to ignore the error returned by a command)
-         v_temporary_file = se_file.create_temporary_text_file.result ( &amp;
+         v_temporary_file = se_text_file_IO.create_temporary_text_file.result ( &amp;
             delete_file_on_exit = yes &amp;
             text = supplier_XML )
          if v_temporary_file =r void then

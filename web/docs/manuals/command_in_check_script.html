@@ -23,9 +23,9 @@
                error_message: "Both strings must be of equal length!"
 
             // we also check that file c:\foo.txt exists
-            var file file = fa_file.create ( fa_file_path.create ( '''c:\foo.txt'''.value ) )
+            var file file = fa_file.create ( '''c:\foo.txt'''~ )
             check v_file.exists &amp;
-               error_message: "File " &amp; v_file.path &amp; " must exist!"
+               error_message: "File " &amp; v_file &amp; " must exist!"
          end
       end
 

@@ -66,20 +66,20 @@ end ///
 
 type program_error_handler
 
-   inherit runtime_error_handler end
+   inherit error_handler end
 
    command handle_program_error
       in error type:program_error end
    end
 
-end</pre><p><code class="code">ty_runtime_error_handler</code> is just a type with no features, used as the parent type of all error handlers:</p><pre class="programlisting">///
+end</pre><p><code class="code">ty_error_handler</code> is just a type with no features, used as the parent type of all error handlers:</p><pre class="programlisting">///
    Copyright (C) 2011 Christian Neumanns (www.obix.lu)
    This code can be used under the terms of the 'GNU Afero General Public License version 3'
    The full text of this license can be found at http://www.gnu.org/licenses/agpl.html
    THIS CODE IS DISTRIBUTED WITHOUT ANY WARRANTY. See the license for details.
 end ///
 
-type runtime_error_handler
+type error_handler
 
 end
 </pre><p>Hence, in the simplest case, the only thing to do in a customized error handler factory is to implement command <code class="code">handle_program_error</code>. All information about the error is available in input argument <code class="code">error</code>. The actual type of object in this input argument is a child-type of type <code class="code">program_error</code> and corresponds to one of the error types listed in <a href="program_error.html#program_errors_table" title="Table 13.1. Types of program errors">Table 13.1, &#8220;Types of program errors&#8221;</a>.</p><p>Let's have a look at an example of a customized program error handler. Suppose that:</p><div class="itemizedlist"><ul type="disc"><li><p>in case of a system error, an email is sent to an administrator.</p></li><li><p>in case of any other error, an email is sent to a developer service center.</p></li><li><p>in any case the date, time and identification of the error is logged to file <code class="code">errors.txt</code></p></li></ul></div><p>The code of the factory could be as follows:</p><pre class="programlisting">factory my_program_error_handler type:program_error_handler
@@ -95,7 +95,7 @@ end
          // depending on the case of error, send an email to the administrator
          // or to the developer service center
          case type of i_error
-            when system_error then
+            when system_program_error then
                // send mail to administrator
                // (code not shown for brevety)
             otherwise
@@ -107,7 +107,7 @@ end
          system.err.write_line ( string = "A program error occured!" )
        
          // log error in log file
-         const file_error log_file_error = se_file.append_string_to_file ( &amp;
+         const file_error log_file_error = se_text_file_IO.append_string_to_file ( &amp;
             string = i_error.to_string &amp;
             file = a_log_file )
          if log_file_error #r void then

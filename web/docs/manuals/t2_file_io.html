@@ -1,0 +1,347 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Step 6: File input/output</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="random_arcs_application.html" title="Chapter 7. The 'Random arcs' application"><link rel="prev" href="t2_object_conversion.html" title="Step 5: Object conversions and error handling"><link rel="next" href="t2_create_picture.html" title="Step 7: Creating the 'random arcs' picture"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Step 6: File input/output</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="t2_object_conversion.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The 'Random arcs' application</th><td width="20%" align="right"> <a accesskey="n" href="t2_create_picture.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="t2_file_io"></a>Step 6: File input/output</h2></div></div></div><p>Now that we can create <code class="code">contribution</code> objects and convert them to and from JSON, the next step is to manage a <span class="emphasis"><em>list</em></span> of contributions and make this list <span class="emphasis"><em><a href="http://en.wikipedia.org/wiki/Persistence_%28computer_science%29" target="_top">persistent</a></em></span> in a JSON file.</p><p>We will achieve this with a <a href="service.html" title="Service">service</a> called <code class="code">se_contribution_list</code>. Besides maintaining a persistent list of <code class="code">contribution</code> objects, this service will have two more responsibilities:</p><div class="itemizedlist"><ul type="disc"><li><p>Assign a unique identifier to each <code class="code">contribution</code> object. The identifier will be an integer number starting at 1 and incremented by 1 for each new object.</p></li><li><p>Create <code class="code">contribution</code> objects from the following 3 string values: <code class="code">first_name</code>, <code class="code">last_name</code> and <code class="code">random_number</code>. This is an important feature because we will later build a web interface that enables users to submit their contribution. Data sent via HTTP are all provided as strings which have to be converted into typed objects. Moreover the users won't input an identifier or the date and time of their contribution. They only submit their first name, last name and random value for an arc.</p></li></ul></div><p><code class="code">se_contribution_list</code> will have two public commands:</p><div class="itemizedlist"><ul type="disc"><li><p>Command <code class="code">add_from_strings</code> creates a <code class="code">contribution</code> object from string values and then adds the object to the list of contributions saved in the JSON file</p></li><li><p>Command <code class="code">get_list</code> reads all contributions from the JSON file and returns the complete list as an object.</p></li></ul></div><p>The signature of command <code class="code">add_from_strings</code> is defined as follows:</p><pre class="programlisting">   command add_from_strings
+      in first_name type:string end
+      in last_name type:string end
+      in random_number type:string end
+      in error_handler type:system_error_handler default:se_system_utilities.default_system_error_handler end
+      
+      out result type:contribution voidable:yes end
+      out error type:system_error voidable:yes end
+      out_check check: i_result =r void xor i_error =r void end
+      
+      script
+      end
+   end</pre><p>As you can see, there is again an <code class="code">error_handler</code> input argument and an <code class="code">error</code> output argument because many things can go wrong. For example the input can be invalid or there is a file write error.</p><p>Command <code class="code">get_list</code> can also fail and is therefore defined like this:</p><pre class="programlisting">   command get_list
+      in error_handler type:system_error_handler default:se_system_utilities.default_system_error_handler end
+      
+      out result type:!indexed_list&lt;contribution&gt; voidable:yes end
+      out error type:system_error voidable:yes end
+      out_check check: i_result =r void xor i_error =r void end
+      
+      script
+      end
+   end</pre><p>Note the type for output argument <code class="code">result</code>: <code class="code">!indexed_list&lt;contribution&gt;</code>. Here we use a <a href="generic_types.html" title="Chapter 19. Generic types">generic type</a> that denotes an <code class="code">indexed_list</code> containing only <code class="code">contribution</code> objects. The <code class="code">!</code> introduces the usage of a generic type, and the value between <code class="code">&lt;</code> and <code class="code">&gt;</code> defines the type of object stored in the list.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">For Java programmers: Although the syntax for generic types in Obix is similar to the syntax used in Java, generic types in Obix are conceptually different from those in Java. For example, in Obix there is no type erasure at runtime. This is important because type safety is always guaranteed and type parameter information is available at runtime.</td></tr></table></div><br><p>Before writing the code for <code class="code">se_contribution_list</code> there is one feature we have to add to factory <code class="code">random_1_15</code> we created in a previous chapter. The underlying data type of our random value is an integer number. The value that will be provided through the web user interface, however, will be a string, because all data transmitted through HTTP requests are strings. Therefore we need a feature that converts a <code class="code">string</code> object into a <code class="code">random_1_15</code> object. The best way to do this is to add a creator in factory <code class="code">random_1_15</code>; a creator which takes a <code class="code">string</code> as input and returns a <code class="code">random_1_15</code> object. Converting a string into an integer is again a very common feature needed in many applications. Therefore Obix's standard library provides a source code template that you can use, so that your code is reduced to a one-liner. Here is the template's source code, as defined in the standard library:</p><pre class="programlisting">template integer32_create_from_string_creator
+
+   param type_suffix end
+
+   creator create_from_string
+      in string type:string end
+      %system_error_handler_input_argument
+      
+      %result_xor_string_to_object_conversion_error_output &lt; {type_suffix} &gt;
+      
+      script
+         var integer32_value value
+         fa_integer32_value.create_from_string_value ( &amp;
+            value = i_string.value &amp;
+            error_handler = i_error_handler ) &amp;
+            ( v_value = result &amp;
+            o_error = error )
+         if o_error #r void then
+            exit script
+         end if
+         
+         const attribute_check_error attribute_check_error = ty_{type_suffix}.value.check ( v_value )
+         if c_attribute_check_error #r void then
+            o_result = void
+            o_error = fa_string_to_object_conversion_error.create ( &amp;
+               id = "string_to_{type_suffix}_conversion_error" &amp;
+               description = c_attribute_check_error.description &amp;
+               java_exception = void &amp;
+               data = i_string &amp;
+               type_of_result = "{type_suffix}" &amp;
+               error_position = void )
+            i_error_handler.handle_system_error ( o_error )
+            exit script
+         end if
+         
+         o_result = create ( v_value )
+      end
+   end
+
+end template</pre><p>To add creator <code class="code">create_from_string</code> in factory <code class="code">random_1_15</code>:</p><div class="itemizedlist"><ul type="disc"><li><p>Edit file <code class="code">fa_random_1_15.osc</code> and add creator <code class="code">create_from_string</code> by using the template. The full code should look as follows:</p><pre class="programlisting">factory random_1_15 type:random_1_15
+
+   creator create kind:in_all end
+
+   %integer32_create_from_string_creator &lt; type_suffix:random_1_15 &gt;
+
+end</pre></li></ul></div><br><p>Now we are ready to write <code class="code">se_contribution_list</code>. The full code with comments and a global test script at the end is shown below. To create the service:</p><div class="itemizedlist"><ul type="disc"><li><p>Create file <code class="code">se_contribution_list.osc</code> in directory <code class="code">li_contribution/</code></p></li><li><p>Copy-paste the following code, then save the file and run <code class="code">compile_and_build</code> and <code class="code">run_tests</code>
+				</p><pre class="programlisting">service contribution_list
+
+   // The following two attributes define the files used to store data
+   // file 'contributions.json' contains the contribution objects in JSON format
+   // file 'next_contribution_id.txt' contains the next identifier for a new contribution object
+   // (integer starting at 1 and incremented by 1 each time )
+
+   attribute_list type:file private:yes kind:variable
+      attribute contributions_file default:fa_relative_file.create ( "contributions.json"~ ).make_absolute_file end
+      attribute next_identifier_file default:fa_relative_file.create ( "next_contribution_id.txt"~ ).make_absolute_file end
+   end
+   
+   command add_from_strings
+      in first_name type:string end
+      in last_name type:string end
+      in random_number type:string end
+      %system_error_handler_input_argument
+      
+      %result_xor_system_error_output &lt; contribution &gt;
+      
+      script
+         // check 'i_first_name' by calling command 'ty_user_name.value.check'
+         const attribute_check_error first_name_error = ty_user_name.value.check ( i_first_name.value )
+         if c_first_name_error #r void then
+            o_error = fa_invalid_data_error.create ( &amp;
+               description = c_first_name_error.description &amp;
+               data = i_first_name )
+            i_error_handler.handle_system_error ( o_error )
+            exit script
+         end if
+
+         // check 'i_last_name'
+         const attribute_check_error last_name_error = ty_user_name.value.check ( i_last_name.value )
+         if c_last_name_error #r void then
+            o_error = fa_invalid_data_error.create ( &amp;
+               description = c_last_name_error.description &amp;
+               data = i_last_name )
+            i_error_handler.handle_system_error ( o_error )
+            exit script
+         end if
+
+         // convert 'i_random_number' provided as type 'string' to type 'random_1_15'
+         var random_1_15 typed_random_number
+         fa_random_1_15.create_from_string ( &amp;
+            string = i_random_number &amp;
+            error_handler = i_error_handler ) &amp;
+            ( v_typed_random_number = result &amp;
+            o_error = error )
+         if o_error #r void then
+            exit script
+         end if
+         
+         // define the identifier for the new object
+         // the service command 'se_text_file_IO.get_next_counter_from_text_file' in Obix's standard library
+         // is a utility that increments a counter stored in a text file
+         var positive32 identifier
+         se_text_file_IO.get_next_counter_from_text_file ( &amp;
+            file = a_next_identifier_file &amp;
+            error_handler = i_error_handler ) &amp;
+            ( v_identifier = result &amp;
+            o_error = error )
+         if o_error #r void then
+            exit script
+         end if
+         
+         // create the 'contribution' object
+         o_result = fa_contribution.create ( &amp;
+            identifier = v_identifier &amp;
+            first_name = fa_user_name.create ( i_first_name.value ) &amp;
+            last_name = fa_user_name.create ( i_last_name.value ) &amp;
+            random_number = v_typed_random_number &amp;
+            date_time = se_date_time.current_local_date_time )
+
+         // append the 'contribution' object to file 'a_contributions_file'
+         o_error = append_contribution_to_file ( &amp;
+            contribution = o_result &amp;
+            file = a_contributions_file &amp;
+            error_handler = i_error_handler )
+         if o_error #r void then
+            o_result = void
+         end if
+      end
+   end
+   
+   // private command to store a 'contribution' object into a JSON file
+   command append_contribution_to_file private:yes
+      in contribution type:contribution end
+      in file type:file end
+      %system_error_handler_input_argument
+      
+      %resource_error_output_argument
+      
+      script
+         // if the file doesn't exist yet then create it
+         if not i_file.exists then
+            o_error = i_file.create_physically ( i_error_handler )
+            if o_error #r void then
+               exit script
+            end if
+         end if
+         
+         // append the JSON representation of the 'i_contribution' object to file 'i_file'
+         o_error = se_text_file_IO.append_string_to_file ( &amp;
+            string = i_contribution.to_JSON &amp; se_string.current_OS_new_line &amp;
+            file = i_file &amp;
+            error_handler = i_error_handler )
+      end
+   end
+
+   command get_list
+      %system_error_handler_input_argument
+      
+      %result_xor_system_error_output &lt; !indexed_list&lt;contribution&gt; &gt;
+      
+      script
+         // read all lines from file 'a_contributions_file'
+         var ty_indexed_string_list text_lines
+         se_text_file_IO.restore_lines_from_text_file ( &amp;
+            file = a_contributions_file &amp;
+            error_handler = i_error_handler ) &amp;
+            ( v_text_lines = result &amp;
+            o_error = error )
+         if o_error #r void then
+            exit script
+         end if
+         
+         // create a mutable list of 'contribution' objects
+         const !mutable_indexed_list&lt;contribution&gt; contribution_list = !mutable_indexed_list_factory&lt;contribution&gt;.create
+         
+         // add all 'contribution' objects stored in the file to the mutable list
+         repeat for each string line in text_lines
+            var contribution contribution
+            fa_contribution.create_from_JSON ( &amp;
+               JSON = line &amp;
+               error_handler = i_error_handler ) &amp;
+               ( v_contribution = result &amp;
+               o_error = error )
+            if o_error #r void then
+               exit script
+            end if
+            
+            c_contribution_list.append ( v_contribution )
+         end
+         
+         // convert the mutable list into an immutable list and return the immutable list
+         o_result = c_contribution_list.to_immutable
+      end
+   end
+   
+   test
+      script
+         // create temporary files for test purposes
+         a_contributions_file = se_file.create_temporary_file.result ( delete_file_on_exit = yes )
+         a_next_identifier_file = se_file.create_temporary_file.result ( delete_file_on_exit = yes )
+         
+         // first test with valid data
+         var contribution result
+         var system_error error
+         add_from_strings ( first_name = "Joshua" &amp;
+            last_name = "Gafter" &amp;
+            random_number = "5" ) &amp;
+            ( v_result = result &amp;
+            v_error = error )
+         verify v_error =r void
+         verify v_result.identifier =v 1
+         verify v_result.first_name.value =v "Joshua"~
+         verify v_result.last_name.value =v "Gafter"~
+         verify v_result.random_number.value =v 5~
+
+         // retain the result for later use
+         const contribution result1 = v_result
+
+         // check the file content
+         var string file_content = se_text_file_IO.restore_string_from_file.result ( file = a_contributions_file )
+         verify v_file_content =v v_result.to_JSON &amp; se_string.current_OS_new_line
+         
+         // read data from file into a list
+         var !indexed_list&lt;contribution&gt; contribution_list = get_list.result
+         verify v_contribution_list.item_count =v 1
+         const contribution first_item = v_contribution_list.item_iterator.next
+         verify c_first_item.identifier =v 1
+         verify c_first_item.first_name.value =v "Joshua"~
+         verify c_first_item.last_name.value =v "Gafter"~
+         verify c_first_item.random_number.value =v 5~
+
+         // create a second object
+         add_from_strings ( first_name = "Albert" &amp;
+            last_name = "Newton" &amp;
+            random_number = "4" ) &amp;
+            ( v_result = result &amp;
+            v_error = error )
+         verify v_error =r void
+         verify v_result.identifier =v 2
+         verify v_result.first_name.value =v "Albert"~
+         verify v_result.last_name.value =v "Newton"~
+         verify v_result.random_number.value =v 4~
+
+         // check the file content again
+         v_file_content = se_text_file_IO.restore_string_from_file.result ( file = a_contributions_file )
+         verify v_file_content =v c_result1.to_JSON &amp; se_string.current_OS_new_line &amp; v_result.to_JSON &amp; se_string.current_OS_new_line
+
+         // read data from file into a list
+         v_contribution_list = get_list.result
+         verify v_contribution_list.item_count =v 2
+
+         // check if an error is reported in case of invalid data
+         add_from_strings ( first_name = "Albert&lt;&gt;" &amp;
+            last_name = "Newton" &amp;
+            random_number = "4" ) &amp;
+            ( v_result = result &amp;
+            v_error = error )
+         verify v_result =r void
+         verify v_error #r void
+
+         // read data from file into a list
+         v_contribution_list = get_list.result
+         verify v_contribution_list.item_count =v 2
+      end
+   end
+
+end service</pre><p>
+				</p></li></ul></div><br><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>It is interesting to note that the above <code class="code">add_from_strings</code> command could also be written in a much shorter way.</p><p>In the above script we carefully check each value for its validity and we manage each possible error individually. This is the preferred way to write code because we have fine-grained control over every possible invalid data and we can provide explicit error messages and error handling.</p><p>Instead of checking each potential error programmatically, however, we could also rely on the fact that a <a href="program_error.html" title="Program error">program error</a> (also called an <a href="http://en.wikipedia.org/wiki/Exception_handling" target="_top">exception</a>) occurs immediately whenever we try to store invalid data in an object. For example, if we created a <code class="code">contribution</code> object with an invalid <code class="code">first_name</code> value, then the data check ensured through <a href="contract_programming.html" title="Chapter 17. Contract programming">contract programming</a> in type <code class="code">user_name</code> would immediately raise a program error at runtime.</p><p>Program errors can be programmatically catched, in the same way that exceptions can be catched in other programming languages.</p><p>The following alternative code for command <code class="code">add_from_strings</code> shows how to do this in Obix. Besides relying on program errors thrown in case of invalid data or other runtime problems, the following (over-simplified) command also doesn't have an <code class="code">error_handler</code> input argument nor an <code class="code">error</code> output argument. In case of a problem at runtime the command simply returns a <code class="code">void</code> result and writes an error message to the system's <code class="code">error</code> device.</p><pre class="programlisting">   command add_from_strings
+      in first_name type:string end
+      in last_name type:string end
+      in random_number type:string end
+      
+      out result type:contribution voidable:yes end
+      
+      script
+         // if a program error (an exception) occurs within the following section then
+         // - the program error is stored in the implicitly defined variable 'v_program_error_'
+         // - script execution continues after the 'end section' instruction
+         section add_contribution on_error:continue
+
+            // create the 'contribution' object
+            // if data is invalid then 
+            // - a program error (exception) will occur
+            // - the error will be stored in variable 'v_program_error_'
+            // - script execution will continue after the 'end section' instruction
+            o_result = fa_contribution.create ( &amp;
+               identifier = se_text_file_IO.get_next_counter_from_text_file.result ( file = a_next_identifier_file ) &amp;
+               first_name = fa_user_name.create ( i_first_name.value ) &amp;
+               last_name = fa_user_name.create ( i_last_name.value ) &amp;
+               random_number = fa_random_1_15.create_from_string.result ( string = i_random_number ) &amp;
+               date_time = se_date_time.current_local_date_time )
+
+            // create file 'a_contributions_file' if it doesn't exists yet
+            if not a_contributions_file.exists then
+               a_contributions_file.create_physically
+            end if
+         
+            // append the JSON representation of the 'contribution' object to file 'a_contributions_file'
+            // if an error occurs then return 'void' as result
+            if se_text_file_IO.append_string_to_file ( &amp;
+               string = o_result.to_JSON &amp; se_string.current_OS_new_line &amp;
+               file = a_contributions_file ) #r void then
+               o_result = void
+            end if
+
+         end section
+
+         // check if anything went wrong
+         if v_program_error_ #r void then
+            o_result = void
+            system.err.write_line ( string = "Contribution object could not be stored to file" )
+         end if
+      end
+   end</pre></td></tr></table></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="t2_object_conversion.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="random_arcs_application.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="t2_create_picture.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Step 5: Object conversions and error handling </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Step 7: Creating the 'random arcs' picture</td></tr></table></div></body></html>

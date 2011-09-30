@@ -1,0 +1,78 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Step 2: Creating objects</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="random_arcs_application.html" title="Chapter 7. The 'Random arcs' application"><link rel="prev" href="random_arcs_application.html" title="Chapter 7. The 'Random arcs' application"><link rel="next" href="t2_unit_testing.html" title="Step 3: Unit testing"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Step 2: Creating objects</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="random_arcs_application.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The 'Random arcs' application</th><td width="20%" align="right"> <a accesskey="n" href="t2_unit_testing.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="t2_create_objects"></a>Step 2: Creating objects</h2></div></div></div><p>Because our application has to manage contributions, we obviously have to create <code class="code">contribution</code> objects at runtime. To do this we need to:</p><div class="itemizedlist"><ul type="disc"><li><p>define a <a href="RSEs.html#type" title="Type"><span class="emphasis"><em>type</em></span></a> that specifies the data structure and behavior of <code class="code">contribution</code> objects</p></li><li><p>define a <a href="factory.html" title="Factory"><span class="emphasis"><em>factory</em></span></a> that implements the type and will be used to create <code class="code">contribution</code> objects.</p></li></ul></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><div class="itemizedlist"><ul type="disc"><li><p>A type in Obix is conceptually similar to an interface in Java or C#. It defines <span class="emphasis"><em>what</em></span> you can do with an object.</p></li><li><p>A factory in Obix is conceptually similar to a class in Java or C# that implements an interface. It defines <span class="emphasis"><em>how</em></span> an object of a given type is implemented.</p></li></ul></div></td></tr></table></div><p>To keep the source code files well organized let us first create a <a href="library_basics.html" title="Libraries"><span class="emphasis"><em>library</em></span></a> named <code class="code">contribution</code>. This library will contain all source code files related to <code class="code">contribution</code> objects. To create this library:</p><div class="itemizedlist"><ul type="disc"><li>Create a subdirectory named <code class="code">li_contribution</code> under the existing directory <code class="code">pr_random_arcs/work/obix/source_code/li_random_arcs/</code></li></ul></div><p>To define the type:</p><div class="itemizedlist"><ul type="disc"><li><p>Open your preferred text editor and type (or copy-paste) the following code:</p><pre class="programlisting">type contribution
+
+   attribute identifier    type:positive32 end
+   attribute first_name    type:string end
+   attribute last_name     type:string end
+   attribute random_number type:positive32 end
+   attribute date_time     type:local_date_time end
+
+end type</pre></li><li><p>Save this code into a file named <code class="code">ty_contribution.osc</code> in the subdirectory <code class="code">li_contribution</code> which you created in the previous step.</p></li></ul></div><p>The code should be self-explanatory. We simply define a <code class="code">contribution</code> type by enumerating the attribute names and their types, according to our initial specifications.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">For Java programmers: The above code is conceptually similar to the following interface defined in Java:
+	<pre class="programlisting">interface IContribution {
+
+   public int getIdentifier();
+   public String getFirst_name();
+   public String getLast_name();
+   public int getRandom_number();
+   public java.util.Calendar getDate_time();
+   
+}</pre></td></tr></table></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>In order to support various source code style preferences you can rewrite the above code:</p><div class="itemizedlist"><ul type="disc"><li><p>If you prefer to write the most explicit code you can re-code the attributes according to the following example:</p><pre class="programlisting">attribute &amp;
+     id: a_first_name &amp;
+   type: ty_string &amp;
+end</pre><p>Note: This syntax is mainly used in more complex attribute definitions.</p></li><li><p>If you think this code is too verbose, you can use the short form to declare attributes. You can leave off the <code class="code">attribute</code> and <code class="code">type</code> keywords, and use <a href="prefixed_identifier.html" title="Prefixed identifier">prefixed identifiers</a> instead. The prefix for attributes is <code class="code">a_</code>, and the prefix for types is <code class="code">ty_</code>. Hence, attribute <code class="code">first_name</code> can also be declared in a shorter way as follows:</p><pre class="programlisting">a_first_name ty_string</pre></li><li><p>If you prefer the C-style usage of braces you can re-code type <code class="code">contribution</code> as follows:</p><pre class="programlisting">type contribution {
+
+   a_identifier ty_positive32
+   a_first_name ty_string
+   a_last_name ty_string
+   a_random_number ty_positive32
+   a_date_time ty_local_date_time
+
+}</pre></li></ul></div><p>In this tutorial we will use the 'standard' style as shown in the above first code of <code class="code">ty_contribution</code>. But keep in mind that you can write all code according to your own preferences.</p></td></tr></table></div><br><p>To check that everything is ok so far:</p><div class="itemizedlist"><ul type="disc"><li>Compile and build the project by executing the <code class="code">compile_and_build</code> system file which is located in your projects root directory (i.e. <code class="code">compile_and_build.sh</code> on Linux systems and <code class="code">compile_and_build.bat</code> on Windows systems).</li></ul></div><br><p>You can now define a factory that implements type <code class="code">contribution</code>:</p><div class="itemizedlist"><ul type="disc"><li><p>Create a file named <code class="code">fa_contribution.osc</code> in the subdirectory <code class="code">li_contribution</code>.</p></li><li><p>Insert the following code in this file:</p><pre class="programlisting">factory contribution type:contribution
+
+end</pre></li></ul></div><p>This code simply defines a factory whose identifier is <code class="code">contribution</code> and which implements type <code class="code">contribution</code>.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">The factory and the type both use the <a href="identifiers.html#identifier" title="Simple identifier">identifier </a><code class="code">contribution</code>. There is no ambiguity, however, because Obix always uses <a href="prefixed_identifier.html" title="Prefixed identifier">prefixed identifiers</a> to distinguish software elements of different kinds that use the same identifier. The identifier prefix is <code class="code">ty_</code> for types, and <code class="code">fa_</code> for factories. Hence, the complete (prefixed) identifier for the type is <code class="code">ty_contribution</code>, and the complete (prefixed) identifier for the factory is <code class="code">fa_contribution</code>.</td></tr></table></div><br><p>A factory always needs at least one <a href="creator.html" title="Creator">creator</a> (also called <a href="http://en.wikipedia.org/wiki/Constructor_%28object-oriented_programming%29" target="_top">constructor</a> in other languages) to create objects. A creator has input arguments which provide the values for the object to be created, and a creator always has one output argument that returns the new object. In our case we need a creator that has one input argument for each attribute defined in the type. This is a very common kind of creator, and therefore Obix provides a shortcut so that you don't have to define the input- and output-arguments, and the boilerplate-code to assign each input argument to its corresponding attribute. This creator can be defined with the following single instruction:</p><pre class="programlisting">   creator create kind:in_all end</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">For Java programmers: The above instruction results in a Java constructor conceptually similar to the following one:
+    <pre class="programlisting">public Contribution ( int identifier, String first_name, String last_name, int random_number, java.util.Calendar date_time ) {
+   this.identifier = identifier;
+   this.first_name = first_name;
+   this.last_name = last_name;
+   this.random_number = random_number;
+   this.date_time = date_time;
+}</pre></td></tr></table></div><br><p>Besides defining a creator, we should also define an implementation for command <code class="code">to_string</code>.</p><p>The reason is that each type in Obix inherits command <code class="code">to_string</code> from type <code class="code">any_type</code> which is (implicitly) the parent type of all other types. Type <code class="code">any_type</code> is defined as follows in Obix's standard libraries:</p><pre class="programlisting">///
+   Copyright (C) 2011 Christian Neumanns (www.obix.lu)
+   This code can be used under the terms of the 'GNU Afero General Public License version 3'
+   The full text of this license can be found at http://www.gnu.org/licenses/agpl.html
+   THIS CODE IS DISTRIBUTED WITHOUT ANY WARRANTY. See the license for details.
+end ///
+
+type any_type
+
+   command to_string
+      out result type:string end
+   end
+
+end type
+</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">For Java programmers: Command <code class="code">to_string</code> in Obix is conceptually similar to method <code class="code">toString</code> in Java. And type <code class="code">any_type</code> in Obix is like class <code class="code">Object</code> in Java in the sense that all other types implicitly inherit from them.</td></tr></table></div><p>Command <code class="code">to_string</code> is typically used to display a short human readable description of the object. The Obix compiler provides a default implementation that simply displays <code class="code">Object of type contribution</code> in our case. This isn't very useful in practice. Therefore you can overwrite Obix's default implementation by explicitly specifying command <code class="code">to_string</code>, as follows:</p><pre class="programlisting">   command to_string
+      script
+         o_result = """{{a_first_name}} {{a_last_name}} contributed '{{a_random_number.to_string}}' on {{a_date_time}}"""
+      end
+   end</pre><p>In the above code we use Obix's <a href="literals.html#triple_quoted_string_literal" title="Triple quoted string literal"><span class="emphasis"><em>triple quoted string literal</em></span></a>. This allows us to embed arbitrary expressions (between <code class="code">{{</code> and <code class="code">}}</code> symbols) in a string literal.</p><p>The above code will return a string such as:</p><pre class="programlisting">Mario Gonzales contributed '5' on 2011.06.30 13:03</pre><br><p>This is all we have to do for factory <code class="code">contribution</code>. Edit file <code class="code">fa_contribution.osc</code> so that the complete code looks as follows:</p><pre class="programlisting">factory contribution type:contribution
+  
+   command to_string
+      script
+         o_result = """{{a_first_name}} {{a_last_name}} contributed '{{a_random_number.to_string}}' on {{a_date_time}}"""
+      end
+   end
+
+   creator create kind:in_all end
+
+end</pre><p>Execute <code class="code">compile_and_build</code> again to check that everything is still fine.</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="random_arcs_application.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="random_arcs_application.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="t2_unit_testing.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter 7. The 'Random arcs' application </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Step 3: Unit testing</td></tr></table></div></body></html>

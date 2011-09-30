@@ -1,0 +1,186 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Step 5: Object conversions and error handling</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="random_arcs_application.html" title="Chapter 7. The 'Random arcs' application"><link rel="prev" href="t2_more_reliable_objects.html" title="Step 4: Making data more reliable and secure"><link rel="next" href="t2_file_io.html" title="Step 6: File input/output"><script type="text/javascript">
+        
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-22290805-1']);
+          _gaq.push(['_trackPageview']);
+        
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        
+    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Step 5: Object conversions and error handling</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="t2_more_reliable_objects.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The 'Random arcs' application</th><td width="20%" align="right"> <a accesskey="n" href="t2_file_io.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="t2_object_conversion"></a>Step 5: Object conversions and error handling</h2></div></div></div><p>Many applications need to convert the internal in-memory representation of objects into other formats, in order to save them in files and databases, send them over networks, or exchange them with other applications that might be written in different languages.</p><p>In our case we will store <code class="code">contribution</code> objects into plain text files.</p><p>A very common, simple and well-suited format for storing hierarchical data like object trees is <a href="http://en.wikipedia.org/wiki/JSON" target="_top">JSON</a>. This is the format we are going to use.</p><p>Here is an example of a <code class="code">contribution</code> object encoded as JSON:</p><pre class="programlisting">{"identifier":1, "first_name":"Giovanni", "last_name":"Spiridigliotsky", "random_number":10, "date_time":"2011-09-17 14:33:22"}</pre><br><p>We will now write code to convert a <code class="code">contribution</code> object to JSON (this is also called <a href="http://en.wikipedia.org/wiki/Marshalling_%28computer_science%29" target="_top">marshalling</a> in computer science), and then write code to convert JSON back to <code class="code">a contribution</code> object (unmarshalling).</p><p>The first step is to add command <code class="code">to_JSON</code> in type <code class="code">contribution</code>:</p><div class="itemizedlist"><ul type="disc"><li><p>Edit file <code class="code">ty_contribution.osc</code></p></li><li><p>Add the following code after the declaration of the attributes:</p><pre class="programlisting">   command to_JSON
+      out result type:string end
+   end</pre><p>Command <code class="code">to_JSON</code> has no input arguments. It has one output argument of type <code class="code">string</code> whose identifier is <code class="code">result</code>.</p></li></ul></div><p>To implement command <code class="code">to_JSON</code> in factory <code class="code">contribution</code> we could write a command similar to the <code class="code">to_string</code> command in a previous chapter, like this:</p><pre class="programlisting">   command to_JSON
+      script
+         o_result = """{ "identifier":{{identifier.to_string}}, "first_name":"{{a_first_name}}", "last_name":"{{a_last_name}}", "random_number":{{a_random_number.to_string}}, "date_time":"{{a_date_time}}" }"""
+      end
+   end</pre><p>But there is an easier way. Obix's standard library provides a simple service command to convert any object into JSON:</p><div class="itemizedlist"><ul type="disc"><li><p>Edit file <code class="code">fa_contribution.osc</code></p></li><li><p>Add the following code after command <code class="code">to_string</code>:</p><pre class="programlisting">   command to_JSON
+      script
+         o_result = se_JSON_converter.object_to_JSON ( this )
+      end
+   end</pre></li><li><p><code class="code">se_JSON_converter.object_to_JSON</code> uses the external Java library <code class="code">JSON_org.jar</code>. To add this Java package to your project, please <a href="http://www.obix.lu/downloads/files/JSON_org.jar" target="_top">download the file</a> and copy it into subdirectory <code class="code">pr_random_arcs/work/java/lib/</code>.</p></li></ul></div><p>In the above code we use command <code class="code">object_to_JSON</code> of service <code class="code">JSON_converter</code>. This command takes an object of any type as input argument. In our case we provide the <code class="code">contribution</code> object itself which is expressed by the keyword <code class="code">this</code>. Internally this command uses Obix's reflection mechanism to get all attribute values and convert them into a JSON string.</p><br><p>The complete code for type and factory <code class="code">contribution</code> now looks as follows (test script not shown):</p><pre class="programlisting">type contribution
+
+   attribute identifier type:positive32 end
+   attribute first_name type:user_name end
+   attribute last_name type:user_name end
+   attribute random_number type:random_1_15 end
+   attribute date_time type:local_date_time end
+
+   command to_JSON
+      out result type:string end
+   end
+
+end</pre><pre class="programlisting">factory contribution type:contribution
+
+   command to_string
+      script
+         o_result = """{{a_first_name}} {{a_last_name}} contributed '{{a_random_number.to_string}}' on {{a_date_time}}"""
+      end
+   end
+	
+   command to_JSON
+      script
+         o_result = se_JSON_converter.object_to_JSON ( this )
+      end
+   end
+
+   creator create kind:in_all end
+
+end</pre><br><p>We should now test whether command <code class="code">to_JSON</code> works correctly. In a previous chapter we created already a test script in factory <code class="code">contribution</code>. This test script tests the factory as a whole. We could add a new test case to this script. A better way, however, is to attach a separate test script to the command script we just created, in order to keep related things closely together. Proceed as follows</p><div class="itemizedlist"><ul type="disc"><li><p>Attach a test script to command <code class="code">to_JSON</code> in factory <code class="code">contribution</code> by inserting the test code as shown below:</p><pre class="programlisting">   command to_JSON
+      script
+         o_result = se_JSON_converter.object_to_JSON ( this )
+      end
+      test
+         script
+            // create a 'contribution' object and assign it to constant 'c'
+            const contribution c = fa_contribution.create ( &amp;
+               identifier = 123 &amp;
+               first_name = fa_user_name.create ( "Albert"~ ) &amp;
+               last_name = fa_user_name.create ( "Newton"~ ) &amp;
+               random_number = fa_random_1_15.create ( 5~ ) &amp;
+               date_time = fa_local_date_time.create ( "2011-08-27 16:16:30"~ ) )
+
+            // execute command 'to_JSON' and store result in constant 'r'
+            const string r = c.to_JSON
+
+            // verify the result
+            verify r =v '''{"identifier":123, "first_name":"Albert", "last_name":"Newton", "random_number":5, "date_time":"2011-08-27 16:16:30"}'''
+         end
+      end
+   end</pre></li><li><p>Execute the system command <code class="code">compile_and_build</code> again. Then re-execute <code class="code">run_tests</code> and look at the test result shown in your system console.</p></li></ul></div><br><p>The counterpart of converting an object to JSON is to convert JSON back to an object. Because this involves the creation of a new object we will use a creator in factory <code class="code">contribution</code> to achieve this task.</p><p>The creator could be defined like this:</p><pre class="programlisting">creator create_from_JSON
+   in JSON type:string end
+
+   out result type:contribution end
+     
+   script
+      // code to create contribution object from JSON
+   end
+end</pre><p>This creator takes the JSON representation of a <code class="code">contribution</code> object as input, and the script converts the JSON string to a <code class="code">contribution</code> object which is returned in output argument <code class="code">result</code>.</p><p>The above code would be fine if the JSON string provided as input for the creator was always a valid string. However, we can't assume this because the JSON string will come from an external source at runtime (e.g. a file), which means that it can be invalid and it can't be trusted.</p><p>This is a very typical example of a potential resource data error at runtime. We know that something can go wrong. Obix supports multiple output arguments and the solution in Obix is to provide a second output argument (typically named <code class="code">error</code>) that reports any errors encountered.</p><p>Now there are two possible outcomes after the creator has been called:</p><div class="orderedlist"><ol type="1"><li><p>The operation succeeded. In this case:
+					</p><div class="itemizedlist"><ul type="disc"><li>output argument <code class="code">result</code> contains the result</li><li>output argument <code class="code">error</code> is <code class="code">void</code></li></ul></div><p>
+				</p></li><li><p>The operation failed. In this case:
+					</p><div class="itemizedlist"><ul type="disc"><li>output argument <code class="code">result</code> is <code class="code">void</code></li><li>output argument <code class="code">error</code> contains a description of the error</li></ul></div><p>
+				</p></li></ol></div><p>The creator's code now becomes:</p><pre class="programlisting">creator create_from_JSON
+   in JSON type:string end
+
+   out result type:contribution voidable:yes end
+   out error type:string_to_object_conversion_error voidable:yes end
+   out_check check: i_result =r void xor i_error =r void end
+     
+   script
+      // code to create contribution object from JSON
+   end
+end</pre><p>Note the <code class="code">voidable:yes</code> clause we have to add to both output arguments. We also use <a href="contract_programming.html" title="Chapter 17. Contract programming">Contract programming</a> again (in the <code class="code">out_check</code> instruction) to ensure that <code class="code">result</code> or else <code class="code">error</code> is <code class="code">void</code> (exclusive or).</p><p>An interesting question appears: What should happen at runtime if the JSON string is invalid? The right answer is of course that the client code which calls the creator should check for any errors and take appropriate actions.</p><p>In practice, the same error handling is often appropriate for many or all clients calling the creator. For example, an error message is appended to a log file. In order to relieve all the clients from doing the same thing, the creator can take care of the error handling. However, flexibility is required, because different clients might need different error handling. The solution in Obix is to provide an error handler as input argument to the creator.</p><p>For this purpose Obix's standard library provides type <code class="code">system_error_handler</code> which is defined as follows:</p><pre class="programlisting">type system_error_handler
+
+   command handle_system_error
+      in error type:system_error end
+   end
+
+end</pre><p>In case of an error the creator will:</p><div class="itemizedlist"><ul type="disc"><li><p>create an <code class="code">error</code> object</p></li><li><p>call the error handler's <code class="code">handle_system_error</code> command and pass it the <code class="code">error</code> object</p></li><li><p>exit the script with the <code class="code">result</code> output argument set to <code class="code">void</code> and the <code class="code">error</code> output argument containing the <code class="code">error</code> object</p></li></ul></div><p>Every client can provide its own specific error handler to the creator (including error handlers that do nothing). In practice, however, it is often appropriate to define a system wide error handler that is used by default if no specific error handler is provided. Therefore a global default error handler is defined in Obix's standard library. The path to it is <code class="code">li_obix.li_system.se_system_utilities.a_default_system_error_handler</code>. By default the global system error handler simply writes the error description to the operating system's <code class="code">error</code> device. If you want to change this behavior you can create your own specific global error handler and assign it to <code class="code">se_system_utilities.a_default_system_error_handler</code> in your application's initialization code.</p><p>As a result the code for the creator's additional input argument is:</p><pre class="programlisting">in error_handler type:system_error_handler default:se_system_utilities.default_system_error_handler end</pre><p>The final signature code for the creator is shown below:</p><pre class="programlisting">creator create_from_JSON
+   in JSON type:string end
+   in error_handler type:system_error_handler default:se_system_utilities.default_system_error_handler end
+
+   out result type:contribution voidable:yes end
+   out error type:string_to_object_conversion_error voidable:yes end
+   out_check check: i_result =r void xor i_error =r void end
+     
+   script
+      // code to create contribution object from JSON
+   end
+end</pre><p>The above code shows a very common pattern used in Obix whenever a command execution can fail at runtime. This pattern is used systematically in Obix's standard libraries and it is recommended to also use it in applications.</p><p>The benefit is that error handling now becomes easy and straightforward:</p><div class="itemizedlist"><ul type="disc"><li><p>If you do nothing in your code then the default global system error handler will be used and send an error message to the system <code class="code">error</code> device (which is the system console by default)</p></li><li><p>If you want to change the default global error handling you can replace the default error handler with your own customized version and provide more sophisticated error handling. For example, you could log errors in a file or database, or send email or SMS messages to administrators or developers, depending on the type of error that occurred.</p></li><li><p>If you need specific error handling in specific parts of your application then you can create your own appropriate error handlers and use them case by case in your code.</p></li></ul></div><p>For more information please refer to <a href="error_handling.html" title="Chapter 13. Runtime error handling">Chapter 13, <i>Runtime error handling</i></a></p><br><p>In order to reduce the size of code and avoid code duplication, different source code templates are available in the standard library. In our case template <code class="code">system_error_handler_input_argument</code> can be used as a shortcut to define the <code class="code">error_handler</code> input argument, and template <code class="code">result_xor_string_to_object_conversion_error_output</code> can be used to simplify the code for the output arguments. The creator's simplified code becomes:</p><pre class="programlisting">creator create_from_JSON
+   in JSON type:string end
+   %system_error_handler_input_argument
+
+   %result_xor_string_to_object_conversion_error_output &lt; result_type: contribution &gt;
+     
+   script
+      // code to create contribution object from JSON
+   end
+end</pre><br><p>What remains to be done is to write the script code to convert the JSON string into a <code class="code">contribution</code> object.</p><p>The simplest way to do this is to use <code class="code">se_JSON_converter</code> again. Command <code class="code">JSON_to_object</code> in this service is defined as follows:</p><pre class="programlisting">command JSON_to_object
+   in JSON type:string end
+   in type_of_object type:type end
+   %system_error_handler_input_argument
+		
+   %result_xor_system_error_output &lt; any_type &gt;
+end</pre><p>This command takes three input arguments:</p><div class="itemizedlist"><ul type="disc"><li><p>The first input argument (<code class="code">JSON</code>) is a string that holds the JSON representation of the object.</p></li><li><p>The second input argument (<code class="code">type_of_object</code>) defines which type of object has to be created from JSON.</p></li><li><p>Executing this command obviously fails if the JSON input string is invalid. Therefore the command also has an <code class="code">error_handler</code> input argument whose purpose is the same as explained previously for creator <code class="code">create_from_JSON</code></p></li></ul></div><p>Because <code class="code">JSON_to_object</code> can fail, there are also two output arguments. The pattern we used previously for creator <code class="code">create_from_JSON</code>'s output is also used here:</p><div class="itemizedlist"><ul type="disc"><li><p>Output argument <code class="code">result</code> returns the object created from JSON if no error occurs. Note that the type of <code class="code">result</code> is <code class="code">any_type</code>, because this is a general command that can be used for any type.</p></li><li><p>Output argument <code class="code">error</code> contains an error object if anything goes wrong.</p></li></ul></div><p>The only thing to do in creator <code class="code">create_from_JSON</code> is to call the above command. Insert the following code in file <code class="code">fa_contribution.osc</code>, just after the existing creator:</p><pre class="programlisting">   creator create_from_JSON
+      in JSON type:string end
+      %system_error_handler_input_argument
+      
+      %result_xor_system_error_output &lt; contribution &gt;
+      
+      script
+         var any_type object_from_JSON
+         se_JSON_converter.JSON_to_object ( &amp;
+            JSON = i_JSON &amp;
+            type_of_object = se_reflection.library_repository.type_by_unprefixed_id_string ( "contribution" ) &amp;
+            error_handler = i_error_handler ) &amp;
+            ( v_object_from_JSON = result &amp;
+            o_error = error )
+
+         if o_error =r void then
+            // cast 'v_object_from_JSON' (which is declared of type 'any_type') to type 'contribution'
+            // 'type_check:no' tells the compiler to skip type checking at compile-time
+            o_result = v_object_from_JSON type_check:no
+         else
+            o_result = void
+         end if
+      end
+   end</pre><p>Does everything work correctly? To find it out, insert the following test script just before the last <code class="code">end</code> instruction in creator <code class="code">create_from_JSON</code>:</p><pre class="programlisting">      test
+         script
+            test i_JSON = """{ "identifier":123, "first_name":"Albert", "last_name":"Newton", "random_number":5, "date_time":"2011-08-27 16:16:30" }"""
+            verify v_result.identifier =v 123
+            verify v_result.first_name.value =v "Albert"~
+            verify v_result.last_name.value =v "Newton"~
+            verify v_result.random_number.value =v 5~
+            verify v_result.date_time.value =v "2011-08-27 16:16:30"~
+
+            // test with invalid JSON (first brace removed)
+            // remark: 'error_handler' is set to 'se_system_utilities.do_nothing_system_error_handler' in order to
+            // display only test results on the system console
+            test i_JSON = """ "identifier":123, "first_name":"Albert", "last_name":"Newton", "random_number":5, "date_time":"2011-08-27 16:16:30" }""" &amp;
+               error_handler = se_system_utilities.do_nothing_system_error_handler
+            verify v_result =r void
+            verify v_error #r void
+
+            // test with invalid attribute name ('ident' instead of 'identifier')
+            test i_JSON = """{ "ident":123, "first_name":"Albert", "last_name":"Newton", "random_number":5, "date_time":"2011-08-27 16:16:30" }""" &amp;
+               error_handler = se_system_utilities.do_nothing_system_error_handler
+            verify v_result =r void
+            verify v_error #r void
+
+            // test with invalid attribute value ('first_name' contains invalid characters)
+            test i_JSON = """{ "identifier":123, "first_name":"Albert&lt;&gt;", "last_name":"Newton", "random_number":5, "date_time":"2011-08-27 16:16:30" }""" &amp;
+               error_handler = se_system_utilities.do_nothing_system_error_handler
+            verify v_result =r void
+            verify v_error #r void
+         end
+      end</pre><p>Run the system commands <code class="code">compile_and_build</code> and <code class="code">run_tests</code>, and look at the test results.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top">If you are tired of manually executing the system command <code class="code">compile_and_build</code> each time before excuting <code class="code">run_tests</code> then you can create your own system command to automatically call <code class="code">compile_and_build</code> and then <code class="code">run_tests</code>. In Windows, for example, you can create <code class="code">compile_build_and_test.bat</code> with the following content:
+		<pre class="programlisting">@echo off
+
+call compile_and_build
+if errorlevel 1 goto end
+
+call run_tests
+
+:end</pre></td></tr></table></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="t2_more_reliable_objects.html">Prev</a> </td><td width="20%" align="center"><a accesskey="u" href="random_arcs_application.html">Up</a></td><td width="40%" align="right"> <a accesskey="n" href="t2_file_io.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Step 4: Making data more reliable and secure </td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top"> Step 6: File input/output</td></tr></table></div></body></html>

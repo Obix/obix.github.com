@@ -15,7 +15,7 @@
    <a href="Obix_EBNF.html#EBNF_script_instruction">script_instruction</a> *<br>
 "end" "repeat" ?</code></p></div>
                 <p>remark: <code class="code">expression</code> must be of type <code class="code">positive32</code></p>
-              </td><td><a href="repeat_times_instruction.html" title="repeat times instruction">the section called &#8220;<code class="code">repeat times</code> instruction&#8221;</a></td></tr><tr><td><code class="code">repeat_tail</code></td><td><code class="code">( "counter" ":" <a href="Obix_EBNF.html#EBNF_variable_id">variable_id</a> ) ? ( "id" ":" <a href="Obix_EBNF.html#EBNF_identifier">identifier</a> ) ?</code></td><td><a href="repeat_tail.html" title="repeat tail">the section called &#8220;repeat tail&#8221;</a></td></tr></tbody></table></div></div><br class="table-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repeat_times_example_section"></a>Examples</h4></div></div></div><div class="example"><a name="repeat_times_example_1"></a><p class="title"><b>Example 8.17. <code class="code">repeat times</code> example 1</b></p><div class="example-contents"><pre class="programlisting">// display numbers from 1 to 10
+              </td><td><a href="repeat_times_instruction.html" title="repeat times instruction">the section called &#8220;<code class="code">repeat times</code> instruction&#8221;</a></td></tr><tr><td><code class="code">repeat_tail</code></td><td><code class="code">( "counter" ":" <a href="Obix_EBNF.html#EBNF_constant_id">constant_id</a> ) ? ( "id" ":" <a href="Obix_EBNF.html#EBNF_identifier">identifier</a> ) ?</code></td><td><a href="repeat_tail.html" title="repeat tail">the section called &#8220;repeat tail&#8221;</a></td></tr></tbody></table></div></div><br class="table-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="repeat_times_example_section"></a>Examples</h4></div></div></div><div class="example"><a name="repeat_times_example_1"></a><p class="title"><b>Example 8.17. <code class="code">repeat times</code> example 1</b></p><div class="example-contents"><pre class="programlisting">// display numbers from 1 to 10
 
 repeat 10 times counter: i
    system.console.write_line ( i.to_string )
@@ -29,8 +29,8 @@ This is the last round.</pre><pre class="programlisting">service instruction_exa
 
          const positive32 number_of_repeats = 3
          repeat c_number_of_repeats times counter: repeat_counter
-            se_system.console.write_line ( "This is round " &amp; v_repeat_counter.co_to_string )
-            if v_repeat_counter =v c_number_of_repeats then
+            se_system.console.write_line ( "This is round " &amp; c_repeat_counter.co_to_string )
+            if c_repeat_counter =v c_number_of_repeats then
                se_system.console.write_line ( "This is the last round." )
             end if
          end repeat

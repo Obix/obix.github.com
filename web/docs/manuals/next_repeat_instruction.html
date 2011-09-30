@@ -24,20 +24,20 @@
          const positive32 row_count = 2
          const positive32 column_count = 4
          const table_data_provider table_data_provider = fa_table_data_provider_for_tests.co_create ( &amp;
-         	i_row_count = c_row_count &amp;
-         	i_column_count = c_column_count )
-         	
+            i_row_count = c_row_count &amp;
+            i_column_count = c_column_count )
+
          // display all row numbers containing at least one void column
 
          repeat from row_index = 1 to c_row_count id: row_loop     // loop through all rows
             repeat from column_index = 1 to c_column_count         // loop through all columns
             
                const any_type cell_value = c_table_data_provider.co_cell_value ( &amp;
-                  i_row_index = v_row_index &amp;
-                  i_column_index = v_column_index )
+                  i_row_index = c_row_index &amp;
+                  i_column_index = c_column_index )
 
                if c_cell_value =r void then
-                  se_system.console.write_line ( "Row " &amp; v_row_index.co_to_string &amp; " contains at least one void column" )
+                  se_system.console.write_line ( "Row " &amp; c_row_index.co_to_string &amp; " contains at least one void column" )
                   next repeat row_loop
                end if
 

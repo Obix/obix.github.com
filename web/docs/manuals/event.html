@@ -33,7 +33,7 @@ end type</pre><p>Now suppose that other objects or services want to be informed 
    inherit object_event end
 
    attribute television type:television end
-   attribute time type:date_time end
+   attribute time type:local_date_time end
 end</pre><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>Type <code class="code">object_event</code> in Obix's standard library is defined as:</p><pre class="programlisting">///
    Copyright (C) 2011 Christian Neumanns (www.obix.lu)
    This code can be used under the terms of the 'GNU Afero General Public License version 3'
@@ -57,7 +57,7 @@ type event
 
 	attribute source type:any_type end
 
-	// attribute time type:date_time voidable:yes end
+	// attribute time type:local_date_time voidable:yes end
 
 end type
 </pre></td></tr></table></div><p>The two event types can now be written using type inheritance again:</p><pre class="programlisting">type television_pushed_event default_factory:yes

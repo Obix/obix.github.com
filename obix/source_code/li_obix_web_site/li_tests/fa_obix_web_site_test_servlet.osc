@@ -18,7 +18,7 @@ factory obix_web_site_test_servlet type:HTTP_servlet java: "extends javax.servle
 	
 	command handle_request
 		script
-			i_response.string_response_writer.write ( string = "<h3>Hello from project 'obix_web_site' test servlet at " & se_time_of_day.co_current_time.to_string & "</h3>")
+			i_response.string_response_writer.write ( string = "<h3>Hello from project 'obix_web_site' test servlet at " & se_time.current_local_time & "</h3>")
 		end
 	end
 
