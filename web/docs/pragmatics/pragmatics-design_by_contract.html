@@ -1,0 +1,70 @@
+<html><!-- #BeginTemplate "/Templates/pragmatics.dwt" --><!-- DW6 -->
+<head>
+<!-- #BeginEditable "doctitle" --> 
+<title>Contract programming (Design by contract) (Obix programming language pragmatic)</title>
+<!-- #EndEditable -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../styles.css" type="text/css">
+</head>
+
+<body>
+<table border="0" width="100%"><tr>
+    <td> <!-- #BeginEditable "previous_page" --><a href="pragmatics-error_handling.html">Previous 
+      page</a><!-- #EndEditable --> 
+      | <!-- #BeginEditable "next_page" --><a href="pragmatics-testing.html">Next 
+      page</a><!-- #EndEditable --> 
+      | <a href="contents.html">Contents</a> | <a href="../../index.html">Home</a> 
+    </td>
+    <td align=right>Obix pragmatics</td>
+</tr></table>
+<hr>
+<!-- #BeginEditable "text" --> 
+<p class="pragmatic">Program with checks<i></i>!</p>
+<p>The concept of <em>Program with checks</em> is similar to <em>Design by contract</em> 
+  which has been developed by Bertrand Meyer and is integrated in the language 
+  <em>Eiffel</em>. Although it is an invaluable concept for developing reliable 
+  software, most languages don't support it. The idea behind is easy: Protect 
+  software against programming errors by providing <em>conditions</em> (contracts) 
+  that must be respected by anyone at any time.</p>
+<p>To understand the importance of this pragmatic let's look at a real world example 
+  and see what could happen in a world without checks. Buddy dreams of his own 
+  house and has a clear idea about how it should be constructed. Although Buddy 
+  never studied architecture he draws a plan, writes specifications and delivers 
+  all this data to a constructor who immediately starts the project, without checking 
+  Buddy's input and without any agreement on the price and delivery conditions. 
+  Obviously, the chances for a successful project are close to zero. It is easy 
+  to imagine any deficiencies and obscurities like cold rooms in winter, dark 
+  rooms, rooms without doors or even a collapsing house. Another example of preprogrammed 
+  problems would be an employee working for a company without an employment contract.</p>
+<p>Clearly, a world without contracts guaranteeing a healthy cooperation between 
+  two parties would end up in a disaster.</p>
+<p>Surprisingly, a large amount of software is written without checks, which is 
+  often a main reason for fragile software. <em>Program with checks</em> has been 
+  integrated into Obix from the ground up. 4 different kinds of checks exist:</p>
+<p><b>Attribute checks:</b> They protect attributes against any illegal values 
+  (e.g. a customer identifier being empty)</p>
+<p><b>Input checks: </b>They protect a script against any illegal input value 
+  (e.g. a negative integer value as index for retrieving an item from an indexed 
+  list)</p>
+<p><b>Output checks: </b>They detect any illegal values returned by a script (e.g. 
+  a character position in a string which is greater than the length of the string)</p>
+<p></p>
+<p><b>Script checks: </b>They can be inserted in any script at any point and are 
+  used whenever the programmer asserts a condition that must always be fulfilled 
+  at run-time. If the assertion doesn't hold, a run-time error will be generated. 
+  Script conditions are useful for detecting logical errors in scripts, such as 
+  errors in an algorithm; loop variant and invariant violations; etc.</p>
+<p>Concrete examples of <dfn>Program with checks</dfn> can be found in the <a href="../manuals/tutorial.html">tutorial</a>.</p>
+<!-- #EndEditable --> 
+<hr>
+<table border="0" width="100%"><tr>
+    <td> <!-- #BeginEditable "previous_page-bottom" --><a href="pragmatics-error_handling.html">Previous 
+      page</a><!-- #EndEditable --> 
+      | <!-- #BeginEditable "next_page-bottom" --><a href="pragmatics-testing.html">Next 
+      page</a><!-- #EndEditable --> 
+      | <a href="contents.html">Contents</a> | <a href="../../index.html">Home</a> 
+    </td>
+    <td align=right>October 2004</td>
+</tr></table>
+</body>
+<!-- #EndTemplate --></html>

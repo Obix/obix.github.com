@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Page not available</title>
+	</head>
+
+	<body>
+   		<p>The page you are requesting is not or no more available (error 404).</p>
+	    <p>Please click <a href="http://www.rps-obix.com">here</a> to go to Obix's main page.</p>
+	</body>
+</html>

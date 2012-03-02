@@ -1,16 +1,16 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Libraries</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="source_code_basics.html" title="Chapter 2. Source code"><link rel="prev" href="source_code_basics.html" title="Chapter 2. Source code"><link rel="next" href="basic_example.html" title="Chapter 3. Simple example"><script type="text/javascript">
-        
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-22290805-1']);
-          _gaq.push(['_trackPageview']);
-        
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        
-    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Libraries</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="source_code_basics.html">Prev</a> </td><th width="60%" align="center">Chapter 2. Source code</th><td width="20%" align="right"> <a accesskey="n" href="basic_example.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="library_basics"></a>Libraries</h2></div></div></div><p>Real world applications are often made up of hundreds or thousands of root software elements (RSEs). Therefore it is important to logically organize them in a hierarchy of groups, sub-groups, sub-sub-groups, and so on. This is done with libraries.</p><p>A <em class="firstterm">library</em> contains any number of RSEs that belong to a logical group of RSEs. A library can also recursively contain other libraries, called <em class="firstterm">child libraries</em>. There is no limit as to the level of child libraries.</p><p>It is up to the programmer to define the tree of libraries for his application. A simple example of a library structure in an ERP application could be the following:</p><pre class="literallayout">library ERP
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29648172-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Libraries</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="source_code_basics.html">Prev</a> </td><th width="60%" align="center">Chapter 2. Source code</th><td width="20%" align="right"> <a accesskey="n" href="basic_example.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="library_basics"></a>Libraries</h2></div></div></div><p>Real world applications are often made up of hundreds or thousands of root software elements (RSEs). Therefore it is important to logically organize them in a hierarchy of groups, sub-groups, sub-sub-groups, and so on. This is done with libraries.</p><p>A <em class="firstterm">library</em> contains any number of RSEs that belong to a logical group of RSEs. A library can also recursively contain other libraries, called <em class="firstterm">child libraries</em>. There is no limit as to the level of child libraries.</p><p>It is up to the programmer to define the tree of libraries for his application. A simple example of a library structure in an ERP application could be the following:</p><pre class="literallayout">library ERP
     library sales
         type customer
         factory customer

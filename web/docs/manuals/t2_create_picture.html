@@ -1,16 +1,16 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Step 7: Creating the 'random arcs' picture</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="random_arcs_application.html" title="Chapter 7. The 'Random arcs' application"><link rel="prev" href="t2_file_io.html" title="Step 6: File input/output"><link rel="next" href="t2_test_application.html" title="Step 8: Testing the application"><script type="text/javascript">
-        
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-22290805-1']);
-          _gaq.push(['_trackPageview']);
-        
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        
-    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Step 7: Creating the 'random arcs' picture</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="t2_file_io.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The 'Random arcs' application</th><td width="20%" align="right"> <a accesskey="n" href="t2_test_application.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="t2_create_picture"></a>Step 7: Creating the 'random arcs' picture</h2></div></div></div><p>Now comes the fun part of the application: creating a picture based on random data provided by people.</p><p>The picture will be created by a script that:</p><div class="itemizedlist"><ul type="disc"><li><p>loads all contributions from the JSON file</p></li><li><p>builds a string that contains the SVG code for the picture, based on the contributions</p></li><li><p>saves the SVG code into a file</p></li></ul></div><p>The code to create the picture doesn't use any new concepts you didn't see already in the previous chapters. We will just create a new service responsible to create the picture. Proceed as follows:</p><div class="itemizedlist"><ul type="disc"><li><p>Create file <code class="code">se_picture_creator.osc</code> in the source code's <code class="code">li_random_arcs</code> directory and copy-paste the following code:</p><pre class="programlisting">service picture_creator
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29648172-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Step 7: Creating the 'random arcs' picture</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="t2_file_io.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The 'Random arcs' application</th><td width="20%" align="right"> <a accesskey="n" href="t2_test_application.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="t2_create_picture"></a>Step 7: Creating the 'random arcs' picture</h2></div></div></div><p>Now comes the fun part of the application: creating a picture based on random data provided by people.</p><p>The picture will be created by a script that:</p><div class="itemizedlist"><ul type="disc"><li><p>loads all contributions from the JSON file</p></li><li><p>builds a string that contains the SVG code for the picture, based on the contributions</p></li><li><p>saves the SVG code into a file</p></li></ul></div><p>The code to create the picture doesn't use any new concepts you didn't see already in the previous chapters. We will just create a new service responsible to create the picture. Proceed as follows:</p><div class="itemizedlist"><ul type="disc"><li><p>Create file <code class="code">se_picture_creator.osc</code> in the source code's <code class="code">li_random_arcs</code> directory and copy-paste the following code:</p><pre class="programlisting">service picture_creator
 
    // file used to store the SVG picture
    attribute picture_file type:file default:fa_relative_file.create ( "picture.svg"~ ).make_absolute_file end
@@ -62,8 +62,9 @@
          var positive32 y_name = 22
 
          // coordinates to draw an arc
-         var positive32 x_start; x_end = image_width / 2
-         var positive32 y_start; y_end = image_height / 2
+// var signed_integer32 x_start; x_end = fa_signed_integer32.create ( image_width.value / 2~ )
+         var signed_integer32 x_start; x_end = image_width / 2
+         var signed_integer32 y_start; y_end = image_height / 2
          var signed_integer32 x_delta; y_delta = 0
 
          // draw the picture
@@ -78,7 +79,8 @@
             end if
 
             // determine the arc's radius based on the contribution's random value
-            const positive32 radius = fa_positive32.create ( 20~ + c_contribution.random_number.value * 10~ )
+            // const positive32 radius = fa_positive32.create ( 20~ + c_contribution.random_number.value * 10~ )
+            const positive32 radius = 20 + 10 * c_contribution.random_number
 
             // make arcs rotate clockwise
             if x_end &gt; x_start then

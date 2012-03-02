@@ -1,16 +1,16 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>next repeat instruction</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="loop_instructions.html" title="Loops"><link rel="prev" href="exit_repeat_instruction.html" title="exit repeat instruction"><link rel="next" href="event_instructions.html" title="Events"><script type="text/javascript">
-        
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-22290805-1']);
-          _gaq.push(['_trackPageview']);
-        
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        
-    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center"><code class="code">next repeat</code> instruction</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="exit_repeat_instruction.html">Prev</a> </td><th width="60%" align="center">Loops</th><td width="20%" align="right"> <a accesskey="n" href="event_instructions.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="next_repeat_instruction"></a><code class="code">next repeat</code> instruction</h3></div></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="next_repeat_description"></a>Description</h4></div></div></div><p>The <code class="code">next repeat</code> instruction is used to stop the current pass of a <code class="code">repeat</code> loop and start the next one immediately.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="next_repeat_syntax"></a>Syntax</h4></div></div></div><div class="table"><a name="next_repeat_syntax_table"></a><p class="title"><b>Table 8.19. <code class="code">next repeat</code> syntax</b></p><div class="table-contents"><table summary="next repeat syntax" cellspacing="0" cellpadding="5" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Production</th><th>Syntax</th><th>Links</th></tr></thead><tbody><tr><td><code class="code">next_repeat_instruction</code></td><td>
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29648172-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center"><code class="code">next repeat</code> instruction</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="exit_repeat_instruction.html">Prev</a> </td><th width="60%" align="center">Loops</th><td width="20%" align="right"> <a accesskey="n" href="event_instructions.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="next_repeat_instruction"></a><code class="code">next repeat</code> instruction</h3></div></div></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="next_repeat_description"></a>Description</h4></div></div></div><p>The <code class="code">next repeat</code> instruction is used to stop the current pass of a <code class="code">repeat</code> loop and start the next one immediately.</p></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="next_repeat_syntax"></a>Syntax</h4></div></div></div><div class="table"><a name="next_repeat_syntax_table"></a><p class="title"><b>Table 8.19. <code class="code">next repeat</code> syntax</b></p><div class="table-contents"><table summary="next repeat syntax" cellspacing="0" cellpadding="5" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>Production</th><th>Syntax</th><th>Links</th></tr></thead><tbody><tr><td><code class="code">next_repeat_instruction</code></td><td>
                 <code class="code">"next" "repeat" <a href="Obix_EBNF.html#EBNF_identifier">identifier</a> ?</code>
                 <p>remarks:
                   </p><div class="itemizedlist"><ul type="disc"><li>if <code class="code">identifier</code> is omitted then the innermost <code class="code">repeat</code> loop is concerned in case of several nested <code class="code">repeat</code> loops</li><li>if <code class="code">identifier</code> is specified, then the <code class="code">repeat</code> loop identified by <code class="code">identifier</code> is concerned</li></ul></div><p>

@@ -1,0 +1,221 @@
+<html><!-- #BeginTemplate "/Templates/pragmatics.dwt" --><!-- DW6 -->
+<head>
+<!-- #BeginEditable "doctitle" --> 
+<title>Fail fast program error detection (Obix programming language pragmatic)</title>
+<!-- #EndEditable -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../styles.css" type="text/css">
+</head>
+
+<body>
+<table border="0" width="100%"><tr>
+    <td> <!-- #BeginEditable "previous_page" --><a href="pragmatics-quality.html">Previous 
+      page</a><!-- #EndEditable --> 
+      | <!-- #BeginEditable "next_page" --><a href="pragmatics-design_by_contract.html">Next 
+      page</a><!-- #EndEditable --> 
+      | <a href="contents.html">Contents</a> | <a href="../../index.html">Home</a> 
+    </td>
+    <td align=right>Obix pragmatics</td>
+</tr></table>
+<hr>
+<!-- #BeginEditable "text" --> 
+<p class="pragmatic">Every possible error should be detected and treated as early 
+  as possible!</p>
+<p>The rationale behind this pragmatic can be best understood by an example. Suppose 
+  we have the following HTML code:</p>
+<table width="100%" border="1" bgcolor="#EAEAEA">
+  <tr> 
+    <td> 
+      <pre>
+
+<code>&lt;html&gt;<br>   &lt;title&gt;TEST&lt;/title&gt;
+   </code><code>&lt;h1&gt;Important:&lt;/h1&gt;
+   You should </code><code>&lt;b&gt;NOT&lt;/b&gt; drink this water!
+&lt;/html&gt;
+</code></pre>
+    </td>
+  </tr>
+</table>
+<p>Displaying this HTML code on my computer (equipped with Windows XP and Internet 
+  Explorer version 6.0) produces the following result:</p>
+<p><img src="images/drink_01.JPG" width="267" height="194" border="1"></p>
+<p>Let's insert now different syntax errors in the HTML code and look at their 
+  consequences.</p>
+<p>First, we replace <code>&lt;/html&gt;</code> in the last line with <code>&lt;html&gt;:</code></p>
+<table width="100%" border="1" bgcolor="#EAEAEA">
+  <tr> 
+    <td> 
+      <pre>
+
+<code>&lt;html&gt;<br>   &lt;title&gt;TEST&lt;/title&gt;
+   </code><code>&lt;h1&gt;Important:&lt;/h1&gt;
+   You should </code><code>&lt;b&gt;NOT&lt;/b&gt; drink this water!
+&lt;html&gt;
+</code></pre>
+    </td>
+  </tr>
+</table>
+<p>Here is the result:</p>
+<p><img src="images/drink_01.JPG" width="267" height="194"></p>
+<p>Although we introduced a little syntax error, the interpreter did its job and 
+  the result is still the same. Everything is fine, isn't it?</p>
+<p>Let's try another error. We delete another character and write <code>&lt;/title</code> 
+  instead of <code>&lt;/title&gt;</code> in the second line of code:</p>
+<table width="100%" border="1" bgcolor="#EAEAEA">
+  <tr> 
+    <td> 
+      <pre>
+
+<code>&lt;html&gt;<br>   &lt;title&gt;TEST&lt;/title
+   </code><code>&lt;h1&gt;Important:&lt;/h1&gt;
+   You should &lt;b&gt;NOT&lt;/b&gt; drink this water!
+&lt;/html&gt;
+</code></pre>
+    </td>
+  </tr>
+</table>
+<p>This code produces the following output:</p>
+<p><img src="images/drink_02.JPG" width="267" height="178" border="1"></p>
+<p>As we can see, there is only a little optical problem: the word 'Important' 
+  is no longer displayed in big letters. But the role of our program is still 
+  fulfilled: to tell the reader that he or she should not drink the water. We 
+  could say: Better doing a job imperfectly than not doing it at all.</p>
+<p>Finally, let's try another error of the same kind. We replace <code>&lt;b&gt;</code> 
+  with <code>&lt;b</code> in the fourth line:</p>
+<table width="100%" border="1" bgcolor="#EAEAEA">
+  <tr> 
+    <td> 
+      <pre>
+
+<code>&lt;html&gt;<br>   &lt;title&gt;TEST&lt;/title&gt;
+   </code><code>&lt;h1&gt;Important:&lt;/h1&gt;
+   You should </code><code>&lt;b NOT&lt;/b&gt; drink this water!
+&lt;/html&gt;
+</code></pre>
+    </td>
+  </tr>
+</table>
+<p>This is the output:</p>
+<p><img src="images/drink_03.JPG" width="268" height="195" border="1"></p>
+<p>Oops!!! This time a very serious problem arises! The program does exactly the 
+  opposite of what it should do. And the consequence is terrible: It has been 
+  transformed into a potential human killer.</p>
+<p>What is the reason for the above problem? Although the interpreter (Internet 
+  Explorer in this case) could detect the above syntax error and display an error 
+  message, it tries to continue the job. But, although the 3 errors were of the 
+  same kind, their outcomes were extremely different. The obvious lesson from 
+  this example is very clear: <b>The consequences of continuing arbitrarily in 
+  the case of an error vary, from really harmless</b> (first case above) <b>to 
+  extremely harmful</b> (last case above). Even the smartest modern interpreter/compiler 
+  could never evaluate the potential consequences of a programming error and then 
+  decide to accept the error and choose a strategy to continue the job. The best 
+  thing it can do is to report an error, stop immediately and produce no output.</p>
+<p>Remarks: </p>
+<ul>
+  <li>The above problem with HTML code is solved in XHTML, which is a successor 
+    of HTML and based on the much more severe rules like those of XML.<br>
+    <br>
+  </li>
+  <li> The above example is not 'only a theoretical, exaggerated example'. There 
+    are numerous real life examples of 'little programming errors' with drastic, 
+    catastrophic consequences. Besides the famous example of the crash of Ariane 
+    5, one of the earliest examples of spacecraft software failures is Mariner 
+    1. On July 21, 1962, the spacecraft exploded shortly after liftoff due to 
+    a misplaced comma in the software.</li>
+</ul>
+<p><br>
+</p>
+<p>The logical conclusion to draw from the above example is:</p>
+<p align="center"><b>Every possible error should be detected and treated as early 
+  as possible.</b></p>
+<p>This is undoubtedly one of the most important rules in software development. 
+  It just has to be applied consistently if we want to create reliable software. 
+</p>
+<p>By the way, you may have heard about the 10 commandments for C programmers, 
+  written in old English. Commandment 6 tells us the same, in a more literary 
+  manner:</p>
+<p><cite>&quot;If a function be advertised to return an error code in the event 
+  of difficulties, thou shalt check for that code, yea, even though the checks 
+  triple the size of thy code and produce aches in thy typing fingers, for if 
+  thou thinkest &quot;it cannot happen to me'', the gods shall surely punish thee 
+  for thy arrogance.&quot;</cite></p>
+<p>Because of the importance of this pragmatic, any programming language should 
+  have built-in as much as possible easy to use error detecting mechanisms. In 
+  the case of a potentially dangerous error that is not explicitly caught and 
+  treated by the program, the system should never try to continue, but report 
+  a helpful error message and then stop immediately or, if appropriate, ask the 
+  user what to do.</p>
+<p>Greatest efforts have been made to apply this important principle in Obix. 
+  The following is a brief enumeration of built-in features that should support 
+  the programmer in creating more robust, reliable software.</p>
+<ul>
+  <li>Obix is a <em>compiled</em>, not an interpreted language. Source code is 
+    analysed by a compiler which detects and reports syntax, grammar and semantic 
+    programming errors. Target code is only produced if no error has been detected.<br>
+    <br>
+  </li>
+  <li>Obix is a <em>statically typed</em> language. Type incompatibility errors 
+    are caught at compile-time. If required in exceptional situations, dynamic 
+    typing can be used, but the programmer has to specify it explicitly.<br>
+    <br>
+  </li>
+  <li><em>Programming with checks</em> (like <dfn>design by contract</dfn>) is 
+    built-in in the language. See the tutorial for more information.<br>
+    <br>
+  </li>
+  <li><em>Automated testing</em> is built-in in the language. See the tutorial 
+    for more information.<br>
+    <br>
+  </li>
+  <li>If an error occurs at runtime and no explicit error handler has been specified 
+    in the program, then the system displays and may log an error message and 
+    stops immediately.<br>
+    <br>
+  </li>
+  <li>Arithmetic overflow errors are always detected at run-time.<br>
+    <br>
+  </li>
+  <li>The enumerated data type is built-in in a type safe way.<br>
+    <br>
+  </li>
+  <li>By default, the value void is <em>not</em> permitted for attributes. If 
+    we create an object with an attribute whose value is void, a run-time error 
+    is immediately generated, except when we explicitly permit void values.<br>
+    (Java programmers probably agree that the most frequent runtime error is the 
+    <code>NullPointerException.)<br>
+    <br>
+    </code></li>
+  <li><em>Source code sections</em> limit the scope of variables and constants 
+    to the section in which they are defined. Using a variable or constant from 
+    another section of the same script generates a compile-time error.<br>
+    <br>
+  </li>
+  <li>Besides variables, <em>constants</em> can be used in scripts. A value can 
+    only be assigned once to a constant.<br>
+    <br>
+  </li>
+  <li>If no condition is fulfilled during execution of a case instruction, a run-time 
+    error is generated, except in the case where the programmer explicitly adds 
+    a default case. <br>
+    <br>
+  </li>
+  <li>There are no implicit type conversions in Obix. Type conversions must always 
+    be explicitly specified by the programmer<br>
+    <br>
+  </li>
+  <li>The <em>dangling else</em> problem doesn't exist in Obix<br>
+  </li>
+</ul>
+<!-- #EndEditable --> 
+<hr>
+<table border="0" width="100%"><tr>
+    <td> <!-- #BeginEditable "previous_page-bottom" --><a href="pragmatics-quality.html">Previous 
+      page</a><!-- #EndEditable --> 
+      | <!-- #BeginEditable "next_page-bottom" --><a href="pragmatics-design_by_contract.html">Next 
+      page</a><!-- #EndEditable --> 
+      | <a href="contents.html">Contents</a> | <a href="../../index.html">Home</a> 
+    </td>
+    <td align=right>October 2004</td>
+</tr></table>
+</body>
+<!-- #EndTemplate --></html>

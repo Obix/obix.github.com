@@ -1,16 +1,16 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Chapter 3. How to execute Java code in a script?</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="tutorial_part_1.html" title="Part I. How to create and execute code"><link rel="prev" href="execute_script.html" title="Chapter 2. How to write and execute script files?"><link rel="next" href="pc_application.html" title="Chapter 4. How to develop a standard PC application?"><script type="text/javascript">
-        
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-22290805-1']);
-          _gaq.push(['_trackPageview']);
-        
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        
-    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 3. How to execute Java code in a script?</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="execute_script.html">Prev</a> </td><th width="60%" align="center">Part I. How to create and execute code</th><td width="20%" align="right"> <a accesskey="n" href="pc_application.html">Next</a></td></tr></table><hr></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="execute_java_script"></a>Chapter 3. How to execute Java code in a script?</h2></div></div></div><p>Besides Obix source code, any script in Obix can also contain Java source code.</p><p>To embed Java source code in a script, simply insert the Java statements between a <code class="code">java</code> line and an <code class="code">end java</code> line, as in the following example:</p><pre class="programlisting">java
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29648172-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter 3. How to execute Java code in a script?</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="execute_script.html">Prev</a> </td><th width="60%" align="center">Part I. How to create and execute code</th><td width="20%" align="right"> <a accesskey="n" href="pc_application.html">Next</a></td></tr></table><hr></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="execute_java_script"></a>Chapter 3. How to execute Java code in a script?</h2></div></div></div><p>Besides Obix source code, any script in Obix can also contain Java source code.</p><p>To embed Java source code in a script, simply insert the Java statements between a <code class="code">java</code> line and an <code class="code">end java</code> line, as in the following example:</p><pre class="programlisting">java
    System.out.println ( "Hello world" );
 end java</pre><p>To execute the above Java code, just proceed as explained in the previous chapter.</p><br><p>You can also <span class="emphasis"><em>mix</em></span> Obix and Java code in a script like this:</p><pre class="programlisting">// loop with Obix; display with Java
 repeat 3 times

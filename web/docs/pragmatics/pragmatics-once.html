@@ -1,0 +1,121 @@
+<html><!-- #BeginTemplate "/Templates/pragmatics.dwt" --><!-- DW6 -->
+<head>
+<!-- #BeginEditable "doctitle" --> 
+<title>Don't repeat yourself! (DRY principle) (Obix programming language pragmatic)</title>
+<!-- #EndEditable -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../styles.css" type="text/css">
+</head>
+
+<body>
+<table border="0" width="100%"><tr>
+    <td> <!-- #BeginEditable "previous_page" --><a href="pragmatics-concurrency.html">Previous 
+      page</a><!-- #EndEditable --> 
+      | <!-- #BeginEditable "next_page" --><a href="pragmatics-independency.html">Next 
+      page</a><!-- #EndEditable --> 
+      | <a href="contents.html">Contents</a> | <a href="../../index.html">Home</a> 
+    </td>
+    <td align=right>Obix pragmatics</td>
+</tr></table>
+<hr>
+<!-- #BeginEditable "text" --> 
+<p class="pragmatic">Every knowledge should be defined at one place only!</p>
+<p>The idea behind this pragmatic is easy to understand. If the same knowledge 
+  is defined at more than one place then each duplicate must be updated in case 
+  of changes. And this implies some considerable inconveniences:</p>
+<ol>
+  <li>We risk forgetting to change one or more duplicates<br>
+    <br>
+  </li>
+  <li>We risk making <em>different</em> updates<br>
+    <br>
+  </li>
+  <li>Knowledge is in an inconsistent state during the update process<br>
+    <br>
+  </li>
+  <li> It takes time to change all duplicates<br>
+    <br>
+  </li>
+  <li>It takes space to store all duplicates<br>
+  </li>
+</ol>
+<p>Inconveniences 1 to 3 are the worst one. Knowledge is in an inconsistent state, 
+  thus being a potential source for the most obscure and annoying problems. We 
+  all experienced such situations in real life, such as Marie who updated an appointment's 
+  change in Albert's calendar, but forgot to change it in the calendar of Isaac.</p>
+<p>Although the above pragmatic can be applied to many domains, let's concentrate 
+  on software development, where it plays a crucial role. Its repeated violation 
+  not only leads to time and space penalties, but is a guarantee for unmaintainable 
+  source code, often resulting in evil maintenance nightmares.</p>
+<p>Unfortunately, source code changes often. Unfortunately, no tool can automatically 
+  and reliably detect all code and data duplication, although some refactoring 
+  tools are able to help the programmer eliminating duplicates in code. Finally, 
+  still unfortunately, it can even be impossible to avoid duplication because 
+  of performance considerations or technical limits and constraints, for example 
+  in the case of the same data that must be available on two different machines 
+  which are not connected.</p>
+<p>Hence, the responsibility for avoiding duplication largely relies on the programmer. 
+  However, Obix provides several features which help us considerably. By applying 
+  them judiciously, code and data duplicates can be totally eliminated in most 
+  cases.</p>
+<ul>
+  <li>Services should be used to provide commonly used features, like constant 
+    values (e.g. pi; the carriage return character; ...) and commands needed by 
+    different scripts.<br>
+    <br>
+  </li>
+  <li>Objects in memory are always accessed by a <em>reference</em> to the object. 
+    For example, if 2 variables hold the same object then both references point 
+    to the same location in memory where the object is stored. Assignments (e.g. 
+    <code>v_balance_to_print = i_current_balance</code>) only manipulate references 
+    to objects, they never copy the value of the object in memory. Thus, any changes 
+    to an object are immediately shared by all references to that object. By the 
+    way, this can dramatically improve performance in many cases.<br>
+    <br>
+  </li>
+  <li>Objects are immutable by default, which reduces the risk of erroneously 
+    changing its state. Moreover they are inherently thread-safe.<br>
+    <br>
+  </li>
+  <li>Multiple type inheritance eliminates the need for code duplication in types<br>
+    <br>
+  </li>
+  <li>Templates (parameterized source code) can be used to define generic software 
+    components or similar chunks of code which are used by different components.</li>
+</ul>
+<p>If we are forced to store the same data in different places then we should 
+  consider automating the update process, so that all duplicates are automatically 
+  and reliably updated from a common source. For example, if a data structure 
+  is defined in the customer's specifications, in the relational database, as 
+  well as in the source code, then we could develop a code generator which, based 
+  on the specifications, automatically generates the table in the database and 
+  the type in Obix.<br>
+</p>
+<p>Finally, XML should be favored for data and configuration storage, whenever 
+  appropriate. XML is a worldwide standard, consists of machine and human readable 
+  plain text and is supported by most programming languages and many tools.</p>
+<p class="remark"><b>Remark:</b> This document is an example of violation of the 
+  above pragmatic!<br>
+  The 'Previous page' link at the top is duplicated at the bottom. The same is 
+  true for the other buttons. Furthermore, if the file name of the linked document 
+  changes (I don't tell the name, because I would again duplicate knowledge), 
+  then it must also be changed twice in this page's HTML code, as well as in all 
+  other documents which contain links to it. Also, instead of storing all information 
+  on this page in an HTML file, it should better be stored in an XML file, so 
+  that it could more easily be explored by other tools, for example to convert 
+  it into any other desired format by using XSLT.</p>
+<p></p>
+<p></p>
+<!-- #EndEditable --> 
+<hr>
+<table border="0" width="100%"><tr>
+    <td> <!-- #BeginEditable "previous_page-bottom" --><a href="pragmatics-concurrency.html">Previous 
+      page</a><!-- #EndEditable --> 
+      | <!-- #BeginEditable "next_page-bottom" --><a href="pragmatics-independency.html">Next 
+      page</a><!-- #EndEditable --> 
+      | <a href="contents.html">Contents</a> | <a href="../../index.html">Home</a> 
+    </td>
+    <td align=right>October 2004</td>
+</tr></table>
+</body>
+<!-- #EndTemplate --></html>

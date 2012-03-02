@@ -1,0 +1,12 @@
+# This file contains all parameters used to configurate your Obix project
+# Look at the example assignments below and modify them if needed
+# Note: To activate a parameter assignment you have to remove the comment symbol (#) at the beginning of the line
+
+
+# The following parameter defines the 'java' executable options applied when your application is launched
+# Please refer to Java's official documentation for a full list of options supported
+# The default value for this parameter is an empty string
+# java_exe_options = -Xmx384m -Xss10m
+
+# java_compiler_options = 
+# distribution_run_file_name = obix

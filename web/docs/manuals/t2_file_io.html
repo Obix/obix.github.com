@@ -1,16 +1,16 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Step 6: File input/output</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="random_arcs_application.html" title="Chapter 7. The 'Random arcs' application"><link rel="prev" href="t2_object_conversion.html" title="Step 5: Object conversions and error handling"><link rel="next" href="t2_create_picture.html" title="Step 7: Creating the 'random arcs' picture"><script type="text/javascript">
-        
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-22290805-1']);
-          _gaq.push(['_trackPageview']);
-        
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        
-    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Step 6: File input/output</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="t2_object_conversion.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The 'Random arcs' application</th><td width="20%" align="right"> <a accesskey="n" href="t2_create_picture.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="t2_file_io"></a>Step 6: File input/output</h2></div></div></div><p>Now that we can create <code class="code">contribution</code> objects and convert them to and from JSON, the next step is to manage a <span class="emphasis"><em>list</em></span> of contributions and make this list <span class="emphasis"><em><a href="http://en.wikipedia.org/wiki/Persistence_%28computer_science%29" target="_top">persistent</a></em></span> in a JSON file.</p><p>We will achieve this with a <a href="service.html" title="Service">service</a> called <code class="code">se_contribution_list</code>. Besides maintaining a persistent list of <code class="code">contribution</code> objects, this service will have two more responsibilities:</p><div class="itemizedlist"><ul type="disc"><li><p>Assign a unique identifier to each <code class="code">contribution</code> object. The identifier will be an integer number starting at 1 and incremented by 1 for each new object.</p></li><li><p>Create <code class="code">contribution</code> objects from the following 3 string values: <code class="code">first_name</code>, <code class="code">last_name</code> and <code class="code">random_number</code>. This is an important feature because we will later build a web interface that enables users to submit their contribution. Data sent via HTTP are all provided as strings which have to be converted into typed objects. Moreover the users won't input an identifier or the date and time of their contribution. They only submit their first name, last name and random value for an arc.</p></li></ul></div><p><code class="code">se_contribution_list</code> will have two public commands:</p><div class="itemizedlist"><ul type="disc"><li><p>Command <code class="code">add_from_strings</code> creates a <code class="code">contribution</code> object from string values and then adds the object to the list of contributions saved in the JSON file</p></li><li><p>Command <code class="code">get_list</code> reads all contributions from the JSON file and returns the complete list as an object.</p></li></ul></div><p>The signature of command <code class="code">add_from_strings</code> is defined as follows:</p><pre class="programlisting">   command add_from_strings
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29648172-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Step 6: File input/output</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="t2_object_conversion.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The 'Random arcs' application</th><td width="20%" align="right"> <a accesskey="n" href="t2_create_picture.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="t2_file_io"></a>Step 6: File input/output</h2></div></div></div><p>Now that we can create <code class="code">contribution</code> objects and convert them to and from JSON, the next step is to manage a <span class="emphasis"><em>list</em></span> of contributions and make this list <span class="emphasis"><em><a href="http://en.wikipedia.org/wiki/Persistence_%28computer_science%29" target="_top">persistent</a></em></span> in a JSON file.</p><p>We will achieve this with a <a href="service.html" title="Service">service</a> called <code class="code">se_contribution_list</code>. Besides maintaining a persistent list of <code class="code">contribution</code> objects, this service will have two more responsibilities:</p><div class="itemizedlist"><ul type="disc"><li><p>Assign a unique identifier to each <code class="code">contribution</code> object. The identifier will be an integer number starting at 1 and incremented by 1 for each new object.</p></li><li><p>Create <code class="code">contribution</code> objects from the following 3 string values: <code class="code">first_name</code>, <code class="code">last_name</code> and <code class="code">random_number</code>. This is an important feature because we will later build a web interface that enables users to submit their contribution. Data sent via HTTP are all provided as strings which have to be converted into typed objects. Moreover the users won't input an identifier or the date and time of their contribution. They only submit their first name, last name and random value for an arc.</p></li></ul></div><p><code class="code">se_contribution_list</code> will have two public commands:</p><div class="itemizedlist"><ul type="disc"><li><p>Command <code class="code">add_from_strings</code> creates a <code class="code">contribution</code> object from string values and then adds the object to the list of contributions saved in the JSON file</p></li><li><p>Command <code class="code">get_list</code> reads all contributions from the JSON file and returns the complete list as an object.</p></li></ul></div><p>The signature of command <code class="code">add_from_strings</code> is defined as follows:</p><pre class="programlisting">   command add_from_strings
       in first_name type:string end
       in last_name type:string end
       in random_number type:string end
@@ -49,6 +49,7 @@
             ( v_value = result &amp;
             o_error = error )
          if o_error #r void then
+			o_result = void
             exit script
          end if
          
@@ -192,6 +193,13 @@ end</pre></li></ul></div><br><p>Now we are ready to write <code class="code">se_
       %result_xor_system_error_output &lt; !indexed_list&lt;contribution&gt; &gt;
       
       script
+         // report an error if 'a_contributions_file' file doesn't exists
+         if not a_contributions_file.exists then
+            o_error = fa_system_error.create ( description = """File {{a_contributions_file}} doesn't exist.""" )
+            i_error_handler.handle_system_error ( o_error )
+            exit script
+         end if
+
          // read all lines from file 'a_contributions_file'
          var ty_indexed_string_list text_lines
          se_text_file_IO.restore_lines_from_text_file ( &amp;
@@ -208,6 +216,11 @@ end</pre></li></ul></div><br><p>Now we are ready to write <code class="code">se_
          
          // add all 'contribution' objects stored in the file to the mutable list
          repeat for each string line in text_lines
+			// skip empty lines
+			if line.is_empty then
+				next repeat
+			end if
+
             var contribution contribution
             fa_contribution.create_from_JSON ( &amp;
                JSON = line &amp;
@@ -298,7 +311,7 @@ end</pre></li></ul></div><br><p>Now we are ready to write <code class="code">se_
    end
 
 end service</pre><p>
-				</p></li></ul></div><br><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>It is interesting to note that the above <code class="code">add_from_strings</code> command could also be written in a much shorter way.</p><p>In the above script we carefully check each value for its validity and we manage each possible error individually. This is the preferred way to write code because we have fine-grained control over every possible invalid data and we can provide explicit error messages and error handling.</p><p>Instead of checking each potential error programmatically, however, we could also rely on the fact that a <a href="program_error.html" title="Program error">program error</a> (also called an <a href="http://en.wikipedia.org/wiki/Exception_handling" target="_top">exception</a>) occurs immediately whenever we try to store invalid data in an object. For example, if we created a <code class="code">contribution</code> object with an invalid <code class="code">first_name</code> value, then the data check ensured through <a href="contract_programming.html" title="Chapter 17. Contract programming">contract programming</a> in type <code class="code">user_name</code> would immediately raise a program error at runtime.</p><p>Program errors can be programmatically catched, in the same way that exceptions can be catched in other programming languages.</p><p>The following alternative code for command <code class="code">add_from_strings</code> shows how to do this in Obix. Besides relying on program errors thrown in case of invalid data or other runtime problems, the following (over-simplified) command also doesn't have an <code class="code">error_handler</code> input argument nor an <code class="code">error</code> output argument. In case of a problem at runtime the command simply returns a <code class="code">void</code> result and writes an error message to the system's <code class="code">error</code> device.</p><pre class="programlisting">   command add_from_strings
+				</p></li></ul></div><br><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/note.png"></td><th align="left">Note</th></tr><tr><td align="left" valign="top"><p>It is interesting to note that the above <code class="code">add_from_strings</code> command could also be written in a much shorter way.</p><p>In the above script we carefully check each value for its validity and we manage each possible error individually. This is the preferred way to write code because we have fine-grained control over every possible invalid data and we can provide explicit error messages and error handling.</p><p>Instead of checking each potential error programmatically, however, we could also rely on the fact that a <a href="program_error.html" title="Program error">program error</a> (also called an <a href="http://en.wikipedia.org/wiki/Exception_handling" target="_top">exception</a>) occurs immediately whenever we try to store invalid data in an object. For example, if we created a <code class="code">contribution</code> object with an invalid <code class="code">first_name</code> value, then the data check ensured through <a href="design_by_contract_contract_programming.html" title="Chapter 17. Contract Programming, also called Design by Contract (TM)">Contract Programming (Design by Contract)</a> in type <code class="code">user_name</code> would immediately raise a program error at runtime.</p><p>Program errors can be programmatically catched, in the same way that exceptions can be catched in other programming languages.</p><p>The following alternative code for command <code class="code">add_from_strings</code> shows how to do this in Obix. Besides relying on program errors thrown in case of invalid data or other runtime problems, the following (over-simplified) command also doesn't have an <code class="code">error_handler</code> input argument nor an <code class="code">error</code> output argument. In case of a problem at runtime the command simply returns a <code class="code">void</code> result and writes an error message to the system's <code class="code">error</code> device.</p><pre class="programlisting">   command add_from_strings
       in first_name type:string end
       in last_name type:string end
       in random_number type:string end

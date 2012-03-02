@@ -1,16 +1,16 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Advantages (so far)</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="random_arcs_application.html" title="Chapter 7. The 'Random arcs' application"><link rel="prev" href="t2_unit_testing.html" title="Step 3: Unit testing"><link rel="next" href="t2_more_reliable_objects.html" title="Step 4: Making data more reliable and secure"><script type="text/javascript">
-        
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-22290805-1']);
-          _gaq.push(['_trackPageview']);
-        
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-        
-    </script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Advantages (so far)</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="t2_unit_testing.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The 'Random arcs' application</th><td width="20%" align="right"> <a accesskey="n" href="t2_more_reliable_objects.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="t2_advantages"></a>Advantages (so far)</h2></div></div></div><p>Until now you just wrote code to define and create objects. It is time, however, to lean back and consider some important points related to Obix's integrated support for more reliability and productivity.</p><br><p>A first point to note is that the <code class="code">contribution</code> objects created at runtime are all <span class="emphasis"><em>immutable</em></span>. This means that once an object is created, its attributes cannot be set to different values. Hence, if an object is created and stored in constant <code class="code">c</code> as follows:</p><pre class="programlisting">const contribution c = fa_contribution.create ( &amp;
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29648172-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Advantages (so far)</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="t2_unit_testing.html">Prev</a> </td><th width="60%" align="center">Chapter 7. The 'Random arcs' application</th><td width="20%" align="right"> <a accesskey="n" href="t2_more_reliable_objects.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="t2_advantages"></a>Advantages (so far)</h2></div></div></div><p>Until now you just wrote code to define and create objects. It is time, however, to lean back and consider some important points related to Obix's integrated support for more reliability and productivity.</p><br><p>A first point to note is that the <code class="code">contribution</code> objects created at runtime are all <span class="emphasis"><em>immutable</em></span>. This means that once an object is created, its attributes cannot be set to different values. Hence, if an object is created and stored in constant <code class="code">c</code> as follows:</p><pre class="programlisting">const contribution c = fa_contribution.create ( &amp;
    identifier = 123 &amp;
    first_name = "Albert" &amp;
    last_name = "Newton" &amp;
