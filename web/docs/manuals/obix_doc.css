@@ -11,6 +11,13 @@ body, p, th, td, li, dt, dd {
   font-size: 12px;
 }
 
+/* center content on page (doesn't work in IE!) */
+div {
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 h1, h2, h3, h4, h5 {
   color: #009; /* dark blue */
   padding-top: 9px;
@@ -39,11 +46,11 @@ h5 {
 }
 
 div.chapter h2 {
-  background-color: #eee; /* gray */
+  background-color: #F3F3FF; /* light blue */
 }
 
 div.section h2 {
-  background-color: #eee; /* gray */
+  background-color: #F3F3FF; /* light blue */
 }
 
 div.section h3, div.section h4, div.section h5 {
