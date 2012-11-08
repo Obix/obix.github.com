@@ -5,633 +5,618 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
    <url>
       <loc>http://www.rps-obix.com/</loc>
-      <lastmod>2012-03-01T14:01:55+07:00</lastmod>
+      <lastmod>2012-11-08T09:23:17+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/index.html</loc>
-      <lastmod>2012-02-17T13:45:22+07:00</lastmod>
+      <lastmod>2012-11-07T16:08:19+07:00</lastmod>
       <priority>1.0</priority>
    </url>
    <url>
       <loc>http://www.rps-obix.com/about/faq.html</loc>
-      <lastmod>2012-03-01T13:01:37+07:00</lastmod>
+      <lastmod>2012-11-07T16:08:19+07:00</lastmod>
       <priority>1.0</priority>
    </url>
    <url>
       <loc>http://www.rps-obix.com/about/vision.html</loc>
-      <lastmod>2012-02-17T13:45:19+07:00</lastmod>
+      <lastmod>2012-11-07T16:08:19+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/community/author.html</loc>
-      <lastmod>2012-03-01T13:56:16+07:00</lastmod>
+      <lastmod>2012-11-07T16:08:19+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/community/community_intro.html</loc>
-      <lastmod>2012-02-17T13:45:19+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/community/success.html</loc>
-      <lastmod>2012-02-17T13:45:19+07:00</lastmod>
+      <lastmod>2012-11-07T16:09:15+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/articles.html</loc>
-      <lastmod>2012-02-17T13:45:19+07:00</lastmod>
+      <lastmod>2012-11-07T16:08:19+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/API/API_intro.html</loc>
-      <lastmod>2012-02-17T13:45:19+07:00</lastmod>
+      <lastmod>2012-11-07T16:08:19+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/about_manual.html</loc>
-      <lastmod>2012-03-01T12:50:41+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:51+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/advanced_concepts.html</loc>
-      <lastmod>2012-03-01T12:50:58+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:49+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/AIO_could_do.html</loc>
+      <lastmod>2012-11-02T14:30:48+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/AIO_will_do.html</loc>
+      <lastmod>2012-11-02T14:30:46+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/attribute_check_script.html</loc>
-      <lastmod>2012-03-01T12:50:46+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:45+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/attribute_get_script.html</loc>
-      <lastmod>2012-03-01T12:50:46+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:44+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/attribute_set_script.html</loc>
-      <lastmod>2012-03-01T12:50:46+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:42+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/basic_example.html</loc>
-      <lastmod>2012-03-01T12:50:41+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:41+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/case_type_of_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:49+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:39+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/character_literal.html</loc>
-      <lastmod>2012-03-01T12:50:42+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:37+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/check_script_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:52+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:35+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/check_scripts.html</loc>
-      <lastmod>2012-03-01T12:50:47+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:34+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/command.html</loc>
-      <lastmod>2012-03-01T12:50:45+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:32+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/command_in_check_script.html</loc>
-      <lastmod>2012-03-01T12:50:46+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:30+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/command_out_check_script.html</loc>
-      <lastmod>2012-03-01T12:50:47+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:28+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/command_script.html</loc>
-      <lastmod>2012-03-01T12:50:46+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:27+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/comments.html</loc>
-      <lastmod>2012-03-01T12:50:42+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:25+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/condition.html</loc>
-      <lastmod>2012-03-01T12:50:53+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:23+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/create_execute_code.html</loc>
+      <lastmod>2012-11-02T14:30:22+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/creator.html</loc>
-      <lastmod>2012-03-01T12:50:45+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:20+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/CRUD_application.html</loc>
+      <lastmod>2012-11-02T14:30:18+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/CRUD_task_CLI.html</loc>
+      <lastmod>2012-11-02T14:30:17+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/CRUD_task_DBI.html</loc>
+      <lastmod>2012-11-02T14:30:15+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/CRUD_task_persistence.html</loc>
+      <lastmod>2012-11-02T14:30:13+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/CRUD_task_source_code.html</loc>
+      <lastmod>2012-11-02T14:30:12+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/CRUD_task_summary.html</loc>
+      <lastmod>2012-11-02T14:30:10+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/CRUD_task_web_interface.html</loc>
+      <lastmod>2012-11-02T14:30:08+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/default_scripts.html</loc>
-      <lastmod>2012-03-01T12:50:47+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:06+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/design_by_contract_contract_programming.html</loc>
-      <lastmod>2012-03-01T12:50:57+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:05+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/ebnf.html</loc>
-      <lastmod>2012-03-01T12:51:01+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:03+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/EBNF_introduction.html</loc>
-      <lastmod>2012-03-01T12:50:58+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:01+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/EBNF_usage.html</loc>
-      <lastmod>2012-03-01T12:50:58+07:00</lastmod>
+      <lastmod>2012-11-02T14:30:00+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/embedded_java.html</loc>
-      <lastmod>2012-03-01T12:50:54+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:58+07:00</lastmod>
    </url>
    <url>
-      <loc>http://www.rps-obix.com/docs/manuals/enumerated_type.html</loc>
-      <lastmod>2012-03-01T12:50:55+07:00</lastmod>
+      <loc>http://www.rps-obix.com/docs/manuals/enumerated_data_type.html</loc>
+      <lastmod>2012-11-02T14:29:56+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/error_handling.html</loc>
-      <lastmod>2012-03-01T12:50:55+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:55+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/error_handling_instructions.html</loc>
-      <lastmod>2012-03-01T12:50:53+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:53+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/error_handling_see_also.html</loc>
-      <lastmod>2012-03-01T12:50:55+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:51+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/error_info.html</loc>
-      <lastmod>2012-03-01T12:50:53+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:50+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/error_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:52+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:48+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/event.html</loc>
-      <lastmod>2012-03-01T12:50:45+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:47+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/event_instructions.html</loc>
-      <lastmod>2012-03-01T12:50:52+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/manuals/execute_instruction.html</loc>
-      <lastmod>2012-03-01T12:51:01+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:45+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/execute_java_script.html</loc>
-      <lastmod>2012-03-01T12:51:01+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:43+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/execute_script.html</loc>
-      <lastmod>2012-03-01T12:51:01+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:41+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/exit_repeat_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:51+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:40+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/exit_script_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:49+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:38+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/expressions.html</loc>
-      <lastmod>2012-03-01T12:50:54+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:37+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/factory.html</loc>
-      <lastmod>2012-03-01T12:50:43+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:35+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/factory_basics.html</loc>
-      <lastmod>2012-03-01T12:50:41+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:33+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/fail_fast_principle.html</loc>
+      <lastmod>2012-11-02T14:29:31+07:00</lastmod>
+      <priority>1.0</priority>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/feature_redefinition.html</loc>
-      <lastmod>2012-03-01T12:50:57+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:29+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/flow_control_instructions.html</loc>
-      <lastmod>2012-03-01T12:50:49+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:26+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/fundamental_concepts.html</loc>
-      <lastmod>2012-03-01T12:50:41+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:25+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/generic_types.html</loc>
-      <lastmod>2012-03-01T12:50:57+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:23+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/identifiers.html</loc>
-      <lastmod>2012-03-01T12:50:42+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:21+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/index.html</loc>
-      <lastmod>2012-03-01T12:51:04+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:20+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/input_argument_check_script.html</loc>
-      <lastmod>2012-03-01T12:50:46+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:18+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/input_argument_default_script.html</loc>
-      <lastmod>2012-03-01T12:50:47+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:16+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/integer_literal.html</loc>
-      <lastmod>2012-03-01T12:50:42+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:15+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/introduction_PAIOF_framework.html</loc>
+      <lastmod>2012-11-02T14:29:13+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/introduction_to_obix.html</loc>
-      <lastmod>2012-03-01T12:51:04+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:12+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/java_code_instructions.html</loc>
-      <lastmod>2012-03-01T12:50:54+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:10+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/language_basics.html</loc>
-      <lastmod>2012-03-01T12:50:54+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:08+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/language_manual.html</loc>
-      <lastmod>2012-03-01T12:50:58+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:06+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/library_basics.html</loc>
-      <lastmod>2012-03-01T12:50:41+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:04+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/line_continuation.html</loc>
-      <lastmod>2012-03-01T12:50:42+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:03+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/literals.html</loc>
-      <lastmod>2012-03-01T12:50:42+07:00</lastmod>
+      <lastmod>2012-11-02T14:29:01+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/loop_instructions.html</loc>
-      <lastmod>2012-03-01T12:50:51+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:59+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/multi_line_comment.html</loc>
-      <lastmod>2012-03-01T12:50:42+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:58+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/next_repeat_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:51+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:55+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/obix_articles.html</loc>
-      <lastmod>2012-03-01T12:51:04+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:54+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/obix_concepts_reliable_code.html</loc>
+      <lastmod>2012-11-02T14:28:52+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/obix_console.html</loc>
-      <lastmod>2012-03-01T12:51:02+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:51+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/Obix_EBNF.html</loc>
-      <lastmod>2012-03-01T12:51:01+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:49+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/obix_manual_preface.html</loc>
-      <lastmod>2012-03-01T12:50:41+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:46+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/object_basics.html</loc>
-      <lastmod>2012-03-01T12:50:41+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:45+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/object_immutability.html</loc>
-      <lastmod>2012-03-01T12:50:55+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:43+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/on_event_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:51+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:41+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/output_argument_check_script.html</loc>
-      <lastmod>2012-03-01T12:50:47+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:39+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/pc_application.html</loc>
-      <lastmod>2012-03-01T12:51:02+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:38+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/prefixed_identifier.html</loc>
-      <lastmod>2012-03-01T12:50:42+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:36+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/program_error.html</loc>
-      <lastmod>2012-03-01T12:50:55+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/manuals/random_arcs_application.html</loc>
-      <lastmod>2012-03-01T12:51:03+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:34+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/reliability_features.html</loc>
-      <lastmod>2012-03-01T12:51:03+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:32+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/repeat_for_each_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:50+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:29+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/repeat_forever_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:50+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:28+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/repeat_from_to_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:50+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:26+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/repeat_tail.html</loc>
-      <lastmod>2012-03-01T12:50:51+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:24+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/repeat_times_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:50+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:23+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/resource_error.html</loc>
-      <lastmod>2012-03-01T12:50:55+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:21+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/RSE_basics.html</loc>
-      <lastmod>2012-03-01T12:50:41+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:20+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/RSE_features.html</loc>
-      <lastmod>2012-03-01T12:50:45+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:18+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/RSE_summary.html</loc>
-      <lastmod>2012-03-01T12:50:41+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:16+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/RSEs.html</loc>
-      <lastmod>2012-03-01T12:50:43+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:14+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/script_execution_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:49+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:12+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/script_execution_instructions.html</loc>
-      <lastmod>2012-03-01T12:50:49+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:11+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/script_execution_tail.html</loc>
-      <lastmod>2012-03-01T12:50:49+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:09+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/script_instructions.html</loc>
-      <lastmod>2012-03-01T12:50:54+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:07+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/scripts.html</loc>
-      <lastmod>2012-03-01T12:50:47+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:05+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/service.html</loc>
-      <lastmod>2012-03-01T12:50:43+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:03+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/service_basics.html</loc>
-      <lastmod>2012-03-01T12:50:41+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:02+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/source_code_basics.html</loc>
-      <lastmod>2012-03-01T12:50:41+07:00</lastmod>
+      <lastmod>2012-11-02T14:28:00+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/source_code_templates.html</loc>
-      <lastmod>2012-03-01T12:50:57+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:59+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/static_typing.html</loc>
-      <lastmod>2012-03-01T12:50:56+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:57+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/stop_event_handler_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:52+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:54+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/syntax.html</loc>
-      <lastmod>2012-03-01T12:50:43+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:53+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/t2_advantages.html</loc>
-      <lastmod>2012-03-01T12:51:02+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:51+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/t2_create_application.html</loc>
+      <lastmod>2012-11-02T14:27:50+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/t2_create_objects.html</loc>
-      <lastmod>2012-03-01T12:51:02+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:48+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/t2_create_picture.html</loc>
-      <lastmod>2012-03-01T12:51:03+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:47+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/t2_file_io.html</loc>
-      <lastmod>2012-03-01T12:51:03+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:45+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/t2_more_reliable_objects.html</loc>
-      <lastmod>2012-03-01T12:51:02+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:43+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/t2_object_conversion.html</loc>
-      <lastmod>2012-03-01T12:51:03+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:41+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/t2_test_application.html</loc>
-      <lastmod>2012-03-01T12:51:03+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:39+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/t2_unit_testing.html</loc>
-      <lastmod>2012-03-01T12:51:02+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:37+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/t3_command_line_utility.html</loc>
+      <lastmod>2012-11-02T14:27:36+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/t3_customizing_PAIOF.html</loc>
+      <lastmod>2012-11-02T14:27:34+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/t3_input_sources.html</loc>
+      <lastmod>2012-11-02T14:27:33+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/t3_lists_of_commands.html</loc>
+      <lastmod>2012-11-02T14:27:31+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/t3_output_options.html</loc>
+      <lastmod>2012-11-02T14:27:30+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/t3_using_PAIOF.html</loc>
+      <lastmod>2012-11-02T14:27:28+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/t3_web_services.html</loc>
+      <lastmod>2012-11-02T14:27:26+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/test_script.html</loc>
-      <lastmod>2012-03-01T12:50:47+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:25+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/testing.html</loc>
-      <lastmod>2012-03-01T12:50:58+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:23+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/testing_instructions.html</loc>
-      <lastmod>2012-03-01T12:50:53+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:21+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/tutorial.html</loc>
-      <lastmod>2012-03-01T12:51:03+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/manuals/tutorial_part_1.html</loc>
-      <lastmod>2012-03-01T12:51:02+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:20+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/tutorial_part_2.html</loc>
-      <lastmod>2012-03-01T12:51:03+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:18+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/tutorial_part_3.html</loc>
-      <lastmod>2012-03-01T12:51:03+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:16+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/tutorial_part_4.html</loc>
-      <lastmod>2012-03-01T12:51:03+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:15+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/tutorial_preface.html</loc>
-      <lastmod>2012-03-01T12:51:01+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:14+07:00</lastmod>
+   </url>
+   <url>
+      <loc>http://www.rps-obix.com/docs/manuals/tutorial_simplicity.html</loc>
+      <lastmod>2012-11-02T14:27:12+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/type_inheritance.html</loc>
-      <lastmod>2012-03-01T12:50:56+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:11+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/user_input_error.html</loc>
-      <lastmod>2012-03-01T12:50:55+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:09+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/verify_error_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:53+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:07+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/verify_instruction.html</loc>
-      <lastmod>2012-03-01T12:50:53+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:06+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/void_literal.html</loc>
-      <lastmod>2012-03-01T12:50:42+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:04+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/void_values.html</loc>
-      <lastmod>2012-03-01T12:50:55+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:03+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/web_application.html</loc>
-      <lastmod>2012-03-01T12:51:02+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:01+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/web_application_further_info.html</loc>
-      <lastmod>2012-03-01T12:51:02+07:00</lastmod>
+      <lastmod>2012-11-02T14:27:00+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/web_application_JSP.html</loc>
-      <lastmod>2012-03-01T12:51:02+07:00</lastmod>
+      <lastmod>2012-11-02T14:26:58+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/web_application_servlet.html</loc>
-      <lastmod>2012-03-01T12:51:02+07:00</lastmod>
+      <lastmod>2012-11-02T14:26:57+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/why_obix.html</loc>
-      <lastmod>2012-03-01T12:51:03+07:00</lastmod>
+      <lastmod>2012-11-02T14:26:55+07:00</lastmod>
       <priority>1.0</priority>
    </url>
    <url>
       <loc>http://www.rps-obix.com/docs/manuals/yes_no_literal.html</loc>
-      <lastmod>2012-03-01T12:50:42+07:00</lastmod>
+      <lastmod>2012-11-02T14:26:53+07:00</lastmod>
    </url>
    <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/caution.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
+      <loc>http://www.rps-obix.com/downloads/system/installation.html</loc>
+      <lastmod>2012-11-07T16:08:19+07:00</lastmod>
    </url>
    <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/contents.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
+      <loc>http://www.rps-obix.com/downloads/system/linux/install.html</loc>
+      <lastmod>2012-11-07T16:08:19+07:00</lastmod>
    </url>
    <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/introduction.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-concurrency.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-design_by_contract.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-error_handling.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-functionality.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-independency.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-links.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-once.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-performance.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-price.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-quality.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-readability.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-real_world.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-recurrence.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-simplicity.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-support.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-terms.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-testing.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/docs/pragmatics/pragmatics-undo.html</loc>
-      <lastmod>2012-02-17T13:45:20+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/downloads/system/license_agree.html</loc>
-      <lastmod>2012-02-17T13:53:57+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/downloads/system/windows_or_linux.html</loc>
-      <lastmod>2012-02-17T13:45:22+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/downloads/system/linux/download.html</loc>
-      <lastmod>2012-02-17T13:45:21+07:00</lastmod>
-   </url>
-   <url>
-      <loc>http://www.rps-obix.com/downloads/system/windows/download.html</loc>
-      <lastmod>2012-02-17T13:45:21+07:00</lastmod>
+      <loc>http://www.rps-obix.com/downloads/system/windows/install.html</loc>
+      <lastmod>2012-11-07T16:08:19+07:00</lastmod>
    </url>
    <url>
       <loc>http://www.rps-obix.com/other/obix_logo.html</loc>
-      <lastmod>2012-02-17T13:45:22+07:00</lastmod>
+      <lastmod>2012-11-07T16:08:19+07:00</lastmod>
    </url>
 </urlset>

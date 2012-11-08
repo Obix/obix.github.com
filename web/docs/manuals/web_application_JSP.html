@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>JSP web application</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="web_application.html" title="Chapter 5. How to develop a web application?"><link rel="prev" href="web_application_servlet.html" title="Servlet web application"><link rel="next" href="web_application_further_info.html" title="Further information"><script type="text/javascript">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>JSP web application</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="web_application.html" title="Developing a web application"><link rel="prev" href="web_application_servlet.html" title="Servlet web application"><link rel="next" href="web_application_further_info.html" title="Further information"><script type="text/javascript">
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-29648172-1']);
@@ -10,7 +10,7 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-</script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">JSP web application</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="web_application_servlet.html"><img src="images/prev.png" alt="Previous chapter" title="Previous chapter"></a> </td><th width="60%" align="center">Chapter 5. How to develop a web application?</th><td width="20%" align="right"> <a accesskey="n" href="web_application_further_info.html"><img src="images/next.png" alt="Next chapter" title="Next chapter"></a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="web_application_JSP"></a>JSP web application</h2></div></div></div><p>Servlets and JSPs can be combined in a single web application. Therefore we will use the servlet application created in the previous section, and just modify it to show how to use JSPs.</p><p>We could simply embed our <code class="code">Hello world</code> message in the JSP file. But in practice it is often useful to call Obix code from a JSP file. Therefore we are going to first create an Obix service to get the text to be displayed, and then we will call that service from a JSP file.</p><div class="itemizedlist"><ul type="disc"><li><p>To create an Obix service that returns the message, create file <code class="code">se_JSP_service.osc</code> in directory <code class="code">pr_hello_web/work/obix/source_code/li_hello_web/</code> with the following content:</p><pre class="programlisting">service JSP_service
+</script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">JSP web application</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="web_application_servlet.html"><img src="images/prev.png" alt="Previous chapter" title="Previous chapter"></a> </td><th width="60%" align="center">Developing a web application</th><td width="20%" align="right"> <a accesskey="n" href="web_application_further_info.html"><img src="images/next.png" alt="Next chapter" title="Next chapter"></a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="web_application_JSP"></a>JSP web application</h3></div></div></div><p>Servlets and JSPs can be combined in a single web application. Therefore we will use the servlet application created in the previous section, and just modify it to show how to use JSPs.</p><p>We could simply embed the <code class="code">Hello world</code> message in the JSP file. But in practice it is often useful to call Obix code from a JSP file. Therefore we are going to first create an Obix service to get the text to be displayed, and we will then call this service from a JSP file.</p><div class="itemizedlist"><ul type="disc"><li><p>To create an Obix service that returns the message, create file <code class="code">se_JSP_service.osc</code> in directory <code class="code">hello_web/work/obix/source_code/hello_web/</code> with the following content:</p><pre class="programlisting">service JSP_service
 
    command get_hello_message
       out result type:string end
@@ -20,9 +20,9 @@
       end
    end
 
-end service</pre></li><li><p>Now create file <code class="code">hello.jsp</code> in directory <code class="code">pr_hello_web/work/web/</code> with the following content:</p><pre class="programlisting">&lt;%@page contentType="text/html" pageEncoding="UTF-8"%&gt;
+end service</pre></li><li><p>Now create file <code class="code">hello.jsp</code> in directory <code class="code">hello_web/work/web/</code> with the following content:</p><pre class="programlisting">&lt;%@page contentType="text/html" pageEncoding="UTF-8"%&gt;
 
-&lt;%@page import="li_hello_web.se_JSP_service"%&gt;
+&lt;%@page import="li_hello_04_web_application.se_JSP_service"%&gt;
 
 &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd"&gt;
@@ -35,7 +35,7 @@ end service</pre></li><li><p>Now create file <code class="code">hello.jsp</code>
     &lt;/head&gt;
 
     &lt;body&gt;
-        &lt;p&gt;The following message is returned from an Obix service:&lt;/p&gt;
+        &lt;p&gt;The following message is returned from an Obix service and displayed through a JSP:&lt;/p&gt;
         &lt;%= se_JSP_service.co_get_hello_message_command().getValue().java_value() %&gt;
     &lt;/body&gt;
 

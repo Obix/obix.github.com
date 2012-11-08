@@ -39,7 +39,7 @@ brain.think</pre>
                 </td></tr></tbody></table></div></div><br class="table-break"></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="default_error_handling"></a>Default behavior</h3></div></div></div><p>An important question is: What happens in case of a program error at runtime?</p><p>Because program errors appear randomly (i.e. the programmer doesn't know in advance when they appear and what causes them to appear), Obix provides a default behavior for all program errors at runtime.</p><p>The default behavior is to simply write an error message to the system's <code class="code">error</code> device which, by default, is the system console. Then the execution of the thread in which the error occurred, is stopped. The error message contains an explanation of the error, the location in the source code that caused the error, as well as the trace of all called scripts, up to the root script.</p><p>Here is an example of such an error message, caused through a division by 0:</p><pre class="screen">OBIX PROGRAM EXECUTION ERROR
 ----------------------------
         feature: ty_integer32_value.co_divide
-        library: li_obix.li_basics.li_scalars.li_number.li_integer.li_integer32
+        library: org.obix.obix_core.basics.scalars.number.integer.integer32
            line: 46
            time: Jan 11, 2011 11:10:27 AM
     description: Division by zero. [division_by_zero_error]
@@ -47,7 +47,7 @@ input argument : i_operand
 
 &gt;
         feature: fa_positive32.co_divide
-        library: li_obix.li_basics.li_scalars.li_number.li_integer.li_integer32
+        library: org.obix.obix_core.basics.scalars.number.integer.integer32
            line: 79
            time: Jan 11, 2011 11:10:27 AM
     description: An error occurred in a supplier. [supplier_error]
@@ -109,7 +109,7 @@ end
          system.err.write_line ( string = "A program error occured!" )
        
          // log error in log file
-         const file_error log_file_error = se_text_file_IO.append_string_to_file ( &amp;
+         const file_error log_file_error = se_text_file_IO.append_string_to_new_or_existing_file ( &amp;
             string = i_error.to_string &amp;
             file = a_log_file )
          if log_file_error #r void then
@@ -132,7 +132,7 @@ end
 
 end factory</pre><p>To activate this customized program error handler (and replace Obix's default error handler), the following code has to be added to the application's initialisation code:</p><pre class="programlisting">const file my_log_file = fa_file.create_from_string.result ( string = "/var/log/my_application/errors.txt" )
 if not my_log_file.exists then
-	my_log_file.create_physically
+	my_log_file.create_on_device
 end if
 se_system_utilities.program_error_handler = fa_my_program_error_handler.create ( my_log_file )</pre></div><div class="simplesect" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="error_handling_rules"></a>Changing local program error handling</h3></div></div></div><p>As said already, the global default program error handling can be overwritten for specific parts of the application. This can be done by applying the following rules:</p><div class="itemizedlist"><ul type="disc"><li><p>Whenever the <code class="code">on_error:continue</code> clause is appended to an instruction and a runtime error occurs during the execution of that instruction, then the execution of that instruction is stopped immediately, but the application itself is not stopped. The application continues execution with the next instruction in the source code.</p><p>The <code class="code">on_error:continue</code> clause can be used with the following instructions:
           </p><div class="itemizedlist"><ul type="circle"><li>variable declaration instruction (see <a href="script_instructions.html#variable_declaration_instruction" title="Variable declaration instruction">the section called &#8220;Variable declaration instruction&#8221;</a>)</li><li>constant declaration instruction (see <a href="script_instructions.html#constant_declaration_instruction" title="Constant declaration instruction">the section called &#8220;Constant declaration instruction&#8221;</a>)</li><li>assignment instruction (see <a href="script_instructions.html#assignment_instruction" title="Assignment instruction">the section called &#8220;Assignment instruction&#8221;</a>)</li><li>object command execution instruction (see <a href="script_execution_instructions.html#object_command_execution_instruction" title="Object command execution instruction">the section called &#8220;Object command execution instruction&#8221;</a>)</li><li>script execution instruction (see <a href="script_execution_instruction.html" title="Script execution instruction">the section called &#8220;Script execution instruction&#8221;</a>)</li></ul></div><p>

@@ -33,7 +33,7 @@
 					<a href="../index.html"><img src="../images/RPS_04_h55.png" height="45" border="0" align="middle"></a>
 				</div>
 				<div style="margin-left:210px; height:29px; padding-top: 15px; text-align:center; letter-spacing:5px">
-					<b><i>more reliable	code in less time</i></b>
+					<b><i> reliable	code in less time</i></b>
 				</div>
 			</div>
 
@@ -43,7 +43,7 @@
 					<div class="menu_level_1">About Obix</div>
 					<div class="menu_level_2"><a href="vision.html">Vision & Mission</a></div>
 					<div class="menu_level_2"><a href="faq.html">FAQ</a></div>
-                    <div class="menu_level_2"><a href="../docs/manuals/why_obix.html" target="_blank">Why Obix?</a></div>
+                    <div class="menu_level_2"><a href="../docs/manuals/why_obix.html" target="_blank">Why Obix?<br />What's in for you?</a></div>
 <div id="search_box" class="menu_level_2">
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -68,23 +68,28 @@
 </div>
 
 					<div class="menu_level_1">Documentation</div>
+					<div class="menu_level_2"><a href="../downloads/system/installation.html">Installation</a></div>
 					<div class="menu_level_2"><a href="../docs/manuals/tutorial.html" target="_blank">Tutorial</a></div>
 					<div class="menu_level_2"><a href="../docs/manuals/language_manual.html" target="_blank">Language manual</a></div>
+					<!-- <div class="menu_level_2"><a href="../docs/API/API_intro.html">API browser</a></div> -->
 					<div class="menu_level_2"><a href="../docs/manuals/ebnf.html" target="_blank">Syntax as EBNF</a></div>
-					<div class="menu_level_2"><a href="../docs/API/API_intro.html">API browser</a></div>
 					<div class="menu_level_2"><a href="../docs/articles.html">Articles</a></div>
-					<!-- <div class="menu_level_2"><a href="http://rpsobix.wordpress.com/" target="_blank">Blog</a></div> -->
+					<div class="menu_level_2"><a href="../other/obix_logo.html">Obix logo</a></div>
 
+					<!-- 
 					<div class="menu_level_1">Downloads</div>
-					<div class="menu_level_2"><a href="../downloads/system/license_agree.html">Obix binary distribution</a></div>
+					<div class="menu_level_2"><a href="../downloads/system/installation.html">Obix binary distribution</a></div>
+                    -->
 
 					<div class="menu_level_1">Community</div>
 					<div class="menu_level_2"><a href="../community/community_intro.html">You can help and get help!</a></div>
-					<div class="menu_level_2"><a href="https://github.com/Obix/pr_obix" target="_blank">Source code repository</a></div>
+					<div class="menu_level_2"><a href="https://github.com/Obix" target="_blank">Source code repository</a></div>
 					<div class="menu_level_2"><a href="../community/author.html">Author</a></div>
 
+					<!--
 					<div class="menu_level_1">Other</div>
 					<div class="menu_level_2"><a href="../other/obix_logo.html">Obix logo</a></div>
+                    -->
 					<!-- <div class="menu_level_2"><a href="../other/obix_keywords_intro.html">Obix keywords</a></div> -->
 				</div>
 				<div id="content_div" style="background-color: white; margin-left: 214px; padding: 10px;">
@@ -106,7 +111,7 @@
 </ul>
 <p>The primary and most important goal is more reliable software. This  goal is achieved by:</p>
 <ul>
-  <li> constantly applying the following very important and effective <em>Fail fast!</em> principle:
+  <li> constantly applying the following  important and effective <em><a href="../docs/manuals/fail_fast_principle.html">Fail fast!</a></em> principle:
     <ul><br>
       <li><b><i>Every coding error should be detected as early as possible,<br />preferably at compile-time, or else as early as possible at run-time.</i></b>
       </li>
@@ -118,11 +123,11 @@
   </ul>
 <p>Focusing on more reliability, productivity and simplicity is important because those are <em>the</em> objectives pursued since decades, but not yet satisfactorily achieved in the world of software development. Achieving these 3 goals:</p>
 <ul>
-  <li> makes a programmer's life more easy and enjoyable</li>
-  <li> helps to write beautiful code in less time</li>
-  <li> reduces the costs of development and maintenance.</li>
+  <li> reduces  development/maintenance time and costs</li>
+  <li> helps to write <em>more reliable code in less time</em></li>
+  <li> makes programming more enjoyable</li>
 </ul>
-<p> For more information please read <a href="../docs/manuals/why_obix.html" target="_blank">Why Obix?</a>. This article recalls the well known reasons for why more reliability,  productivity, and simplicity are important for every programmer, and it explains and shows examples of the techniques used to realize these goals in Obix.</p>
+<p> For more information please read <a href="../docs/manuals/why_obix.html" target="_blank">Why Obix?</a>. This article recalls the well known reasons for why more reliability,  productivity, and simplicity are important for everyone (developers, managers, users) and it explains and shows examples of the techniques used to realize these goals in Obix.</p>
 
 <br />
 <p><b>What's unique about Obix?</b></p>
@@ -169,12 +174,13 @@ part of the compiler has been designed with this flexibility in mind.</p>
   <li>write small executable scripts contained in a single source code text file</li>
   <li>write command line utilities</li>
   <li>write console input/output programs</li>
-  <li>write simple or complex web applications using Java's <a href="http://en.wikipedia.org/wiki/JavaServer_Pages" target="_blank">JSP</a> and/or <a href="http://en.wikipedia.org/wiki/Java_servlet" target="_blank">servlet</a> technology</li>
+  <li>write simple or complex web applications using Java's <a href="http://en.wikipedia.org/wiki/JavaServer_Pages" target="_blank">JSP</a> and/or <a href="http://en.wikipedia.org/wiki/Java_servlet" target="_blank">servlet</a> technology or Obix's <em>Practical Application Input/Output Framework</em></li>
 </ul>
 <p>Note: To see how this works in practice please refer to Part I of the <a href="../docs/manuals/tutorial.html">Tutorial</a>.</p>
 <p>You can also easily combine Obix and Java code in your application. For example, you can:</p>
 <ul>
   <li> directly embed Java source code within Obix source code</li>
+  <li>add pure Java source code files to an Obix project</li>
   <li>call Java code from Obix code, call Obix code from Java code, and exchange data between Java and Obix</li>
   <li> use any existing .jar or .class files (Java libraries and frameworks), for example to write a GUI  application using Java Swing, SWT, or any other Java GUI package</li>
   <li>integrate any software written in any other language that produces Java binaries, such as software written in Groovy, Jyton, JRuby, Scala, etc. </li>
@@ -189,7 +195,7 @@ part of the compiler has been designed with this flexibility in mind.</p>
   <li>a text editor</li>
   <li>a Java servlet container, such as Tomcat or Jetty (only if you want to develop web applications)</li>
   </ul>
-<p>You can then <a href="../downloads/system/license_agree.html">download Obix</a> (a single compressed archive file that contains the Obix compiler and libraries), read the tutorial, and start developing.</p>
+<p>You can then <a href="../downloads/system/installation.html">download Obix</a> (a single compressed archive file that contains the Obix compiler and libraries), read the tutorial, and start developing.</p>
 <p>You can deploy your application to any computer or device that supports a Java Virtual Machine (JVM).</p>
 <br />
 <p><b>How is Obix developed?</b></p>
@@ -225,7 +231,7 @@ part of the compiler has been designed with this flexibility in mind.</p>
 <p><b>Where can I see examples of Obix source code?</b></p>
 <p>Examples can be found:</p>
 <ul>
-  <li>in the 'projects' directory created during installation of Obix (look at the 'readme' files for each project)</li>
+  <li>in the 'examples' directory created during installation of Obix (look at the 'readme' files for each project)</li>
   <li>in the <a href="../docs/manuals/tutorial.html" target="_blank">Tutorial</a></li>
   <li>throughout the <a href="../docs/manuals/language_manual.html" target="_blank">Language manual</a></li>
   <li>in Obix's source code, because Obix is written in Obix (libraries, compiler, etc.)</li>
@@ -238,8 +244,8 @@ part of the compiler has been designed with this flexibility in mind.</p>
 <ul>
   <li>read the <a href="faq.html">FAQ page</a> (this page)</li>
   <li>for more information about the benefits you can expect from Obix, read   <a href="../docs/manuals/why_obix.html" target="_blank">Why Obix?</a>.</li>
-  <li>download Obix, then read and practice part I of the <a href="../docs/manuals/tutorial.html" target="_blank">Tutorial</a> (How to create and execute code</a>?)</li>
-  <li>look at the examples in the 'projects' directory created during the installation of Obix</li>
+  <li><a href="../downloads/system/installation.html">install</a> Obix, then read and practice chapter 'Versatility (Creating  and executing code</a>)' of the <a href="../docs/manuals/tutorial.html" target="_blank">tutorial</a></li>
+  <li>look at the examples in the 'examples' directory created during the installation of Obix</li>
   <li>read part I of the <a href="../docs/manuals/language_manual.html">language manual</a> (Fundamental concepts)</li>
 </ul>
 <p>You should now have the basic knowledge to develop your own applications.</p>

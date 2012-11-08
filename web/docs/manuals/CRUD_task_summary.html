@@ -1,0 +1,59 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Summary of development steps</title><link rel="stylesheet" href="obix_doc.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="Obix programming language documentation"><link rel="up" href="CRUD_application.html" title="Chapter 1. Creating a web application with data stored in a database"><link rel="prev" href="CRUD_task_CLI.html" title="Bonus 2: Creating a command line utility to manage tasks in a terminal window"><link rel="next" href="tutorial_part_2.html" title="Part II. Versatility"><script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29648172-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Summary of development steps</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="CRUD_task_CLI.html"><img src="images/prev.png" alt="Previous chapter" title="Previous chapter"></a> </td><th width="60%" align="center">Chapter 1. Creating a web application with data stored in a database</th><td width="20%" align="right"> <a accesskey="n" href="tutorial_part_2.html"><img src="images/next.png" alt="Next chapter" title="Next chapter"></a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="CRUD_task_summary"></a>Summary of development steps</h2></div></div></div><p>To get a quick overview of the development steps explained in the previous chapters you can find below a condensed summary of how to create the to-do-list application.</p><p>After <a href="http://www.rps-obix.com/downloads/system/installation.html" target="_top">installing Obix</a> proceed as follows:</p><div class="itemizedlist"><ul type="disc"><li><p>Open a terminal window, go to any directory in which you want to create the project and type:</p><pre class="programlisting">obix create_project project_id:to_do_list</pre></li><li><p>Create a subdirectory called <code class="code">tasks</code> in your project's <code class="code">work/obix/source_code/to_do_list/</code> directory.</p><p>In this subdirectory create the following source code files:</p><div class="itemizedlist"><ul type="circle"><li><p>file <code class="code">ty_task_priority.osc</code> with the following content:</p><pre class="programlisting">type task_priority
+
+   enumerated low; medium; high end
+	
+end</pre></li><li><p>file <code class="code">ty_task.osc</code> with the following content:</p><pre class="programlisting">type task persistence:JPA
+   
+   inherit primary_key end
+
+   attribute title type:non_empty_string kind:variable setable:all end
+   attribute description type:text voidable:yes kind:variable setable:all end
+   attribute priority type:task_priority.enumerated kind:variable setable:all end
+   attribute time_created type:local_date_time default:se_date_time.current_local_date_time end
+   attribute done type:yes_no default:no kind:variable setable:all end
+
+end</pre></li><li><p>file <code class="code">fa_task.osc</code> with the following content:</p><pre class="programlisting">factory task type:task
+
+   command to_string
+      script
+         o_result = """Task {{iif a_primary_key #r void then a_primary_key.to_string &amp; ", " else "" end if}}{{a_title}}"""
+      end
+   end
+
+   creator create kind:in_all end
+
+end
+</pre></li></ul></div></li><li><p>In your terminal window go to the root directory of your project (i.e. directory <code class="code">to_do_list</code>) and type:</p><pre class="programlisting">obix add_persistence_support persistence_kind:JPA_Hibernate database_engine:H2 driver_class:org.h2.Driver connection_url:\"jdbc:h2:file:data/to_do_list\" user:sa password:\"\"</pre><p>Then compile and build your project by typing:</p><pre class="programlisting">obix cp</pre><p>and then:</p><pre class="programlisting">obix bp</pre></li><li><p>To create a web application as well as a command line utility (by using the Obix PAIOF framework), open file <code class="code">work/obix/source_code/to_do_list/se_to_do_list_starter.osc</code> and modify its content so that it looks as follows:</p><pre class="programlisting">service to_do_list_starter
+
+   command start
+      // this input argument provides the command line arguments as a list of strings
+      in command_line_arguments type:indexed_string_list voidable:yes end
+      
+      script
+         se_PAIOF.start_for_service_commands_by_regex ( &amp;
+            command_line_arguments = i_command_line_arguments &amp;
+            service_command_path_regex = fa_regex.create ( ".*se_task_commands.*|.*start_H2_servers_in_same_process"~ ) )
+      end
+   end
+
+end</pre><p>Compile and build again by typing:</p><pre class="programlisting">obix cp</pre><p>and then:</p><pre class="programlisting">obix bp</pre></li></ul></div><p>This concludes the development.</p><br><p>To explore the application in a web browser:</p><div class="itemizedlist"><ul type="disc"><li><p>In your system terminal type:</p><pre class="programlisting">run @start_web_server @port:8080</pre></li><li><p>Open a web browser and enter the following URL:</p><pre class="programlisting">http://127.0.0.1:8080/</pre></li><li><p>In the drop down list box displayed at the top of your browser select <code class="code">create task</code>, then enter some data and click the <code class="code">Create task</code> button.</p></li><li><p>Enter a few more tasks. Then play around with the other commands to list, modify or delete tasks.</p></li><li><p>Refer to a <a href="CRUD_task_DBI.html" title="Bonus 1: Adding a web interface to directly manipulate database tables">previous chapter</a> for instruction on how to manipulate your H2 database tables directly in a web browser.</p></li><li><p>When finished type <code class="code">Ctrl-C</code> in the terminal window to stop the Obix web server.</p></li></ul></div><br><p>You can also manage your data directly from the command line, as follows:</p><div class="itemizedlist"><ul type="disc"><li><p>First you need to change a JPA parameter so that data stored in your database is not lost between sessions.</p><p>Open file <code class="code">work/java/META-INF/persistence.xml</code> and replace line</p><pre class="programlisting">&lt;property name="hibernate.hbm2ddl.auto" value="create-drop"/&gt;</pre><p>with</p><pre class="programlisting">&lt;property name="hibernate.hbm2ddl.auto" value="update"/&gt;</pre><p>Save the file.</p><p>Build the project again by typing:</p><pre class="programlisting">obix bp</pre></li><li><p>To create a new task from the command line type:</p><pre class="programlisting">on Unix:
+./run.sh create_task title:'ttt' description:'ddd' priority:low
+
+on Windows:
+run create_task title:"ttt" description:"ddd" priority:low</pre><p>Create more tasks by entering similar commands.</p></li><li><p>To retrieve task 1 from the database and show it as JSON type:</p><pre class="programlisting">on Unix:
+./run.sh show_task primary_key:1 @format:json @content:obj
+
+on Windows:
+run show_task primary_key:1 @format:json @content:obj</pre><p>The result looks as follows:</p><pre class="screen">{"Result":{"primary_key":1,"title":"ttt","description":"ddd","priority":"low","time_created":"2012-10-03T11:15:43","done":false}}</pre></li></ul></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="CRUD_task_CLI.html"><img src="images/prev.png" alt="Previous chapter" title="Previous chapter"></a> </td><td width="20%" align="center"><a accesskey="u" href="CRUD_application.html"><img src="images/up.png" alt="Go up one level" title="Go up one level"></a></td><td width="40%" align="right"> <a accesskey="n" href="tutorial_part_2.html"><img src="images/next.png" alt="Next chapter" title="Next chapter"></a></td></tr><tr><td width="40%" align="left" valign="top">Bonus 2: Creating a command line utility to manage tasks in a terminal window </td><td width="20%" align="center"><a accesskey="h" href="index.html"><img src="images/home.png" alt="Table of contents" title="Table of contents"></a></td><td width="40%" align="right" valign="top"> Part II. Versatility</td></tr></table></div></body></html>
